@@ -1,8 +1,0 @@
-$(window).load(
-	function(){
-		var products =$(".product-upper");
-		products.each( function(indx,val){
-			$(this).find("img").attr("src","http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg")
-		})
-	}
-);

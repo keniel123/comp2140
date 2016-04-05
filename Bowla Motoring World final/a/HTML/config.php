@@ -30,7 +30,7 @@ try {
 include('customer/customer.php');
 
 //include('classes/phpmailer/mail.php');
-$customer = new Customer($db);
+$user = new User($db);
 
 
 include('catalog/catalog.php');

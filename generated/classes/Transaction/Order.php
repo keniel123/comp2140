@@ -49,7 +49,7 @@ class Order
     /**
      * @return String
      */
-    public function getID():String
+    public function getID()//String
     {
         // TODO: implement here
         return null;
@@ -59,7 +59,7 @@ class Order
      * @param String $ID
      * @return boolean
      */
-    public function setID(String $ID):boolean
+    public function setID(String $ID)//boolean
     {
         // TODO: implement here
         return false;
@@ -68,7 +68,7 @@ class Order
     /**
      * @return String
      */
-    public function getOrderDate():String
+    public function getOrderDate()//String
     {
         // TODO: implement here
         return null;
@@ -78,7 +78,7 @@ class Order
      * @param String $orderDate
      * @return boolean
      */
-    public function setOrderDate(String $orderDate):boolean
+    public function setOrderDate(String $orderDate)//boolean
     {
         // TODO: implement here
         return false;
@@ -87,7 +87,7 @@ class Order
     /**
      * @return String
      */
-    public function getDeliveryDate():String
+    public function getDeliveryDate()//String
     {
         // TODO: implement here
         return null;
@@ -97,7 +97,7 @@ class Order
      * @param String $deliveryDate
      * @return boolean
      */
-    public function setDeliveryDate(String $deliveryDate):boolean
+    public function setDeliveryDate(String $deliveryDate)//boolean
     {
         // TODO: implement here
         return false;
@@ -106,7 +106,7 @@ class Order
     /**
      * @return String
      */
-    public function getOrderStatus():String
+    public function getOrderStatus()//String
     {
         // TODO: implement here
         return null;
@@ -116,7 +116,7 @@ class Order
      * @param String $orderStatus
      * @return boolean
      */
-    public function setOrderStatus(String $orderStatus):boolean
+    public function setOrderStatus(String $orderStatus)//boolean
     {
         // TODO: implement here
         return false;
@@ -125,7 +125,7 @@ class Order
     /**
      * @return Double
      */
-    public function getTotal():Double
+    public function getTotal()//Double
     {
         // TODO: implement here
         return null;
@@ -134,7 +134,7 @@ class Order
     /**
      * @return boolean
      */
-    public function calculateTotal():boolean
+    public function calculateTotal()//boolean
     {
         // TODO: implement here
         return false;
@@ -143,7 +143,7 @@ class Order
     /**
      * @return List<Product>
      */
-    public function getItems():List<Product>
+    public function getItems()//List<Product>
     {
         // TODO: implement here
         return null;

@@ -20,38 +20,36 @@ class PayPal extends PaymentMethod
     /**
      * @return String
      */
-    public function getEmail():String
+    public function getEmail()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->email;
     }
 
     /**
      * @param String $email
      * @return boolean
      */
-    public function setEmail(String $email):boolean
+    public function setEmail(String $email)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->email = $email;
+        return TRUE;
     }
 
     /**
      * @return String
      */
-    public function getPassword():String
+    public function getPassword()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->password;
     }
 
     /**
      * @param String $password
      * @return boolean
      */
-    public function setPassword(String $password):boolean
+    public function setPassword(String $password)//boolean
     {
-        // TODO: implement here
+        $this->password = $password;
         return false;
     }
 }

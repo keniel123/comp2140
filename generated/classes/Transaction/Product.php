@@ -53,7 +53,7 @@ class Product
     /**
      * @return String
      */
-    public function getID():String
+    public function getID()//String
     {
         // TODO: implement here
         return null;
@@ -63,7 +63,7 @@ class Product
      * @param String $ID
      * @return boolean
      */
-    public function setID(String $ID):boolean
+    public function setID(String $ID)//boolean
     {
         // TODO: implement here
         return false;
@@ -72,7 +72,7 @@ class Product
     /**
      * @return String
      */
-    public function getName():String
+    public function getName()//String
     {
         // TODO: implement here
         return null;
@@ -82,7 +82,7 @@ class Product
      * @param String $name
      * @return boolean
      */
-    public function setName(String $name):boolean
+    public function setName(String $name)//boolean
     {
         // TODO: implement here
         return false;
@@ -91,7 +91,7 @@ class Product
     /**
      * @return Double
      */
-    public function getPrice():Double
+    public function getPrice()//Double
     {
         // TODO: implement here
         return null;
@@ -101,7 +101,7 @@ class Product
      * @param Double $price
      * @return boolean
      */
-    public function setPrice(Double $price):boolean
+    public function setPrice(Double $price)//boolean
     {
         // TODO: implement here
         return false;
@@ -110,7 +110,7 @@ class Product
     /**
      * @return List<String>
      */
-    public function getDescription():List<String>
+    public function getDescription()//List<String>
     {
         // TODO: implement here
         return null;
@@ -120,7 +120,7 @@ class Product
      * @param List<String> $description
      * @return boolean
      */
-    public function setDescription(List<String> $description):boolean
+    public function setDescription($description)//boolean
     {
         // TODO: implement here
         return false;
@@ -129,7 +129,7 @@ class Product
     /**
      * @return int
      */
-    public function getQuantity():int
+    public function getQuantity()//int
     {
         // TODO: implement here
         return 0;
@@ -139,7 +139,7 @@ class Product
      * @param String $quantity
      * @return boolean
      */
-    public function setQuantity(String $quantity):boolean
+    public function setQuantity(String $quantity)//boolean
     {
         // TODO: implement here
         return false;

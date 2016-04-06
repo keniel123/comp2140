@@ -15,7 +15,7 @@ class Admin extends User
     /**
      * @return List<Product>
      */
-    private function getAllProducts():List<Product>
+    private function getAllProducts()//List<Product>
     {
         // TODO: implement here
         return null;
@@ -24,7 +24,7 @@ class Admin extends User
     /**
      * @return List<Account>
      */
-    private function viewCustomers():List<Account>
+    private function viewCustomers()//List<Account>
     {
         // TODO: implement here
         return null;
@@ -33,7 +33,7 @@ class Admin extends User
     /**
      * @return List<Order>
      */
-    private function getSalesList():List<Order>
+    private function getSalesList()//List<Order>
     {
         // TODO: implement here
         return null;
@@ -42,7 +42,7 @@ class Admin extends User
     /**
      * @return boolean
      */
-    private function confirmOrder():boolean
+    private function confirmOrder()//boolean
     {
         // TODO: implement here
         return false;

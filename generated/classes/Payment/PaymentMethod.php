@@ -20,7 +20,7 @@ class PaymentMethod
     /**
      * @return boolean
      */
-    protected function validatePayment():boolean
+    protected function validatePayment()//boolean
     {
         // TODO: implement here
         return false;

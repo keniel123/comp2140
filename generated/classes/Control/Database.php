@@ -16,7 +16,7 @@ class Database
     /**
      * @return ResultSet
      */
-    public function query():ResultSet
+    public function query()
     {
         // TODO: implement here
         return null;
@@ -25,7 +25,7 @@ class Database
     /**
      * @return ResultSet
      */
-    public function update():ResultSet
+    public function update()
     {
         // TODO: implement here
         return null;

@@ -32,7 +32,7 @@ class Cart
     /**
      * @return boolean
      */
-    public function checkAvailability():boolean
+    public function checkAvailability()//boolean
     {
         // TODO: implement here
         return false;
@@ -41,7 +41,7 @@ class Cart
     /**
      * @return boolean
      */
-    public function emptyCart():boolean
+    public function emptyCart()//boolean
     {
         // TODO: implement here
         return false;
@@ -51,7 +51,7 @@ class Cart
      * @param \Product $item
      * @return boolean
      */
-    public function addToCart(\Product $item):boolean
+    public function addToCart(\Product $item)//boolean
     {
         // TODO: implement here
         return false;
@@ -61,7 +61,7 @@ class Cart
      * @param String $itemName
      * @return boolean
      */
-    public function removeFromCart(String $itemName):boolean
+    public function removeFromCart(String $itemName)//boolean
     {
         // TODO: implement here
         return false;
@@ -70,7 +70,7 @@ class Cart
     /**
      * @return void
      */
-    public function calculateTotal():void
+    public function calculateTotal()//void
     {
         // TODO: implement here
         return null;
@@ -79,7 +79,7 @@ class Cart
     /**
      * @return String
      */
-    public function getDateCreated():String
+    public function getDateCreated()//String
     {
         // TODO: implement here
         return null;
@@ -88,7 +88,7 @@ class Cart
     /**
      * @return Double
      */
-    public function getTotal():Double
+    public function getTotal()//Double
     {
         // TODO: implement here
         return null;
@@ -97,7 +97,7 @@ class Cart
     /**
      * @return List<Product>
      */
-    public function getItems():List<Product>
+    public function getItems()//List<Product>
     {
         // TODO: implement here
         return null;

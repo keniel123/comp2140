@@ -27,7 +27,7 @@ class User
      * @param String $username
      * @return boolean
      */
-    protected function setUsername(String $username):boolean
+    protected function setUsername(String $username)//boolean
     {
         // TODO: implement here
         return false;
@@ -36,7 +36,7 @@ class User
     /**
      * @return String
      */
-    protected function getUsername():String
+    protected function getUsername()//String
     {
         // TODO: implement here
         return null;
@@ -46,7 +46,7 @@ class User
      * @param String $password
      * @return boolean
      */
-    protected function setPassword(String $password):boolean
+    protected function setPassword(String $password)//boolean
     {
         // TODO: implement here
         return false;
@@ -55,7 +55,7 @@ class User
     /**
      * @return String
      */
-    protected function getPassword():String
+    protected function getPassword()//String
     {
         // TODO: implement here
         return null;
@@ -64,7 +64,7 @@ class User
     /**
      * @return boolean
      */
-    protected function logout():boolean
+    protected function logout()//boolean
     {
         // TODO: implement here
         return false;
@@ -73,7 +73,7 @@ class User
     /**
      * @return boolean
      */
-    protected function login():boolean
+    protected function login()//boolean
     {
         // TODO: implement here
         return false;
@@ -82,7 +82,7 @@ class User
     /**
      * @return String
      */
-    protected function get_user_hash():String
+    protected function get_user_hash()//String
     {
         // TODO: implement here
         return null;
@@ -91,7 +91,7 @@ class User
     /**
      * @return boolean
      */
-    protected function is_logged_in():boolean
+    protected function is_logged_in()//boolean
     {
         // TODO: implement here
         return false;
@@ -100,7 +100,7 @@ class User
     /**
      * @return \Account
      */
-    public function createAccount():\Account
+    public function createAccount()//\Account
     {
         // TODO: implement here
         return null;

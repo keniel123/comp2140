@@ -22,7 +22,7 @@ class System
     /**
      * @return boolean
      */
-    public function generateToken():boolean
+    public function generateToken()
     {
         // TODO: implement here
         return false;
@@ -31,7 +31,7 @@ class System
     /**
      * @return boolean
      */
-    public function updateStock():boolean
+    public function updateStock()//:boolean
     {
         // TODO: implement here
         return false;
@@ -40,7 +40,7 @@ class System
     /**
      * @return boolean
      */
-    public function deleteProduct():boolean
+    public function deleteProduct()//:boolean
     {
         // TODO: implement here
         return false;
@@ -49,7 +49,7 @@ class System
     /**
      * @return boolean
      */
-    public function editProduct():boolean
+    public function editProduct()//:boolean
     {
         // TODO: implement here
         return false;
@@ -58,7 +58,7 @@ class System
     /**
      * @return boolean
      */
-    public function addProduct():boolean
+    public function addProduct()//:boolean
     {
         // TODO: implement here
         return false;

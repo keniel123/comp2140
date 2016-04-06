@@ -31,7 +31,7 @@ class BankAccount extends PaymentMethod
     /**
      * @return String
      */
-    public function getAccountNumber():String
+    public function getAccountNumber()//String
     {
         // TODO: implement here
         return null;
@@ -41,7 +41,7 @@ class BankAccount extends PaymentMethod
      * @param String $accountNumber
      * @return boolean
      */
-    public function setAccountNumber(String $accountNumber):boolean
+    public function setAccountNumber(String $accountNumber)//boolean
     {
         // TODO: implement here
         return false;
@@ -50,7 +50,7 @@ class BankAccount extends PaymentMethod
     /**
      * @return String
      */
-    public function getBank():String
+    public function getBank()//String
     {
         // TODO: implement here
         return null;
@@ -63,7 +63,7 @@ class BankAccount extends PaymentMethod
      * @param Address $address
      * @return boolean
      */
-    public function changeBank(String $accountNumber, String $bank, String $accountType, Address $address):boolean
+    public function changeBank(String $accountNumber, String $bank, String $accountType, Address $address)//boolean
     {
         // TODO: implement here
         return false;
@@ -72,7 +72,7 @@ class BankAccount extends PaymentMethod
     /**
      * @return String
      */
-    public function getAccountType():String
+    public function getAccountType()//String
     {
         // TODO: implement here
         return null;
@@ -82,7 +82,7 @@ class BankAccount extends PaymentMethod
      * @param String $accountType
      * @return boolean
      */
-    public function setAccountType(String $accountType):boolean
+    public function setAccountType(String $accountType)//boolean
     {
         // TODO: implement here
         return false;
@@ -91,7 +91,7 @@ class BankAccount extends PaymentMethod
     /**
      * @return Address
      */
-    public function getAddress():Address
+    public function getAddress()//Address
     {
         // TODO: implement here
         return null;
@@ -101,7 +101,7 @@ class BankAccount extends PaymentMethod
      * @param Address $address
      * @return boolean
      */
-    public function setAddress(Address $address):boolean
+    public function setAddress(Address $address)//boolean
     {
         // TODO: implement here
         return false;

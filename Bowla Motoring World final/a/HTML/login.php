@@ -3,7 +3,7 @@
 include('views/header.php');
 
 //check if already logged in move to home page
-if( $customer->is_logged_in() ){ header('Location:index.php'); } 
+if( $user->is_logged_in() ){ header('Location:index.php'); } 
 
 //process login form if submitted
 if(isset($_POST['submit'])){
@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	
-	if($customer->login($username,$password)){ 
+	if($user->login($username,$password)){ 
 		$_SESSION['username'] = $username;
 		if ($_SESSION['username']=="Admin") {
 			header("Location:admin/index.php");

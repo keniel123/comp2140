@@ -1,17 +1,11 @@
 <?php
-
-
+require_once('Product.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/models/Control/Database.php');
 /**
  *
  */
 class Cart
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @var String
@@ -27,15 +21,33 @@ class Cart
      * @var List<Product>
      */
     private $items;
-
-
+    
+	/**
+	 * @return	void 
+	 **/
+	public function __construct()
+    {
+		$this->$dateCreated = getdate();
+		$this->$total = 0.00;
+		$this->$items = array();
+    }
     /**
      * @return boolean
      */
-    public function checkAvailability()//boolean
+    public function checkAvailability(Product $prod, int $qty)//boolean
     {
-        // TODO: implement here
-        return false;
+        $db = new Database();
+        if($db->query(
+					//select product quantity left
+					//too lazy to write this now
+					)
+					!= false)
+		{
+			//compare qty with qtyRemaining
+			//if enough return true
+			return true;
+		}
+		return false;
     }
 
     /**
@@ -43,18 +55,33 @@ class Cart
      */
     public function emptyCart()//boolean
     {
-        // TODO: implement here
-        return false;
+		unset($this->$items);
+		$this->$items = array();
+		return true;
     }
 
     /**
-     * @param \Product $item
+     * @param prod			Product object
      * @return boolean
      */
-    public function addToCart(\Product $item)//boolean
+    public function addToCart(Product $prod)//boolean
     {
-        // TODO: implement here
-        return false;
+        if (!checkAvailability($prod))
+        {
+				return false;
+		}
+		// if product already in list increase quantity
+		foreach($this->$items as $product)
+		{
+			if($prod->name == $product->name)
+			{
+				$product->quantity+=$prod->name;
+			}
+		}
+		array_push($this->$items,prod);
+		//update total price
+		calculateTotal();
+		return true;
     }
 
     /**
@@ -63,17 +90,33 @@ class Cart
      */
     public function removeFromCart(String $itemName)//boolean
     {
-        // TODO: implement here
+        for($this->$items as $product)
+        {
+			if($product.name == $itemName)
+			{
+				array_pop($this->$items,$product);
+				return true;
+			}	
+		}
         return false;
     }
 
     /**
-     * @return void
+     * @return double
      */
-    public function calculateTotal()//void
+    public function calculateTotal()//double
     {
-        // TODO: implement here
-        return null;
+		$running_sum = 0.00;
+		$size = count($this->$items);
+        if($size==0)
+        {
+			return 0.00;
+		}
+		foreach($this->$items as $product)
+		{
+			$running_sum += $product->price;
+		}
+		return true;
     }
 
     /**
@@ -81,8 +124,7 @@ class Cart
      */
     public function getDateCreated()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->$dateCreated;
     }
 
     /**
@@ -90,8 +132,7 @@ class Cart
      */
     public function getTotal()//Double
     {
-        // TODO: implement here
-        return null;
+        return $this->$total;
     }
 
     /**
@@ -99,7 +140,6 @@ class Cart
      */
     public function getItems()//List<Product>
     {
-        // TODO: implement here
-        return null;
+        return $this->$items;
     }
 }

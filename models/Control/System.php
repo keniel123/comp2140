@@ -22,8 +22,8 @@ class System
     public static function create_account(){
         
         //$database = Database();
-        $sql = "delete from members where memberID=3;";
-        $result = Database::query($sql);
+        $sql = "insert into members values(2, 'user1', 'password', 'someone@example.com', 'Y', 'r', '','');";
+        $result = Database::update($sql);
         return $result;
     }
 

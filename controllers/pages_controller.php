@@ -3,7 +3,7 @@
 
   class PagesController {
     public function index() {
-        //System::create_account();
+        System::create_account();
       require_once('views/pages/index.php');
     }
 

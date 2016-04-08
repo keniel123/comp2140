@@ -5,31 +5,17 @@
  */
 class Database
 {
-    private $db;
-    
-    /**
-     *
-     */
-    public function __construct($dbhost, $dbname, $dbuser, $dbpass)
-    {
-        try {
-                //create PDO connection
-                $this->$db = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-                $this->$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                return 0;
-        } catch(PDOException $e) {
-            //Return error
-            return -1;
-        }
-    }
 
     /**
-     * @return ResultSet
+     * @return array
      */
-    public function query($sql)
+    public static function query($sql)
     {
         try {
-            $stmt = $this->$db->prepare($sql);
+            //create PDO connection
+            $db = new PDO("mysql:host=localhost;dbname=pdo_ret",'root','');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $db->prepare($sql);
             $stmt->execute();
              $result = $stmt->fetchAll();
              return $result;
@@ -40,11 +26,14 @@ class Database
     }
 
     /**
-     * @return ResultSet
+     * @return array
      */
-    public function update($sql)
+    public static function update($sql)
     {
         try {
+            //create PDO connection
+            $db = new PDO("mysql:host=localhost;dbname=pdo_ret",'root','');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $stmt = $db->prepare($sql);
             $stmt->execute();
             return $stmt->rowCount();

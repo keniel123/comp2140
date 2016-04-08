@@ -1,5 +1,5 @@
 <?php
-  require_once('models/control/database.php');
+  //require_once('models/control/database.php');
 
   if (isset($_GET['controller']) && isset($_GET['action'])) {
     $controller = $_GET['controller'];

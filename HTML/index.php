@@ -1,7 +1,7 @@
 
                   
          <?php
-        include 'views/header.php';
+        include 'Views/header.php';
          $page_title='HomePage';
          ?>
 

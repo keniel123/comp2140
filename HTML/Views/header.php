@@ -45,9 +45,9 @@ $title="Bowla's Motoring World"?>
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul class="nav navbar-nav">
-                         <ul><?php if($customer->is_logged_in()){ 
+                         <ul><?php if($user->is_logged_in()){ 
                             echo"<li><a href='account.php'><i class='fa fa-user'></i> My Account</a></li>";}?>
-                        <?php if($customer->is_logged_in()){
+                        <?php if($user->is_logged_in()){
                             include"/authenticated.php";}
                             else{include"/notlogged.php";}?>     
                         

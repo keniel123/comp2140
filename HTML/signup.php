@@ -1,7 +1,8 @@
 <?php 
-ob_start();
+
 include 'config.php';
 include '/functions.php';
+include 'controllers/signup.php';
 $title="Bowla's Motoring World"?>
 
 
@@ -49,9 +50,9 @@ $title="Bowla's Motoring World"?>
                         <ul class="nav navbar-nav">
                          <ul>
                             <li><a href="account.php"><i class="fa fa-user"></i> My Account</a></li>
-                        <?php if($customer->is_logged_in()){
+                        <!--?php if($user->is_logged_in()){
                             include"/authenticated.php";}
-                            else{include"/notlogged.php";}?>     
+                            else{include"/notlogged.php";}?-->     
                         
                         
                             
@@ -78,15 +79,6 @@ $title="Bowla's Motoring World"?>
                 </div>
                    <div class="col-sm-6">
                     <div class="shopping-item">
-                        <?php
-                        if (isset($_SESSION['total'])) {
-                            $total=$_SESSION['total'] ;
-                        }
-                        if (isset($_SESSION['number'])) {
-                            $number=$_SESSION['number'] ;
-                        }
-
-                        ?>
                         <a href="cart.php">Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
                     </div>
                 </div>
@@ -115,84 +107,7 @@ $title="Bowla's Motoring World"?>
         <!-- === END HEADER === -->
         <!-- === BEGIN CONTENT === -->
 
-<?php
-//if logged in redirect to members page
-if( $customer->is_logged_in() ){ header('Location:landingpage.php'); }
 
-//if form has been submitted process it
-if(isset($_POST['submit'])){
-
-	//very basic validation
-	if(strlen($_POST['username']) < 3){
-		$error[] = 'Username is too short.';
-	} else {
-		$stmt = $db->prepare('SELECT username FROM members WHERE username = :username');
-		$stmt->execute(array(':username' => $_POST['username']));
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		if(!empty($row['username'])){
-			$error[] = 'Username provided is already in use.';
-		}
-
-	}
-
-	if(strlen($_POST['password']) < 3){
-		$error[] = 'Password is too short.';
-	}
-
-	if(strlen($_POST['passwordConfirm']) < 3){
-		$error[] = 'Confirm password is too short.';
-	}
-
-	if($_POST['password'] != $_POST['passwordConfirm']){
-		$error[] = 'Passwords do not match.';
-	}
-
-	//email validation
-	if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-	    $error[] = 'Please enter a valid email address';
-	} else {
-		$stmt = $db->prepare('SELECT email FROM members WHERE email = :email');
-		$stmt->execute(array(':email' => $_POST['email']));
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-		if(!empty($row['email'])){
-			$error[] = 'Email provided is already in use.';
-		}
-
-	}
-
-
-	//if no errors have been created carry on
-	if(!isset($error)){
-
-		//hash the password
-		$hashedpassword = $customer->password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-		//create the activasion code
-		$activasion = md5(uniqid(rand(),true));
-		try{
-			$customer->Register($_POST['username'],$hashedpassword,$_POST['email'],$activasion,$db);
-			$id = $db->lastInsertId('memberID');
-			header('Location: index.php?action=joined');
-			$customer->process($_POST['email'],$activasion,$id);
-			exit;
-		}
-		catch(PDOException $e) {
-		    $error[] = $e->getMessage();
-
-		}
-		
-		
-
-	}
-
-}
-
-
- ob_flush(); 
-
-?>
 		<!-- === BEGIN CONTENT === -->
 		<div id="content" class="container">
 			<div class="row margin-vert-30">

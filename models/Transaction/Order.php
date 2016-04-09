@@ -157,7 +157,7 @@ class Order
      */
      public function setItems(array $arr)
      {
-		 $this.$items = $arr;
+		 $this->$items = $arr;
 		 return true;
 	 }
 }

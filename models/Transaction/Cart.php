@@ -1,7 +1,6 @@
 <?php
-$my_sys_path = '/var/www/html/comp2140';
 require_once('Product.php');
-require_once($my_sys_path.'/models/Control/Database.php');
+require_once(realpath('../').'/Control/Database.php');// ;)
 /**
  *
  */

@@ -32,299 +32,80 @@ USE pdo_ret;
 -- Table structure for table `user`
 --
 
-CREATE TABLE user (
-  uid int(11) NOT NULL ,
+CREATE TABLE admin(
   username varchar(80) NOT NULL,
-  password varchar(80) NOT NULL,
-  PRIMARY Key (uid)
+  password_hash varchar(80) NOT NULL,
+  PRIMARY Key (username)
 );
 
---
--- Dumping data for table `user`
---
 
--- --------------------------------------------------------
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `userType`
---
-
-CREATE TABLE userType (
-  uid int(11) NOT NULL ,
-  usertype char(1) NOT NULL,
-  PRIMARY Key (uid),
-  foreign key (uid) references user(uid) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `userType`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart`
---
-
-CREATE TABLE cart (
-  cid int(20) NOT NULL unique,
-  date_created date NOT NULL,
-  PRIMARY KEY(cid)
-);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cartproduct`
---
-
-CREATE TABLE cartproduct (
-  cid int(20) NOT NULL ,
-  productId int(20) NOT NULL,
-  PRIMARY Key(cid,productId),
-  foreign key (cid) references cart(cid) on update cascade on delete cascade,
-  foreign key (productId) references product(productId) on update cascade on delete cascade
-);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `account`
---
 
 CREATE TABLE account (
-  aid int(11) NOT NULL,
-  firstName varchar(255) NOT NULL,
-  lastName varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  phoneNumber int(20) NOT NULL,
-  active varchar(255) NOT NULL,
-  resetToken varchar(255) DEFAULT NULL,
-  resetComplete varchar(3) DEFAULT 'No',
-  PRIMARY KEY(aid)
+  email_address varchar(80) NOT NULL ,
+  username varchar(80) NOT NULL,
+  password_hash varchar(80) NOT NULL,
+  p_number int(20) NOT NULL,
+  f_name varchar(80) NOT NULL,
+  l_name varchar(80) NOT NULL,
+  PRIMARY Key (email_address)
 );
 
---
--- Dumping data for table `account`
---
 
--- --------------------------------------------------------
 
---
--- Table structure for table `newsletter`
---
-
-CREATE TABLE userAccount (
-  uid int(11) NOT NULL,
-  aid int(11) NOT NULL,
-  PRIMARY Key(uid,aid),
-  foreign key (uid) references user(uid) on update cascade on delete cascade,
-  foreign key (aid) references account(aid) on update cascade on delete cascade
+CREATE TABLE cart (
+  cart_id int(20) NOT NULL,
+  date_created date NOT NULL,
+  total_price float(50) NOT Null,
+  PRIMARY KEY(cart_id)
 );
 
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
 
 CREATE TABLE orders (
-  orderId int(11) NOT NULL,
+  order_id int(80) NOT NULL,
   order_date date NOT NULL,
   delivery_date date NOT NULL,
   orderStatus varchar(20) NOT NULL,
-  total float(40) NOT NULL,
-  Primary Key(orderId)
+  order_total float(40) NOT NULL,
+  Primary Key(order_id)
 );
 
--- --------------------------------------------------------
-
---
--- Table structure for table `product`
---
 
 CREATE TABLE product (
-  productId int(11) NOT NULL,
-  Name varchar(80) NOT NULL,
-  Description varchar(80) NOT NULL,
+  product_id int(11) NOT NULL,
+  product_name varchar(80) NOT NULL,
   image varchar(80) NOT NULL,
-  price float NOT NULL,
-  quantity int(11) NOT NULL,
-  Primary Key(productId)
+  price float(40) NOT NULL,
+  quantity_left int(11) NOT NULL,
+  Primary Key(product_id)
 );
-
---
--- Dumping data for table `product`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orderItem`
---
-
-CREATE TABLE orderItem (
-  itemCode int(11) NOT NULL,
-  quantity int(11) NOT NULL,
-  price float NOT NULL,
-  PRIMARY KEY(itemCode),
-  foreign key (itemCode) references product(productId) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `orderItem`
---
-
---
--- Table structure for table `orderProduct`
---
-
-CREATE TABLE orderProduct (
-  orderId int(11) NOT NULL,
-  itemCode int(11) NOT NULL,
-  PRIMARY KEY(orderId,itemCode),
-  foreign key (orderId) references orders(orderId) on update cascade on delete cascade,
-  foreign key (itemCode) references orderItem(itemCode) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `orderProduct`
---
-
-
-
--- --------------------------------------------------------
-
-
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `accounrtCart`
---
-
-CREATE TABLE accountCart (
-  aid int(11) NOT NULL,
-  cid int(11) NOT NULL,
-  Primary Key (aid,cid),
-  foreign key (aid) references account(aid) on update cascade on delete cascade,
-  foreign key (cid) references cart(cid) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `accountCart`
---
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `accounrtOrder`
-
-CREATE TABLE accountOrder (
-  aid int(11) NOT NULL,
-  orderId int(11) NOT NULL,
-  Primary Key (aid,orderId),
-  foreign key (aid) references account(aid) on update cascade on delete cascade,
-  foreign key (orderId) references orders(orderId) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `accountOrder`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `address`
 
 CREATE TABLE address (
-  addressId int(11) NOT NULL,
-  streetAddress varchar(255) NOT NULL,
+  address_id int(11) NOT NULL,
+  street_address varchar(255) NOT NULL,
   city varchar(80) NOT NULL,
-  parrish varchar(50) NOT NULL,
-  postalCode varchar(20) NOT NULL,
-  Primary Key (addressId)
+  parish varchar(50) NOT NULL,
+  postal_code varchar(20) NOT NULL,
+  Primary Key (address_id)
 );
 
---
--- Dumping data for table `address`
---
--- --------------------------------------------------------
 
---
--- Table structure for table `accountAddress`
-
-CREATE TABLE accountAddress (
-  aid int(11) NOT NULL,
-  addressId int(11) NOT NULL,
-  Primary Key (aid,addressId),
-  foreign key (aid) references account(aid) on update cascade on delete cascade,
-  foreign key (addressId) references address(addressId) on update cascade on delete cascade
-);
-
---
--- Dumping data for table `accountAddress`
---
-
-
-
-
-
-
-
--- --------------------------------------------------------
-
---
-
-
---
 -- Table structure for table `creditCard`
 
-CREATE TABLE creditCard (
-  cardHolder varchar(255) NOT NULL,
-  cardNumber int(80) NOT NULL,
-  expiryDate date  NOT NULL,
-  cardVerificationCode varchar(50) NOT NULL,
-  Primary Key (cardNumber)
+CREATE TABLE credit_card (
+  cc_number int(80) NOT NULL,
+  cardholder_name varchar(80) NOT NULL,
+  Primary Key (cc_number)
 );
 
---
--- Dumping data for table `creditCard`
---
 
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bankAccount`
-
-CREATE TABLE bankAccount (
-  accountNumber int(80) NOT NULL,
-  bank varchar(80) NOT NULL,
-  accountType varchar(30)  NOT NULL,
-  Primary Key (accountNumber)
+CREATE TABLE bank_account (
+  acc_id int(80) NOT NULL,
+  bank_name varchar(80) NOT NULL,
+  acc_type varchar(30)  NOT NULL,
+  acc_number int(80) NOT NULL,
+  Primary Key (acc_id)
 );
 
---
--- Dumping data for table `bankAccount`
---
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paypal`
 
 CREATE TABLE paypal (
   email varchar(80) NOT NULL,
@@ -332,67 +113,85 @@ CREATE TABLE paypal (
   Primary Key (email)
 );
 
---
--- Dumping data for table `paypal`
---
 
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `creditAccount`
-
-CREATE TABLE creditAccount (
-  cardNumber int(11) NOT NULL,
-  aid int(11) NOT NULL,
-  Primary Key (cardNumber,aid),
-  foreign key (aid) references account(aid) on update cascade on delete cascade,
-  foreign key (cardNumber) references creditCard(cardNumber) on update cascade on delete cascade
+CREATE TABLE order_product (
+  order_id int(11) NOT NULL,
+  product_id int(11) NOT NULL,
+  PRIMARY KEY(order_id,product_id),
+  foreign key (order_id) references orders(order_id) on update cascade on delete cascade,
+  foreign key (product_id) references product(product_id) on update cascade on delete cascade
 );
 
---
--- Dumping data for table `creditAccount`
---
 
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bankAcc`
-
-CREATE TABLE bankAcc (
-  accountNumber int(11) NOT NULL,
-  aid int(11) NOT NULL,
-  Primary Key (accountNumber,aid),
-  foreign key (accountNumber) references bankAccount(accountNumber) on update cascade on delete cascade,
-  foreign key (aid) references account(aid) on update cascade on delete cascade
+CREATE TABLE cart_product (
+  cart_id int(20) NOT NULL ,
+  product_id int(20) NOT NULL,
+  PRIMARY Key(cart_id,product_id),
+  foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade,
+  foreign key (product_id) references product(product_id) on update cascade on delete cascade
 );
 
---
--- Dumping data for table `bankAcc`
---
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paypalAccount`
-
-CREATE TABLE paypalAccount (
-  email varchar(80) NOT NULL,
-  aid int(11) NOT NULL,
-  Primary Key (email,aid),
-  foreign key (email) references paypal(email) on update cascade on delete cascade,
-  foreign key (aid) references account(aid) on update cascade on delete cascade
+CREATE TABLE account_cart (
+  username varchar(80) NOT NULL,
+  cart_id int(11) NOT NULL,
+  Primary Key (username,cart_id),
+  foreign key (username) references account(username) on update cascade on delete cascade,
+  foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade
 );
 
---
--- Dumping data for table `bankAcc`
---
+
+
+CREATE TABLE account_order (
+  username varchar(80) NOT NULL,
+  order_id int(11) NOT NULL,
+  Primary Key (username,order_id),
+  foreign key (username) references account(username) on update cascade on delete cascade,
+  foreign key (order_id) references orders(order_id) on update cascade on delete cascade
+);
 
 
 
--- --------------------------------------------------------
+
+
+
+CREATE TABLE shipping_address (
+  username varchar(80) NOT NULL,
+  address_id int(80) NOT NULL,
+  Primary Key (username),
+  foreign key (username) references account(username) on update cascade on delete cascade,
+  foreign key (address_id) references address(address_id) on update cascade on delete cascade
+);
+
+CREATE TABLE cc_billing_address (
+  cc_number int(80) NOT NULL,
+  address_id int(80) NOT NULL,
+  Primary Key (cc_number),
+  foreign key (cc_number) references credit_cart(cc_number) on update cascade on delete cascade,
+  foreign key (address_id) references address(address_id) on update cascade on delete cascade
+);
+
+CREATE TABLE ba_billing_address (
+  acc_id int(80) NOT NULL,
+  address_id int(80) NOT NULL,
+  Primary Key (acc_id),
+  foreign key (acc_id) references bank_account(acc_id) on update cascade on delete cascade,
+  foreign key (address_id) references address(address_id) on update cascade on delete cascade
+);
+
+CREATE TABLE user_payment (
+  username varchar(80) NOT NULL,
+  payment_id int(80) NOT NULL,
+  Primary Key (username),
+  foreign key (username) references account(username) on update cascade on delete cascade
+);
+
+CREATE TABLE product_description (
+  product_id int(80) NOT NULL,
+  description_no int(80) NOT NULL,
+  description varchar(255) NOT NULL,
+  Primary Key (product_id,description_no),
+  foreign key (product_id) references product(product_id) on update cascade on delete cascade
+);
+
+
+

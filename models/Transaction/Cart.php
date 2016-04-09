@@ -1,10 +1,6 @@
 <?php
 require_once('Product.php');
-<<<<<<< HEAD
-require_once($_SERVER['DOCUMENT_ROOT'].'/models/Control/Database.php');
-=======
 require_once(realpath('../').'/Control/Database.php');// ;)
->>>>>>> transaction
 /**
  *
  */
@@ -25,15 +21,12 @@ class Cart
      * @var List<Product>
      */
     private $items;
-    
-<<<<<<< HEAD
-=======
+
     /**
      * @var Database Object 
      */
     private $db;
     
->>>>>>> transaction
 	/**
 	 * @return	void 
 	 **/
@@ -42,28 +35,14 @@ class Cart
 		$this->$dateCreated = getdate();
 		$this->$total = 0.00;
 		$this->$items = array();
-<<<<<<< HEAD
-=======
 		$db = new Database();
->>>>>>> transaction
     }
     /**
      * @return boolean
      */
     public function checkAvailability(Product $prod, int $qty)//boolean
     {
-<<<<<<< HEAD
         $db = new Database();
-        if($db->query(
-					//select product quantity left
-					//too lazy to write this now
-					)
-					!= false)
-		{
-			//compare qty with qtyRemaining
-			//if enough return true
-			return true;
-=======
         $query_result = $db->query(
 					"SELECT quantity
 					 FROM product
@@ -74,7 +53,6 @@ class Cart
 			$row = msql_fetch_array($result);
 			if($qty<$row[0])
 				return true;
->>>>>>> transaction
 		}
 		return false;
     }
@@ -93,15 +71,9 @@ class Cart
      * @param prod			Product object
      * @return boolean
      */
-<<<<<<< HEAD
-    public function addToCart(Product $prod)//boolean
-    {
-        if (!checkAvailability($prod))
-=======
     public function addToCart(Product $prod, int $amt)//boolean
     {
         if (!checkAvailability($prod, $amt))
->>>>>>> transaction
         {
 				return false;
 		}
@@ -125,11 +97,7 @@ class Cart
      */
     public function removeFromCart(String $itemName)//boolean
     {
-<<<<<<< HEAD
-        for($this->$items as $product)
-=======
         foreach($this->$items as $product)
->>>>>>> transaction
         {
 			if($product.name == $itemName)
 			{
@@ -153,15 +121,9 @@ class Cart
 		}
 		foreach($this->$items as $product)
 		{
-<<<<<<< HEAD
-			$running_sum += $product->price;
-		}
-		return true;
-=======
 			$running_sum += $product->$price;
 		}
 		return $running_sum;
->>>>>>> transaction
     }
 
     /**

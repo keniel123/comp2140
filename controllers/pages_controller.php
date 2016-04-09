@@ -5,6 +5,10 @@
     public function index() {
       require_once('views/pages/index.php');
     }
+      
+    public function admin() {
+      require_once('views/pages/admin.php');
+    }
 
     public function error() {
       require_once('views/pages/error.php');

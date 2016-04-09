@@ -12,15 +12,15 @@
         $user = new User($username, $password);
         $boolean = $user->login('account');
         if ($boolean) {
-            $_SESSION['username'] = $username;
             require_once('views/pages/index.php');
             //TODO: Create account
+            $_SESSION['username'] = $username;
         } else {
             $boolean = $user->login('admin');
             if ($boolean) {
-                $_SESSION['username'] = $username;
                 require_once('views/pages/index.php');
                 //TODO: Create admin
+                $_SESSION['username'] = $username;
             } else {
                 require_once('views/pages/login.php');
                 echo '<script>alert(\'Incorrect username or password\')</script>';
@@ -28,8 +28,13 @@
         }
     }
       
+    public function logout(){
+        unset($_SESSION['username']);
+        echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+    }
+      
     public function signup(){
-        require_once('views/pages/signup.php');
+        //require_once('views/pages/signup.php');
     }
   }
 ?>

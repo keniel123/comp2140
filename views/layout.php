@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/style1.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="source-files/css/owl.carousel.css">
+    <link rel="stylesheet" href="source-files/css/style1.css">
+    <link rel="stylesheet" href="source-files/css/responsive.css">
     
 </head>
 <body>
@@ -38,19 +38,20 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="user-menu">
-                        <ul class="nav navbar-nav">
-                         <ul>
+                         <ul class="nav navbar-nav pull-left">
                              <?php 
                                  if(isset($_SESSION['username']))
                                  {
                                      echo "<li><a href='?controller=pages&action=account'>
                                      <i class='fa fa-user'></i>" . $_SESSION['username'] . "</a></li>";
+                                     echo "<li><a href='?controller=control&action=logout'>
+                                     Logout</a></li>";
                                  } else {
-                                     echo '<li><a href=\'?controller=pages&action=login\'><i class=\'fa fa-user\'></i>Login</a></li>';
+                                     echo '<li class="nav"><a href=\'?controller=pages&action=login\'>
+                                     <i class=\'fa fa-user\'></i>Login</a></li>';
                                  }
                              ?>
-                         </ul>
-                         </ul>              
+                        </ul>
                     </div>
                </div>
                 

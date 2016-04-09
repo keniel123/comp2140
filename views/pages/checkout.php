@@ -787,7 +787,7 @@
                                         <tbody>
                                             
                                             
-                                        <?php
+                                        <!--?php
                                         $total=0;
                                          $currentUser=$_SESSION['username'];
                                                 $cart=$db->prepare("SELECT * FROM cart  WHERE user='$currentUser' ");
@@ -807,14 +807,14 @@
                                                 $total+=$y->quantity*$y->price;
                                              }
                                          }
-                                            ?>
+                                            ?-->
                                             </tr>
                                         </tbody>
                                         <tfoot>
 
                                             <tr class="cart-subtotal">
                                                 <th>Cart Subtotal</th>
-                                                <td><span class="amount"><?php echo'$' .$total;?></span>
+                                                <td><span class="amount"><!--?php echo'$' .$total;?--></span>
                                                 </td>
                                             </tr>
 
@@ -830,7 +830,7 @@
 
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount"><?php echo'$' .$total;?></span></strong> </td>
+                                                <td><strong><span class="amount"><!--?php echo'$' .$total;?--></span></strong> </td>
                                             </tr>
 
                                         </tfoot>
@@ -882,5 +882,3 @@
             </div>
         </div>
     </div>
-
-<?php include "views/footer.php";?>

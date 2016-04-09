@@ -39,14 +39,16 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul class="nav navbar-nav">
-                         <ul><!--?php if($user->is_logged_in()){ 
-                            echo"<li><a href='account.php'><i class='fa fa-user'></i> My Account</a></li>";}?-->
-                        <!--?php if($user->is_logged_in()){
-                            include"/authenticated.php";}
-                            else{include"/notlogged.php";}?-->     
-                        
-                        
-                            
+                         <ul>
+                             <?php 
+                                 if(isset($_SESSION['username']))
+                                 {
+                                     echo "<li><a href='?controller=pages&action=account'>
+                                     <i class='fa fa-user'></i>" . $_SESSION['username'] . "</a></li>";
+                                 } else {
+                                     echo '<li><a href=\'?controller=pages&action=login\'><i class=\'fa fa-user\'></i>Login</a></li>';
+                                 }
+                             ?>
                          </ul>
                          </ul>              
                     </div>

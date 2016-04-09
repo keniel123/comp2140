@@ -3,7 +3,6 @@
 
   class PagesController {
     public function index() {
-        System::create_account();
       require_once('views/pages/index.php');
     }
 
@@ -38,6 +37,14 @@
       
     public function signup(){
         require_once('views/pages/signup.php');
+    }
+      
+    public function account(){
+        if (isset($_SESSION['username'])) {
+            require_once('views/pages/account.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
     }
   }
 ?>

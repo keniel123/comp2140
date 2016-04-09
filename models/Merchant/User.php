@@ -7,21 +7,22 @@
 class User
 {
     /**
+     * @var String
+     */
+    protected $username='';
+
+    /**
+     * @var String
+     */
+    protected $password='';
+    
+    /**
      *
      */
-    public function __construct()
-    {
+    public function __construct($user, $pass){
+        $this->username = $user;
+        $this->password = $pass;
     }
-
-    /**
-     * @var String
-     */
-    protected $username;
-
-    /**
-     * @var String
-     */
-    protected $password;
 
     /**
      * @param String $username
@@ -64,7 +65,7 @@ class User
     /**
      * @return boolean
      */
-    protected function logout()//boolean
+    public function logout()//boolean
     {
         // TODO: implement here
         return false;
@@ -73,19 +74,26 @@ class User
     /**
      * @return boolean
      */
-    protected function login()//boolean
+    public function login($table)//boolean
     {
-        // TODO: implement here
-        return false;
+        $hash = $this->get_user_hash();
+        $sql = 'select * from ' . $table . ' where username=\'' . $this->username . '\' and password_hash=\'' . $hash . '\'';
+        $database = new Database('localhost', 'pdo_ret', 'root', '');
+        $result = $database->query($sql);
+        if ($result != -1){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * @return String
      */
-    protected function get_user_hash()//String
+    public function get_user_hash()//String
     {
         // TODO: implement here
-        return null;
+        return '';
     }
 
     /**

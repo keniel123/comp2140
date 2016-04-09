@@ -8,9 +8,11 @@
 
     // create a new instance of the needed controller
     switch($controller) {
-      case 'pages':
-        $controller = new PagesController();
-      break;
+        case 'pages':
+            $controller = new PagesController();
+            break;
+        case 'control':
+            $controller = new ControlController();
     }
 
     // call the action
@@ -23,7 +25,9 @@
   // just a list of the controllers we have and their actions
   // we consider those "allowed" values
   $controllers = array('pages' => ['index', 'error', 'cart', 'shop',
-                                   'checkout', 'contact', 'about', 'login', 'signup']);
+                                   'checkout', 'contact', 'about',
+                                   'login', 'signup', 'account'],
+                        'control' => ['login', 'signup', 'logout']);
 
   // check that the requested controller and action are both allowed
   // if someone tries to access something else he will be redirected to the error action of the pages controller

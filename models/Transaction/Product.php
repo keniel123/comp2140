@@ -1,18 +1,10 @@
 <?php
 
-
 /**
  *
  */
 class Product
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * @var String
      */
@@ -48,25 +40,32 @@ class Product
      */
     private $qtyLeft;
 
-
+	 public function __construct(string $_i, string $_n, string $_d, double $_p, int $_q, string $_img, int $_ql)
+    {
+		$this->$ID = $_i;
+		$this->$name = $_n;
+		$this->$description = $_d;
+		$this->$price = $_p;
+		$this->$image = $_i;
+		$this->$qtyLeft = $_ql;
+	}
 
     /**
      * @return String
      */
     public function getID()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->$ID;
     }
 
     /**
      * @param String $ID
-     * @return boolean
+     * @return 
      */
     public function setID(String $ID)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->$ID = $ID;
+        return true;
     }
 
     /**
@@ -74,8 +73,7 @@ class Product
      */
     public function getName()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->$name;
     }
 
     /**
@@ -84,8 +82,8 @@ class Product
      */
     public function setName(String $name)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->$name = $name;
+        return true;
     }
 
     /**
@@ -93,8 +91,7 @@ class Product
      */
     public function getPrice()//Double
     {
-        // TODO: implement here
-        return null;
+        return $this->$price;
     }
 
     /**
@@ -103,8 +100,8 @@ class Product
      */
     public function setPrice(Double $price)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->$price = $price;
+        return true;
     }
 
     /**
@@ -112,18 +109,17 @@ class Product
      */
     public function getDescription()//List<String>
     {
-        // TODO: implement here
-        return null;
+        return $this->$description;
     }
 
     /**
      * @param List<String> $description
      * @return boolean
      */
-    public function setDescription($description)//boolean
+    public function setDescription(string $description)//boolean
     {
-        // TODO: implement here
-        return false;
+       $this->$description = $description;
+       return true;
     }
 
     /**
@@ -131,8 +127,7 @@ class Product
      */
     public function getQuantity()//int
     {
-        // TODO: implement here
-        return 0;
+        return $this->$quantity;
     }
 
     /**
@@ -141,7 +136,7 @@ class Product
      */
     public function setQuantity(String $quantity)//boolean
     {
-        // TODO: implement here
+        $this->$quantity = $quantity;
         return false;
     }
 }

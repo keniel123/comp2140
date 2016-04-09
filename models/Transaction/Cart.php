@@ -1,6 +1,7 @@
 <?php
+$my_sys_path = '/var/www/html/comp2140';
 require_once('Product.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/models/Control/Database.php');
+require_once($my_sys_path.'/models/Control/Database.php');
 /**
  *
  */
@@ -22,6 +23,11 @@ class Cart
      */
     private $items;
     
+    /**
+     * @var Database Object 
+     */
+    private $db;
+    
 	/**
 	 * @return	void 
 	 **/
@@ -30,22 +36,23 @@ class Cart
 		$this->$dateCreated = getdate();
 		$this->$total = 0.00;
 		$this->$items = array();
+		$db = new Database();
     }
     /**
      * @return boolean
      */
     public function checkAvailability(Product $prod, int $qty)//boolean
     {
-        $db = new Database();
-        if($db->query(
-					//select product quantity left
-					//too lazy to write this now
-					)
-					!= false)
+        $query_result = $db->query(
+					"SELECT quantity
+					 FROM product
+					  WHERE productId = '".$prod->$ID."';"
+					);
+		if ($result != false)
 		{
-			//compare qty with qtyRemaining
-			//if enough return true
-			return true;
+			$row = msql_fetch_array($result);
+			if($qty<$row[0])
+				return true;
 		}
 		return false;
     }
@@ -64,9 +71,9 @@ class Cart
      * @param prod			Product object
      * @return boolean
      */
-    public function addToCart(Product $prod)//boolean
+    public function addToCart(Product $prod, int $amt)//boolean
     {
-        if (!checkAvailability($prod))
+        if (!checkAvailability($prod, $amt))
         {
 				return false;
 		}
@@ -90,7 +97,7 @@ class Cart
      */
     public function removeFromCart(String $itemName)//boolean
     {
-        for($this->$items as $product)
+        foreach($this->$items as $product)
         {
 			if($product.name == $itemName)
 			{
@@ -114,9 +121,9 @@ class Cart
 		}
 		foreach($this->$items as $product)
 		{
-			$running_sum += $product->price;
+			$running_sum += $product->$price;
 		}
-		return true;
+		return $running_sum;
     }
 
     /**

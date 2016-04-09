@@ -79,8 +79,13 @@ class User
         $hash = $this->get_user_hash();
         $sql = 'select * from ' . $table . ' where username=\'' . $this->username . '\' and password_hash=\'' . $hash . '\'';
         $database = new Database('localhost', 'pdo_ret', 'root', '');
-        $result = $database->query($sql);
-        if ($result != -1){
+        if ($database->get_db() != -1){
+            $result = $database->query($sql);
+            if ($result != -1){
+                return true;
+            } else {
+                return false;
+            }
             return true;
         } else {
             return false;

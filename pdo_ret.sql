@@ -78,6 +78,26 @@ CREATE TABLE cart (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product`
+--
+
+CREATE TABLE product (
+  productId int(11) NOT NULL,
+  Name varchar(80) NOT NULL,
+  Description varchar(80) NOT NULL,
+  image varchar(80) NOT NULL,
+  price float NOT NULL,
+  quantity int(11) NOT NULL,
+  Primary Key(productId)
+);
+
+--
+-- Dumping data for table `product`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cartproduct`
 --
 
@@ -139,27 +159,6 @@ CREATE TABLE orders (
   total float(40) NOT NULL,
   Primary Key(orderId)
 );
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product`
---
-
-CREATE TABLE product (
-  productId int(11) NOT NULL,
-  Name varchar(80) NOT NULL,
-  Description varchar(80) NOT NULL,
-  image varchar(80) NOT NULL,
-  price float NOT NULL,
-  quantity int(11) NOT NULL,
-  Primary Key(productId)
-);
-
---
--- Dumping data for table `product`
---
-
 
 -- --------------------------------------------------------
 

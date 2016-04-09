@@ -26,7 +26,7 @@
   // we consider those "allowed" values
   $controllers = array('pages' => ['index', 'error', 'cart', 'shop',
                                    'checkout', 'contact', 'about',
-                                   'login', 'signup', 'account'],
+                                   'login', 'signup', 'account', 'admin'],
                         'control' => ['login', 'signup', 'logout']);
 
   // check that the requested controller and action are both allowed

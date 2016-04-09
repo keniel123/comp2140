@@ -13,8 +13,12 @@ class Database
             $this->db = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
-            return -1;
+            $this->db = -1;
         }
+    }
+    
+    public function get_db(){
+        return $this->db;
     }
 
     /**

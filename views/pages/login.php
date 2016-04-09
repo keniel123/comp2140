@@ -63,7 +63,7 @@ if(isset($_POST['submit'])){
                                 <form id="login-form-wrap" class="login collapse" method="post">
                                     <p>
                                     If you have shopped with us before, please enter your details in the boxes below. 
-                                        If you are a new customer please proceed to the Billing &amp; Shipping section.
+                                        If you are a new customer you can <a href="?controller=pages&action=signup"> Create an Account </a>
                                     </p>
 
                                     <p class="form-row form-row-first">
@@ -86,7 +86,7 @@ if(isset($_POST['submit'])){
                                         <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Remember me </label>
                                     </p>
                                     <p class="lost_password">
-                                        <a href="reset.php">Lost your password?</a>
+                                        <a href="?controller=pages&action=reset">Lost your password?</a>
                                     </p>
 
                                     <div class="clear"></div>

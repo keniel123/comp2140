@@ -36,5 +36,9 @@
     public function signup(){
         //require_once('views/pages/signup.php');
     }
+      
+    public function reset(){
+        echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+    }
   }
 ?>

@@ -82,7 +82,8 @@
                         }
 
                         ?>
-                        <a href="?controller=pages&action=cart">Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
+                        <?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=cart">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
                     </div>
                 </div>
                    </div>
@@ -97,8 +98,10 @@
                     <ul class="nav navbar-nav" >
                         <li class="active"><a href="?controller=pages&action=index">Home</a></li>
                         <li><a href="?controller=pages&action=shop">Shop page</a></li>
-                        <li><a href="?controller=pages&action=cart">Cart</a></li>
-                        <li><a href="?controller=pages&action=checkout">Checkout</a></li>
+                        <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=cart">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>Cart</a></li>
+                        <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=checkout">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>Checkout</a></li>
                         <li><a href="?controller=pages&action=contact">Contact</a></li>
                     </ul>
                 </div>
@@ -110,6 +113,7 @@
         <!-- === END HEADER === -->
     
     <!-- === CONTENT === -->
+<br/><br/>
 
     
     <?php require_once('routes.php'); ?>
@@ -146,7 +150,8 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
                         <ul>
-                            <li><a href="#">My account</a></li>
+                            <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=account">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>My account</a></li>
                             <li><a href="#">Order history</a></li>
                             <li><a href="?controller=pages&action=contact">Contact</a></li>
                             <li><a href="?controller=pages&action=index">Front page</a></li>

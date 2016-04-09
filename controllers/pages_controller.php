@@ -43,6 +43,10 @@
         require_once('views/pages/signup.php');
     }
       
+    public function reset(){
+        require_once('views/pages/reset.php');
+    }
+      
     public function account(){
         if (isset($_SESSION['username'])) {
             require_once('views/pages/account.php');

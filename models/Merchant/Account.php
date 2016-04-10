@@ -40,12 +40,28 @@ class Account extends User
      * @var Cart
      */
     private $cart;
-
-
-
-
-
-
+    
+    /**
+     * @var Cart
+     */
+    private $emailAddress;
+    
+    
+    
+    
+    
+    public function __construct($user, $email, $pass, $phone_number,
+                               $first_name, $last_name, $address){
+        parent::__construct($user, $pass);
+        $this->emailAddress = $email;
+        $this->firstName = $first_name;
+        $this->lastName = $last_name;
+        $this->shippingAddress = $address;
+        $this->phoneNumber = $phone_number;
+        $this->cart = new Cart();
+        $this->orders = array();
+    }
+    
     /**
      * @return String
      */

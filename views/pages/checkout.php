@@ -390,17 +390,17 @@
                                                 </select>
                                             </p>
 
-                                            <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                            <!--p id="billing_first_name_field" class="form-row form-row-first validate-required">
                                                 <label class="" for="billing_first_name">First Name <abbr title="required" class="required">*</abbr>
                                                 </label>
                                                 <input type="text" value="" placeholder="" id="billing_first_name" name="billing_first_name" class="input-text ">
-                                            </p>
+                                            </p-->
 
-                                            <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                            <!--p id="billing_last_name_field" class="form-row form-row-last validate-required">
                                                 <label class="" for="billing_last_name">Last Name <abbr title="required" class="required">*</abbr>
                                                 </label>
                                                 <input type="text" value="" placeholder="" id="billing_last_name" name="billing_last_name" class="input-text ">
-                                            </p>
+                                            </p-->
                                             <div class="clear"></div>
 
                                             <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">

@@ -27,7 +27,7 @@
   $controllers = array('pages' => ['index', 'error', 'cart', 'shop',
                                    'checkout', 'contact', 'about',
                                    'login', 'signup', 'account', 'admin',
-                                  'reset'],
+                                  'form', 'changeshipping'],
                         'control' => ['login', 'signup', 'logout', 'reset']);
 
   // check that the requested controller and action are both allowed

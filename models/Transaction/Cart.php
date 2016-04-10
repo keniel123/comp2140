@@ -1,6 +1,4 @@
 <?php
-require_once('Product.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/models/Control/Database.php');
 /**
  *
  */
@@ -27,9 +25,9 @@ class Cart
 	 **/
 	public function __construct()
     {
-		$this->$dateCreated = getdate();
-		$this->$total = 0.00;
-		$this->$items = array();
+		$this->dateCreated = getdate();
+		$this->total = 0.00;
+		$this->items = array();
     }
     /**
      * @return boolean
@@ -55,8 +53,8 @@ class Cart
      */
     public function emptyCart()//boolean
     {
-		unset($this->$items);
-		$this->$items = array();
+		unset($this->items);
+		$this->items = array();
 		return true;
     }
 
@@ -71,14 +69,14 @@ class Cart
 				return false;
 		}
 		// if product already in list increase quantity
-		foreach($this->$items as $product)
+		foreach($this->items as $product)
 		{
 			if($prod->name == $product->name)
 			{
 				$product->quantity+=$prod->name;
 			}
 		}
-		array_push($this->$items,prod);
+		array_push($this->items,prod);
 		//update total price
 		calculateTotal();
 		return true;
@@ -90,11 +88,11 @@ class Cart
      */
     public function removeFromCart(String $itemName)//boolean
     {
-        for($this->$items as $product)
+        foreach($this->items as $product)
         {
 			if($product.name == $itemName)
 			{
-				array_pop($this->$items,$product);
+				array_pop($this->items,$product);
 				return true;
 			}	
 		}
@@ -107,12 +105,12 @@ class Cart
     public function calculateTotal()//double
     {
 		$running_sum = 0.00;
-		$size = count($this->$items);
+		$size = count($this->items);
         if($size==0)
         {
 			return 0.00;
 		}
-		foreach($this->$items as $product)
+		foreach($this->items as $product)
 		{
 			$running_sum += $product->price;
 		}
@@ -124,7 +122,7 @@ class Cart
      */
     public function getDateCreated()//String
     {
-        return $this->$dateCreated;
+        return $this->dateCreated;
     }
 
     /**
@@ -132,7 +130,7 @@ class Cart
      */
     public function getTotal()//Double
     {
-        return $this->$total;
+        return $this->total;
     }
 
     /**
@@ -140,6 +138,6 @@ class Cart
      */
     public function getItems()//List<Product>
     {
-        return $this->$items;
+        return $this->items;
     }
 }

@@ -77,18 +77,19 @@ class User
     public function login($table)//boolean
     {
         $hash = $this->get_user_hash();
-        $sql = 'select * from ' . $table . ' where username=\'' . $this->username . '\' and password_hash=\'' . $hash . '\'';
+        $sql = "select * from $table where username='$this->username' and password_hash='$hash';";
         $database = new Database('localhost', 'pdo_ret', 'root', '');
-        if ($database->get_db() != -1){
+        if (gettype($database->get_db()) != 'int'){
             $result = $database->query($sql);
-            if ($result != -1){
-                return true;
+            $result = count($result);
+            if ($result > 0){
+                return TRUE;
             } else {
-                return false;
+                return FALSE;
             }
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -97,8 +98,8 @@ class User
      */
     public function get_user_hash()//String
     {
-        // TODO: implement here
-        return '';
+        $hash = sha1($this->password);
+        return $hash;
     }
 
     /**
@@ -108,14 +109,5 @@ class User
     {
         // TODO: implement here
         return false;
-    }
-
-    /**
-     * @return \Account
-     */
-    public function createAccount()//\Account
-    {
-        // TODO: implement here
-        return null;
     }
 }

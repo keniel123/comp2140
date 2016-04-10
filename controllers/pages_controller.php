@@ -7,7 +7,16 @@
     }
       
     public function admin() {
-      require_once('views/pages/admin.php');
+      if (isset($_SESSION['username'])) {
+          if ($_SESSION['username'] == 'admin'){
+            require_once('views/pages/admin.php');
+          } else{
+              echo '<script>alert(\'Restricted area\');
+            window.location.href = "?controller=pages&action=index";</script>';
+          }
+        } else {
+            require_once('views/pages/login.php');
+        }
     }
 
     public function error() {
@@ -16,7 +25,11 @@
       
       
     public function cart(){
-        require_once('views/pages/cart.php');
+        if (isset($_SESSION['username'])) {
+            require_once('views/pages/cart.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
     }
       
     public function shop(){
@@ -24,7 +37,11 @@
     }
       
     public function checkout(){
-        require_once('views/pages/checkout.php');
+        if (isset($_SESSION['username'])) {
+            require_once('views/pages/checkout.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
     }
       
     public function contact(){
@@ -36,15 +53,28 @@
     }
       
     public function login(){
-        require_once('views/pages/login.php');
+        if (isset($_SESSION['username'])) {
+            echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+        } else {
+            require_once('views/pages/login.php');
+        }
     }
       
     public function signup(){
-        require_once('views/pages/signup.php');
+        if (isset($_SESSION['username'])) {
+            echo '<script>alert(\'You already have an account.\n Please log out first\');
+            window.location.href = "?controller=pages&action=account";</script>';
+        } else {
+            require_once('views/pages/signup.php');
+        }
     }
       
-    public function reset(){
-        require_once('views/pages/reset.php');
+    public function form(){
+        if (isset($_SESSION['username'])) {
+            require_once('views/pages/form.php');
+        } else {
+            echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+        }
     }
       
     public function account(){

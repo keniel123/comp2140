@@ -24,6 +24,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="source-files/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="source-files/css/style.css">
     <link rel="stylesheet" href="source-files/css/style1.css">
     <link rel="stylesheet" href="source-files/css/responsive.css">
     
@@ -43,7 +44,7 @@
                                  if(isset($_SESSION['username']))
                                  {
                                      echo "<li><a href='?controller=pages&action=account'>
-                                     <i class='fa fa-user'></i>" . $_SESSION['username'] . "</a></li>";
+                                     <i class='fa fa-user'></i>Hi " . $_SESSION['username'] . "</a></li>";
                                      echo "<li><a href='?controller=control&action=logout'>
                                      Logout</a></li>";
                                  } else {
@@ -118,7 +119,7 @@
     
     <?php require_once('routes.php'); ?>
 
-    
+    <br/><br/>
     <!-- === END CONTENT === -->
     
     <!-- === BEGIN FOOTER === -->
@@ -221,13 +222,13 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
+    <script src="source-files/js/owl.carousel.min.js"></script>
+    <script src="source-files/js/jquery.sticky.js"></script>
                
     <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
+    <script src="source-files/js/jquery.easing.1.3.min.js"></script>
     
     <!-- Main Script -->
-    <script src="js/main.js"></script>
+    <script src="source-files/js/main.js"></script>
   </body>
 </html>

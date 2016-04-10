@@ -9,7 +9,7 @@ class Address
     /**
      *
      */
-    public function __construct()
+    public function __construct($street, $city, $parish, $postal)
     {
     }
 

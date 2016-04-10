@@ -41,13 +41,13 @@ CREATE TABLE admin(
 
 
 CREATE TABLE account (
-  email_address varchar(80) NOT NULL ,
-  username varchar(80) NOT NULL,
-  password_hash varchar(80) NOT NULL,
-  p_number int(20) NOT NULL,
-  f_name varchar(80) NOT NULL,
-  l_name varchar(80) NOT NULL,
-  PRIMARY Key (email_address)
+    username varchar(80) NOT NULL,
+    email_address varchar(80) NOT NULL,
+    password_hash varchar(80) NOT NULL,
+    p_number int(20) NOT NULL,
+    f_name varchar(80) NOT NULL,
+    l_name varchar(80) NOT NULL,
+    PRIMARY Key (username, email_address)
 );
 
 
@@ -80,14 +80,13 @@ CREATE TABLE product (
 );
 
 CREATE TABLE address (
-  address_id int(11) NOT NULL,
+  address_id int(80) NOT NULL,
   street_address varchar(255) NOT NULL,
   city varchar(80) NOT NULL,
   parish varchar(50) NOT NULL,
   postal_code varchar(20) NOT NULL,
   Primary Key (address_id)
 );
-
 
 -- Table structure for table `creditCard`
 
@@ -133,7 +132,7 @@ CREATE TABLE cart_product (
 
 CREATE TABLE account_cart (
   username varchar(80) NOT NULL,
-  cart_id int(11) NOT NULL,
+  cart_id int(20) NOT NULL,
   Primary Key (username,cart_id),
   foreign key (username) references account(username) on update cascade on delete cascade,
   foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade
@@ -150,10 +149,6 @@ CREATE TABLE account_order (
 );
 
 
-
-
-
-
 CREATE TABLE shipping_address (
   username varchar(80) NOT NULL,
   address_id int(80) NOT NULL,
@@ -163,11 +158,11 @@ CREATE TABLE shipping_address (
 );
 
 CREATE TABLE cc_billing_address (
-  cc_number int(80) NOT NULL,
-  address_id int(80) NOT NULL,
-  Primary Key (cc_number),
-  foreign key (cc_number) references credit_cart(cc_number) on update cascade on delete cascade,
-  foreign key (address_id) references address(address_id) on update cascade on delete cascade
+    cc_number int(80) NOT NULL,
+    address_id int(80) NOT NULL,
+    Primary Key (cc_number),
+    foreign key (address_id) references address(address_id) on update cascade on delete cascade,
+    foreign key (cc_number) references credit_cart(cc_number) on update cascade on delete cascade
 );
 
 CREATE TABLE ba_billing_address (

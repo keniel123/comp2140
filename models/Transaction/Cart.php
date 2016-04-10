@@ -4,21 +4,23 @@
  */
 class Cart
 {
-
     /**
      * @var String
      */
     private $dateCreated;
-
     /**
      * @var Double
      */
     private $total;
-
     /**
      * @var List<Product>
      */
     private $items;
+    
+    /**
+     * @var Database Object 
+     */
+    private $db;
     
 	/**
 	 * @return	void 
@@ -28,26 +30,26 @@ class Cart
 		$this->dateCreated = getdate();
 		$this->total = 0.00;
 		$this->items = array();
+		$db = new Database();
     }
     /**
      * @return boolean
      */
     public function checkAvailability(Product $prod, int $qty)//boolean
     {
-        $db = new Database();
-        if($db->query(
-					//select product quantity left
-					//too lazy to write this now
-					)
-					!= false)
+        $query_result = $db->query(
+					"SELECT quantity
+					 FROM product
+					  WHERE productId = '".$prod->ID."';"
+					);
+		if ($result != false)
 		{
-			//compare qty with qtyRemaining
-			//if enough return true
-			return true;
+			$row = msql_fetch_array($result);
+			if($qty<$row[0])
+				return true;
 		}
 		return false;
     }
-
     /**
      * @return boolean
      */
@@ -57,14 +59,13 @@ class Cart
 		$this->items = array();
 		return true;
     }
-
     /**
      * @param prod			Product object
      * @return boolean
      */
-    public function addToCart(Product $prod)//boolean
+    public function addToCart(Product $prod, int $amt)//boolean
     {
-        if (!checkAvailability($prod))
+        if (!checkAvailability($prod, $amt))
         {
 				return false;
 		}
@@ -81,7 +82,6 @@ class Cart
 		calculateTotal();
 		return true;
     }
-
     /**
      * @param String $itemName
      * @return boolean
@@ -98,7 +98,6 @@ class Cart
 		}
         return false;
     }
-
     /**
      * @return double
      */
@@ -114,9 +113,8 @@ class Cart
 		{
 			$running_sum += $product->price;
 		}
-		return true;
+		return $running_sum;
     }
-
     /**
      * @return String
      */
@@ -124,7 +122,6 @@ class Cart
     {
         return $this->dateCreated;
     }
-
     /**
      * @return Double
      */
@@ -132,7 +129,6 @@ class Cart
     {
         return $this->total;
     }
-
     /**
      * @return List<Product>
      */

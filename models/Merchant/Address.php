@@ -57,7 +57,7 @@ class Address
      */
     public function setStreetAddress(String $address)//:boolean
     {
-       return $this->streetAddress = $address;
+        $this->streetAddress = $address;
     }
 
     /**
@@ -74,7 +74,7 @@ class Address
      */
     public function setCity(String $city)//:boolean
     {
-       return $this->city = $city;
+        $this->city = $city;
     }
 
     /**
@@ -91,7 +91,7 @@ class Address
      */
     public function setParish(String $parish)//:boolean
     {
-       return $this->parish = $parish;
+        $this->parish = $parish;
     }
 
     /**
@@ -108,6 +108,6 @@ class Address
      */
     public function setPostalCode(String $postalCode)//:boolean
     {
-         return $this->postalCode = $postalCode;
+          $this->postalCode = $postalCode;
     }
 }

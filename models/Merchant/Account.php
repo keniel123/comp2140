@@ -206,6 +206,6 @@ class Account extends User
      */
     public function chargePaymentMethod()//:boolean
     {
-        
+        return True
     }
 }

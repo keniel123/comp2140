@@ -84,5 +84,31 @@
             require_once('views/pages/login.php');
         }
     }
+      
+    public function reset(){
+        if (isset($_SESSION['username'])) {
+            require_once('views/pages/reset.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
+    }
+      
+    public function addpayment(){
+        if (isset($_SESSION['username'])) {
+            $_SESSION['fromaccount'] = 'yes';
+            require_once('views/pages/addpayment.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
+    }
+      
+    public function addpaymentc(){
+        if (isset($_SESSION['username'])) {
+            $_SESSION['fromcheckout'] = 'yes';
+            require_once('views/pages/addpayment.php');
+        } else {
+            require_once('views/pages/login.php');
+        }
+    }
   }
 ?>

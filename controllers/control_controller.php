@@ -81,7 +81,37 @@
     }
       
     public function reset(){
+        //Send reset email
         echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+    }
+      
+    public function change(){
+        //Make changes to user details
+    }
+      
+    public function addpayment(){
+        if (isset($_SESSION['fromcheckout'])){
+            unset($_SESSION['fromcheckout']);
+            //Implement
+            //$_SESSION['payment'] = yes;
+            echo '<script>window.location.href = "?controller=pages&action=checkout";</script>';
+        } else {
+            if(isset($_SESSION['fromaccount'])){
+                unset($_SESSION['fromaccount'])
+                //$_SESSION['payment'] = yes;
+                echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+            } else {
+                echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+            }
+        }
+    }
+      
+    public function addtocart(){
+        //Implement
+    }
+      
+    public function removefromcart(){
+        //Implement
     }
   }
 ?>

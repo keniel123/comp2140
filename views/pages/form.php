@@ -1,15 +1,28 @@
 		<!-- === BEGIN CONTENT === -->
-		<div id="content" class="container">
+<div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Make changes to your account</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+		<div id="content" class="container" style="margin-top: 5%;">
 			<div class="row margin-vert-30">
 				<!-- Register Box -->
 				<div class="col-md-6 col-md-offset-3 col-sm-offset-3">
 					<form class="signup-page" role="form" method="post" action="?controller=control&action=change" autocomplete="off">
-                        <div class="form-group">
-                            <div class="signup-header">
-							<h2>Make changes to your account</h2>
+                        
+                            <!--div class="signup-header">
+                                <h2>Make changes to your account</h2>
+                            </div-->
                             
-                        <label>First Name<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="firstname" id="firstname"
+                        <div class="form-group">
+                            <label>First Name<span class="color-red">*</span></label>
+                            <input class="form-control margin-bottom-20" type="text" name="firstname" id="firstname"
                                value="<?php echo $_SESSION['firstname'] ?>">
                         </div>
                         
@@ -62,7 +75,7 @@
                         </div>
                         
 						<div class="row">
-							<div class="col-sm-6">
+							<!--div class="col-sm-6">
 								<label>Password <span class="color-red">*</span></label>
 								<input class="form-control margin-bottom-20" type="password" name="password" 
                                        id="password" placeholder="Leave empty to keep password">
@@ -70,16 +83,13 @@
 							<div class="col-sm-6">
 								<label>Confirm Password <span class="color-red">*</span></label>
 								<input class="form-control margin-bottom-20" type="password" name="passwordConfirm" id="passwordConfirm" >
-							</div>
+							</div-->
+                            <p>Click <a href="?controller=pages&action=reset">here</a> to change your password</p>
 						</div>
 						<hr>
 
 						<div class="row">
 							<div class="col-lg-8">
-								<label class="checkbox">
-									<input type="checkbox">
-									I read the <a href="#">Terms and Conditions</a>
-								</label>
 							</div>
 							<div class="col-lg-4 text-right">
 								<button class="btn btn-primary" type="submit" name="submit" value="Register">Submit</button>

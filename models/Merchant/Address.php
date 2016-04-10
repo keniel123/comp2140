@@ -6,32 +6,39 @@
  */
 class Address
 {
+
+        /**
+     * @var String
+     */
+    private $streetAddress="";
+
+    /**
+     * @var String
+     */
+    private $city="";
+
+    /**
+     * @var String
+     */
+    private $parish="";
+
+    /**
+     * @var String
+     */
+    private $postalCode="";
     /**
      *
      */
     public function __construct($street, $city, $parish, $postal)
     {
+        $this->streetAddress = $street;
+        $this->city = $city;
+        $this->parish = $parish;
+        $this->postalCode = $postal;
+
     }
 
-    /**
-     * @var String
-     */
-    private $streetAddress;
 
-    /**
-     * @var String
-     */
-    private $city;
-
-    /**
-     * @var String
-     */
-    private $parish;
-
-    /**
-     * @var String
-     */
-    private $postalCode;
 
 
 
@@ -41,18 +48,16 @@ class Address
      */
     public function getStreetAddress()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->streetAddress;
     }
 
     /**
      * @param Street $address
      * @return boolean
      */
-    public function setStreetAddress(Street $address)//:boolean
+    public function setStreetAddress(String $address)//:boolean
     {
-        // TODO: implement here
-        return false;
+       return $this->streetAddress = $address;
     }
 
     /**
@@ -60,8 +65,7 @@ class Address
      */
     public function getCity()//:String
     {
-        // TODO: implement here
-        return null;
+       return $this->city;
     }
 
     /**
@@ -70,8 +74,7 @@ class Address
      */
     public function setCity(String $city)//:boolean
     {
-        // TODO: implement here
-        return false;
+       return $this->city = $city;
     }
 
     /**
@@ -79,8 +82,7 @@ class Address
      */
     public function getParish()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->parish;
     }
 
     /**
@@ -89,8 +91,7 @@ class Address
      */
     public function setParish(String $parish)//:boolean
     {
-        // TODO: implement here
-        return false;
+       return $this->parish = $parish;
     }
 
     /**
@@ -98,8 +99,7 @@ class Address
      */
     public function getPostalCode()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->postalCode;
     }
 
     /**
@@ -108,7 +108,6 @@ class Address
      */
     public function setPostalCode(String $postalCode)//:boolean
     {
-        // TODO: implement here
-        return false;
+         return $this->postalCode = $postalCode;
     }
 }

@@ -12,22 +12,43 @@ class Admin extends User
      */
     private $orders;
 
+    private $db;
     /**
      * @return List<Product>
      */
     private function getAllProducts()//List<Product>
     {
-        // TODO: implement here
-        return null;
+        $query_result = $db->query(
+                    "SELECT *
+                     FROM product
+                      ORDER BY product_id ASC;"
+                    );
+        if ($query_result != false)
+        {
+                foreach ($query_result as $query_result) {
+                        return $query_result
+                }
+        }
+        return false;
     }
+    
 
     /**
      * @return List<Account>
      */
     private function viewCustomers()//List<Account>
     {
-        // TODO: implement here
-        return null;
+        $query_result = $db->query(
+                    "SELECT *
+                     FROM account;"
+                    );
+        if ($query_result != false)
+        {
+                foreach ($query_result as $query_result) {
+                        return $query_result
+                }
+        }
+        return false;
     }
 
     /**
@@ -35,16 +56,29 @@ class Admin extends User
      */
     private function getSalesList()//List<Order>
     {
-        // TODO: implement here
-        return null;
+        $query_result = $db->query(
+                    "SELECT DISTINCT orders.order_id,order_date,delivery_date , orderStatus,order_total,product.product_id,product_name,image,price,quantity_left
+                     FROM orders JOIN order_product JOIN product
+                     ON orders.order_id = order_product.order_id AND product.product_id = order_product.product_id;"
+                    );
+        if ($query_result != false)
+        {
+                foreach ($query_result as $query_result) {
+                        return $query_result
+                }
+        }
+        return false;
     }
 
     /**
      * @return boolean
      */
-    private function confirmOrder()//boolean
+    private function confirmOrder($username)//boolean
     {
-        // TODO: implement here
-        return false;
+        $update_result = $db->update(
+            "UPDATE orders JOIN account_order 
+            ON orders.order_id = account_order.order_id WHERE account_order.username = '%s'  
+            SET orderStatus = confirmed;",$username)
+        
     }
 }

@@ -30,8 +30,7 @@ class User
      */
     protected function setUsername(String $username)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->password = $username;
     }
 
     /**
@@ -39,8 +38,7 @@ class User
      */
     protected function getUsername()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->username;
     }
 
     /**
@@ -49,8 +47,7 @@ class User
      */
     protected function setPassword(String $password)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->password = $password;
     }
 
     /**
@@ -58,8 +55,7 @@ class User
      */
     protected function getPassword()//String
     {
-        // TODO: implement here
-        return null;
+       return $this->password;
     }
 
     /**
@@ -67,8 +63,7 @@ class User
      */
     public function logout()//boolean
     {
-        // TODO: implement here
-        return false;
+        session_destroy();
     }
 
     /**
@@ -107,7 +102,8 @@ class User
      */
     protected function is_logged_in()//boolean
     {
-        // TODO: implement here
-        return false;
+        if(isset($_SESSION['username']) && $_SESSION['username'] == $this->username){
+            return true;
+        }   
     }
 }

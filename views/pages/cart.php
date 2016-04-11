@@ -14,10 +14,10 @@
     <div class="single-product-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="">
                 </div>
                 
-                <div class="col-md-8">
+                <div class="">
                     <div class="product-content-right">
                         <div class="woocommerce">
                             <form method="post" action="?controller=pages&action=checkout">
@@ -58,35 +58,6 @@
                                     </tbody>
                                 </table>
                             </form>
-
-                            <div class="cart-collaterals">
-
-
-                            <div class="cross-sells">
-                                <h2>You may be interested in...</h2>
-                                <ul class="products">
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
-                                            <h3>G6 Engine</h3>
-                                            <span class="price"><span class="amount">$50000.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
-
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
-                                            <h3>Prestone Brake Fuel</h3>
-                                            <span class="price"><span class="amount">$4000.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

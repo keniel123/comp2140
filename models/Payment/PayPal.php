@@ -16,6 +16,11 @@ class PayPal extends PaymentMethod
      * @var String
      */
     private $password;
+    
+    public function __construct($email, $password){
+        $this->email = $email;
+        $this->password = $password;
+    }
 
     /**
      * @return String
@@ -29,7 +34,7 @@ class PayPal extends PaymentMethod
      * @param String $email
      * @return boolean
      */
-    public function setEmail(String $email)//boolean
+    public function setEmail($email)//boolean
     {
         $this->email = $email;
         return TRUE;
@@ -47,9 +52,9 @@ class PayPal extends PaymentMethod
      * @param String $password
      * @return boolean
      */
-    public function setPassword(String $password)//boolean
+    public function setPassword($password)//boolean
     {
         $this->password = $password;
-        return false;
+        return TRUE;
     }
 }

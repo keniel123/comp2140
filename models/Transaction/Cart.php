@@ -17,11 +17,6 @@ class Cart
      */
     private $items;
     
-    /**
-     * @var Database Object 
-     */
-    private $db;
-    
 	/**
 	 * @return	void 
 	 **/
@@ -30,25 +25,24 @@ class Cart
 		$this->dateCreated = getdate();
 		$this->total = 0.00;
 		$this->items = array();
-		$db = new Database();
     }
     /**
      * @return boolean
      */
-    public function checkAvailability(Product $prod, int $qty)//boolean
+    public function checkAvailability($prod, $qty)//boolean
     {
-        $query_result = $db->query(
+        $result = $database->query(
 					"SELECT quantity
 					 FROM product
-					  WHERE productId = '".$prod->ID."';"
+					  WHERE productId = ".$prod->getID().";"
 					);
-		if ($result != false)
+		if (gettype($result) == 'object')
 		{
-			$row = msql_fetch_array($result);
-			if($qty<$row[0])
-				return true;
+			$row = $result[0];
+			if($qty <= $row[4])
+				return TRUE;
 		}
-		return false;
+		return FALSE;
     }
     /**
      * @return boolean
@@ -57,7 +51,7 @@ class Cart
     {
 		unset($this->items);
 		$this->items = array();
-		return true;
+		return TRUE;
     }
     /**
      * @param prod			Product object
@@ -67,7 +61,7 @@ class Cart
     {
         if (!checkAvailability($prod, $amt))
         {
-				return false;
+				return FALSE;
 		}
 		// if product already in list increase quantity
 		foreach($this->items as $product)
@@ -80,7 +74,7 @@ class Cart
 		array_push($this->items,prod);
 		//update total price
 		calculateTotal();
-		return true;
+		return TRUE;
     }
     /**
      * @param String $itemName
@@ -93,10 +87,10 @@ class Cart
 			if($product.name == $itemName)
 			{
 				array_pop($this->items,$product);
-				return true;
+				return TRUE;
 			}	
 		}
-        return false;
+        return FALSE;
     }
     /**
      * @return double

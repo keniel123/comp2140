@@ -72,7 +72,6 @@ $title = 'Reset Account';
 	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 			<form role="form" method="post" action="?controller=control&action=reset" autocomplete="off">
 				<h2>Reset Password</h2>
-				<p><a href='?controller=pages&action=login'>Back to login page</a></p>
 				<hr>
 
 				<!--?php

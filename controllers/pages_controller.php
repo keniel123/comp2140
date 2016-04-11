@@ -57,6 +57,10 @@
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
         } else {
             require_once('views/pages/login.php');
+            if (isset($_SESSION['incorrect'])){
+                unset($_SESSION[incorrect]);
+                echo '<script>alert(\'Incorrect username or password\');</script>';
+            }
         }
     }
       
@@ -71,9 +75,10 @@
       
     public function form(){
         if (isset($_SESSION['username'])) {
+            $_SESSION['fromaccount'] = 'yes';
             require_once('views/pages/form.php');
         } else {
-            echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+            echo '<script>window.location.href = "?controller=pages&action=login";</script>';
         }
     }
       
@@ -86,11 +91,7 @@
     }
       
     public function reset(){
-        if (isset($_SESSION['username'])) {
-            require_once('views/pages/reset.php');
-        } else {
-            require_once('views/pages/login.php');
-        }
+        require_once('views/pages/reset.php');
     }
       
     public function addpayment(){

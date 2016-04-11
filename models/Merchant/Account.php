@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  *
  */
@@ -10,48 +8,46 @@ class Account extends User
      * @var String
      */
     private $firstName;
-
     /**
      * @var String
      */
     private $lastName;
-
     /**
      * @var Address
      */
     private $shippingAddress;
-
     /**
      * @var List<Order>
      */
     private $orders;
-
     /**
      * @var String
      */
     private $phoneNumber;
-
     /**
      * @var PaymentMethod
      */
     private $paymentMethod;
-
     /**
      * @var Cart
      */
     private $cart;
     
     /**
-     * @var Cart
+     * @var emailAddress
      */
     private $emailAddress;
+    /**
+     * @var paymentMethod
+     */
+    private $paymentMethod;
     
     
     
     
     
     public function __construct($user, $email, $pass, $phone_number,
-                               $first_name, $last_name, $address){
+                               $first_name, $last_name, $address,$payment){
         parent::__construct($user, $pass);
         $this->emailAddress = $email;
         $this->firstName = $first_name;
@@ -60,6 +56,7 @@ class Account extends User
         $this->phoneNumber = $phone_number;
         $this->cart = new Cart();
         $this->orders = array();
+        $this->paymentMethod = new PaymentMethod();
     }
     
     /**
@@ -68,9 +65,8 @@ class Account extends User
     public function getFirstName()//:String
     {
         // TODO: implement here
-        return null;
+        return $this->firstName;
     }
-
     /**
      * @param String $firstName
      * @return boolean
@@ -78,18 +74,16 @@ class Account extends User
     public function setFirstName(String $firstName)//:boolean
     {
         // TODO: implement here
-        return false;
+         $this->firstName = $firstName;
     }
-
     /**
      * @return String
      */
     public function getLastName()//:String
     {
         // TODO: implement here
-        return null;
+        return $this->lastName = $lastName;
     }
-
     /**
      * @param String $lastName
      * @return boolean
@@ -97,18 +91,16 @@ class Account extends User
     public function setLastName(String $lastName)//:boolean
     {
         // TODO: implement here
-        return false;
+        $this->lastName = $lastName;
     }
-
     /**
      * @return Address
      */
     public function getShippingAddress()//:Address
     {
         // TODO: implement here
-        return null;
+        return $this->shippingAddress
     }
-
     /**
      * @param Address $address
      * @return boolean
@@ -116,79 +108,80 @@ class Account extends User
     public function setShippingAddress(Address $address)//:boolean
     {
         // TODO: implement here
-        return false;
+        $this->shippingAddress = $address;
     }
-
     /**
      * @return List<Order>
      */
     public function getOrders()//:List<Order>
     {
         // TODO: implement here
-        return null;
+        return $this->orders;
     }
-
     /**
      * @return boolean
      */
-    public function updateOrders()//:boolean
+    public function updateOrders($orders)//:boolean
     {
         // TODO: implement here
-        return false;
+        return $this->orders = $orders;
     }
-
     /**
      * @return String
      */
     public function getPhoneNumber()//:String
     {
         // TODO: implement here
-        return null;
+        return $this->phoneNumber;
     }
-
     /**
      * @param String $number
      * @return boolean
      */
     public function setPhoneNumber(String $number)//:boolean
     {
-        // TODO: implement here
-        return false;
+        $this->phoneNumber = $number
     }
-
     /**
      * @return boolean
      */
     public function checkout()//:boolean
     {
-        // TODO: implement here
+        if (!empty($cart)){
+            if $paymentMethod->validatePayment(){
+                $items = fetchItems();
+                foreach ($items as $item ) {
+                    if(!checkAvailability($item)){
+                        return false;
+                    }
+                }
+                $this->chargePayment();
+                $this->updateOrders($orders=new array())
+                return true;
+            }
+            return false
+        }
         return false;
     }
-
     /**
      * @return List<Product>
      */
     public function fetchItems()//:List<Product>
     {
-        // TODO: implement here
-        return null;
+        $cart->getItems();
     }
-
     /**
      * @return void
      */
-    public function makeComplaint()//:void
+    public function makeComplaint($complain)//:void
     {
-        // TODO: implement here
-        return null;
+        $complaint = $complain
     }
-
     /**
      * @return boolean
      */
     public function chargePaymentMethod()//:boolean
     {
-        // TODO: implement here
-        return false;
+        return True
     }
 }

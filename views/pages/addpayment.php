@@ -24,6 +24,10 @@
                 ?>
                 <div class="product-content-right">
                     <div class="woocommerce">
+                        
+                        <!--== FORM START ==-->
+                        
+                        <form action="?controller=control&action=addpayment" method="post">
                             
                             <!--== CHOOSE PAYMENT TYPE ==-->
                             <div id="payment">
@@ -31,7 +35,8 @@
                                     <h2>Select Payment Type</h2>
                                     <li class="payment_method_bacs">
                                         <input type="radio" data-order_button_text="" 
-                                               checked="checked" value="bacs" name="payment_method" class="input-radio" id="payment_method_bacs">
+                                               checked="checked" value="bankaccount" 
+                                               name="payment_method" class="input-radio" id="payment_method_bacs">
                                         <label for="payment_method_bacs">Bank Account </label>
                                         <div class="payment_box payment_method_bacs">
                                             <!--p>Make your payment directly into our bank account. 
@@ -41,7 +46,7 @@
                                     </li>
                                     <li class="payment_method_cheque">
                                         <input type="radio" data-order_button_text="" 
-                                               value="cheque" name="payment_method" class="input-radio" 
+                                               value="creditcard" name="payment_method" class="input-radio" 
                                                id="payment_method_cheque">
                                         <label for="payment_method_cheque">Credit Card</label>
                                     </li>
@@ -65,9 +70,7 @@
                             
                             <!--== BANK ACCOUNT FORM ==-->
                             
-                            <div id="coupon-collapse-wrap">
-                            <form id="bank-account" method="post" class="form" role="form" 
-                                  action="?controller=control&action=addpayment">
+                            <div id="bankaccount">
                                 <div class="form-group">
                                     <label>Bank Name</label>
                                     <input class="form-control" name="bankname">
@@ -96,18 +99,11 @@
                                     <label></label>
                                     <input class="form-control" name="postalcode" placeholder="Postal Code">
                                 </div>
-                                <div class="form-group">
-                                    <input type="submit" data-value="Add" value="Add" 
-                                           id="placeOrder" name="Add" class="button alt">
-                                </div>
-                            </form>
                             </div>
                             
                             <!--== CREDIT CARD FORM ==-->
                             
-                            <div id="coupon-collapse-wrap" hidden="true">
-                            <form id="credit-card" method="post" class="form" role="form" 
-                                  action="?controller=control&action=addpayment">
+                            <div id="credit card" hidden="true">
                                 <div class="form-group">
                                     <label>Card Type</label>
                                     <input class="form-control" name="cctype" placeholder="E.g. Visa">
@@ -130,17 +126,26 @@
                                     <input class="form-control" name="cccardholder" placeholder="E.g. John Doe">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" data-value="Add" value="Add" 
-                                           id="placeOrder" name="Add" class="button alt">
+                                    <label>Billing Address</label>
+                                    <input class="form-control" name="ccstreetaddress" placeholder="Street Address">
                                 </div>
-                            </form>
+                                <div class="form-group">
+                                    <label></label>
+                                    <input class="form-control" name="cccity" placeholder="City">
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <input class="form-control" name="ccparish" placeholder="Parish">
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <input class="form-control" name="ccpostalcode" placeholder="Postal Code">
+                                </div>
                             </div>
                             
                             <!--== PAYPAL FORM ==-->
                             
-                            <div id="coupon-collapse-wrap" hidden="true">
-                            <form id="paypal" method="post" class="form" role="form" 
-                                  action="?controller=control&action=addpayment">
+                            <div id="paypal" hidden="true">
                                 <div class="form-group">
                                     <label>PayPal Email</label>
                                     <input class="form-control" name="paypalemail" placeholder="someone@example.com">
@@ -149,12 +154,15 @@
                                     <label>PayPal Password</label>
                                     <input class="form-control" name="paypalpassword" type="password">
                                 </div>
-                                <div class="form-group">
-                                    <input type="submit" data-value="Add" value="Add" 
-                                           id="placeOrder" name="Add" class="button alt">
-                                </div>
-                            </form>
                             </div>
+                            <div class="form-group">
+                                <input type="submit" data-value="Add" value="Add" 
+                                           id="placeOrder" name="Add" class="button alt">
+                            </div>
+                        </form>
+                        
+                        <!--== FORM END ==-->
+                        
                     </div>
                 </div>
             </div>

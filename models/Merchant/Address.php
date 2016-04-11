@@ -1,114 +1,93 @@
 <?php
-
-
 /**
  *
  */
 class Address
 {
+        /**
+     * @var String
+     */
+    private $streetAddress="";
+    /**
+     * @var String
+     */
+    private $city="";
+    /**
+     * @var String
+     */
+    private $parish="";
+    /**
+     * @var String
+     */
+    private $postalCode="";
     /**
      *
      */
     public function __construct($street, $city, $parish, $postal)
     {
+        $this->streetAddress = $street;
+        $this->city = $city;
+        $this->parish = $parish;
+        $this->postalCode = $postal;
     }
-
-    /**
-     * @var String
-     */
-    private $streetAddress;
-
-    /**
-     * @var String
-     */
-    private $city;
-
-    /**
-     * @var String
-     */
-    private $parish;
-
-    /**
-     * @var String
-     */
-    private $postalCode;
-
-
-
-
     /**
      * @return String
      */
     public function getStreetAddress()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->streetAddress;
     }
-
     /**
      * @param Street $address
      * @return boolean
      */
-    public function setStreetAddress(Street $address)//:boolean
+    public function setStreetAddress(String $address)//:boolean
     {
-        // TODO: implement here
-        return false;
+        $this->streetAddress = $address;
     }
-
     /**
      * @return String
      */
     public function getCity()//:String
     {
-        // TODO: implement here
-        return null;
+       return $this->city;
     }
-
     /**
      * @param String $city
      * @return boolean
      */
     public function setCity(String $city)//:boolean
     {
-        // TODO: implement here
-        return false;
+        $this->city = $city;
     }
-
     /**
      * @return String
      */
     public function getParish()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->parish;
     }
-
     /**
      * @param String $parish
      * @return boolean
      */
     public function setParish(String $parish)//:boolean
     {
-        // TODO: implement here
-        return false;
+        $this->parish = $parish;
     }
-
     /**
      * @return String
      */
     public function getPostalCode()//:String
     {
-        // TODO: implement here
-        return null;
+        return $this->postalCode;
     }
-
     /**
      * @param String $postalCode
      * @return boolean
      */
     public function setPostalCode(String $postalCode)//:boolean
     {
-        // TODO: implement here
-        return false;
+          $this->postalCode = $postalCode;
     }
 }

@@ -28,14 +28,15 @@ class Order
      * @var List<Product>
      */
     private $items;
-	public function __construct()
+    
+	public function __construct($total, $items)
     {
-		$this->ID = "";
-		$this->orderDate = "";
+		$this->ID = sha1(date());
+		$this->orderDate = date();
 		$this->deliveryDate = "";
 		$this->orderStatus = "";
-		$this->total = 0.00;
-		$this->items = array();
+		$this->total = $total;
+		$this->items = $items;
     }
     /**
      * @return String

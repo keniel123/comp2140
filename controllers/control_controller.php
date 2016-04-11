@@ -16,6 +16,8 @@
             $address = new Address($result[7], $result[8], $result[9], $result[10]);
             $account = new Account($username, $result[2], $password, $result[4],
                                   $result[5], $result[6], $address);
+            
+            //Check for existing payment method
             $sql = "select * from account natural join account_payment 
             natural join address where username='$username';";
             $result = $database->query($sql);
@@ -23,22 +25,54 @@
                 $result = $result[0];
                 $paymentID = $result[1];
                 $methods = array('bank_account', 'credit_card', 'paypal');
-                for($i=0; $<count($methods); $i++){
+                for($i=0; $i<count($methods); $i++){
                     $sql = "select * from " . $methods[i] . " where payment_id='$paymentID';";
                     $result = $database->query($sql);
                     if(count($result) > 0){
                         $result = $result[0];
                         switch($methods[i]){
                             case 'bank_account':
-                                $sql = "select * from " . $methods[i] . " where payment_id='$paymentID';";
+                                $sql = "select * from bank_account natural join ba_billing_address 
+                                natural join address where payment_id='$paymentID';";
                                 $result = $database->query($sql);
-                                $payment = new BankAccount();
+                                $result = $result[0];
+                                $street = $result[5];
+                                $city = $result[6];
+                                $parish = $result[7];
+                                $postal = $result[8];
+                                $address = new Address($street, $city, $parish, $postal);
+                                $payment = new BankAccount($result[4], $result[2], $result[3], $address);
+                                $account->setPaymentMethod($payment);
+                                $_SESSION['payment'] = 'yes';
+                                $_SESSION['paymenttype'] = 'ba';
                                 break;
                             case 'credit_card':
-                                $payment = new CreditCard();
+                                $sql = "select * from credit_card natural join cc_billing_address 
+                                natural join address where payment_id='$paymentID';";
+                                $result = $database->query($sql);
+                                $result = $result[0];
+                                $ccnumber = $result[1];
+                                $cardholder = $result[2];
+                                $street = $result[3];
+                                $city = $result[4];
+                                $parish = $result[5];
+                                $postal = $result[6];
+                                $address = new Address($street, $city, $parish, $postal);
+                                $payment = new CreditCard($cardholder, $ccnumber, '', '', $address);
+                                $account->setPaymentMethod($payment);
+                                $_SESSION['payment'] = 'yes';
+                                $_SESSION['paymenttype'] = 'cc';
                                 break;
                             case 'paypal':
-                                $payment = new PayPal();
+                                $sql = "select * from paypal where payment_id='$paymentID';";
+                                $result = $database->query($sql);
+                                $result = $result[0];
+                                $email = $result[0];
+                                $password = $result[1];
+                                $payment = new PayPal($email, $password);
+                                $account->setPaymentMethod($payment);
+                                $_SESSION['payment'] = 'yes';
+                                $_SESSION['paymenttype'] = 'pp';
                                 break;
                         }
                         break;
@@ -47,32 +81,22 @@
                 
             }
             $_SESSION['account'] = $account;
-            //$_SESSION['username'] = $account->getUsername();
-            //$_SESSION['email'] = $account->getEmail();
-            //$_SESSION['phonenumber'] = $account->getPhoneNumber();
-            //$_SESSION['firstname'] = $account->getFirstName();
-            //$_SESSION['lastname'] = $account->getLastName();
-            //$_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-            //$_SESSION['city'] = $account->getShippingAddress()->getCity();
-            //$_SESSION['parish'] = $account->getShippingAddress()->getParish();
-            //$_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $result[2];
-            $_SESSION['phonenumber'] = $result[4];
-            $_SESSION['firstname'] = $result[5];
-            $_SESSION['lastname'] = $result[6];
-            $_SESSION['streetaddress'] = $result[7];
-            $_SESSION['city'] = $result[8];
-            $_SESSION['parish'] = $result[9];
-            $_SESSION['postalcode'] = $result[10];
+            $_SESSION['username'] = $account->getUsername();
+            $_SESSION['email'] = $account->getEmail();
+            $_SESSION['phonenumber'] = $account->getPhoneNumber();
+            $_SESSION['firstname'] = $account->getFirstName();
+            $_SESSION['lastname'] = $account->getLastName();
+            $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
+            $_SESSION['city'] = $account->getShippingAddress()->getCity();
+            $_SESSION['parish'] = $account->getShippingAddress()->getParish();
+            $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
         } else {
             $boolean = $user->login('admin');
             if ($boolean) {
-                //$admin = new Admin($username, $password);
-                //$_SESSION['admin'] = $admin;
-                //$_SESSION['username'] = $admin->getUsername();
-                $_SESSION['username'] = 'admin';
+                $admin = new Admin($username, $password);
+                $_SESSION['admin'] = $admin;
+                $_SESSION['username'] = $admin->getUsername();
                 echo '<script>window.location.href = "?controller=pages&action=index";</script>';
                 
             } else {
@@ -104,39 +128,40 @@
         $account = new Account($username, $email, $password, $phone_number, 
                               $first_name, $last_name, $shipping_address);
         $database = new Database('localhost', 'pdo_ret', 'root', '');
-        if (gettype($database->get_db()) != 'int'){
+        if (gettype($database->get_db()) == 'object'){
             $sql = "insert into account values('$username', '$email', '" . sha1($password)
-                . "', $phone_number, '$first_name', '$last_name');";
+                . "', ".(int)$phone_number.", '$first_name', '$last_name');";
             $result = $database->update($sql);
-            if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;};
+            if ($result == -1){
+                echo '<script>alert(\'Unknown error occurred\')</script>';
+                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+            }
             $sql = "insert into address values(0, '$street_address', '$city', '$parish', '$postal_code');";
             $result = $database->update($sql);
-            if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;};
+            if ($result == -1){
+                echo '<script>alert(\'Unknown error occurred\')</script>';
+                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+            }
             $sql = "insert into shipping_address values('$username', 0);";
             $result = $database->update($sql);
-            if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;};
+            if ($result == -1){
+                echo '<script>alert(\'Unknown error occurred\')</script>';
+                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+            }
             $_SESSION['account'] = $account;
-            //$_SESSION['username'] = $account->getUsername();
-            //$_SESSION['email'] = $account->getEmail();
-            //$_SESSION['phonenumber'] = $account->getPhoneNumber();
-            //$_SESSION['firstname'] = $account->getFirstName();
-            //$_SESSION['lastname'] = $account->getLastName();
-            //$_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-            //$_SESSION['city'] = $account->getShippingAddress()->getCity();
-            //$_SESSION['parish'] = $account->getShippingAddress()->getParish();
-            //$_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
-            $_SESSION['phonenumber'] = $phone_number;
-            $_SESSION['firstname'] = $first_name;
-            $_SESSION['lastname'] = $last_name;
-            $_SESSION['streetaddress'] = $street_address;
-            $_SESSION['city'] = $city;
-            $_SESSION['parish'] = $parish;
-            $_SESSION['postalcode'] = $postal_code;
+            $_SESSION['username'] = $account->getUsername();
+            $_SESSION['email'] = $account->getEmail();
+            $_SESSION['phonenumber'] = $account->getPhoneNumber();
+            $_SESSION['firstname'] = $account->getFirstName();
+            $_SESSION['lastname'] = $account->getLastName();
+            $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
+            $_SESSION['city'] = $account->getShippingAddress()->getCity();
+            $_SESSION['parish'] = $account->getShippingAddress()->getParish();
+            $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
         } else {
             echo '<script>alert(\'Unknown error occurred\')</script>';
+            echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
         }
         
     }
@@ -162,6 +187,7 @@
 
             $shipping_address = new Address($street_address, $city, $parish, $postal_code);
             $account = $_SESSION['account'];
+            $oldusername = $account->getUsername();
             $account->setUsername($username);
             $account->setEmail($email);
             $account->setPhoneNumber($phone_number);
@@ -171,42 +197,33 @@
 
             $database = new Database('localhost', 'pdo_ret', 'root', '');
             if (gettype($database->get_db()) != 'int'){
-                $sql = "update account where username='$username' set username='$username', 
-                email_address='$email', p_number=$phone_number, f_name='$first_name', l_name='$last_name';";
+                $sql = "update account set username='$username', email_address='$email', 
+                p_number=". (int)$phone_number .", f_name='$first_name', l_name='$last_name' where username='$oldusername';";
                 $result = $database->update($sql);
                 if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;}
-                $sql = "select from shipping_address where username='$username'";
+                $sql = "select from shipping_address where username='$oldusername'";
                 $result = $database->query($sql);
                 if (count($result) < 1){
                     echo '<script>alert(\'Unknown error occurred\')</script>'; return;
                 } else {
                     $result = $result[0];
                     $address_id = $result[1];
+                    $sql = "update address set street_address='$street_address',
+                    city='$city', parish='$parish', postal_code='$postal_code' where address_id=" . (int)$address_id . ";";
+                    $result = $database->update($sql);
+                    if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;}
+                    $_SESSION['account'] = $account;
+                    $_SESSION['username'] = $account->getUsername();
+                    $_SESSION['email'] = $account->getEmail();
+                    $_SESSION['phonenumber'] = $account->getPhoneNumber();
+                    $_SESSION['firstname'] = $account->getFirstName();
+                    $_SESSION['lastname'] = $account->getLastName();
+                    $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
+                    $_SESSION['city'] = $account->getShippingAddress()->getCity();
+                    $_SESSION['parish'] = $account->getShippingAddress()->getParish();
+                    $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
+                    echo '<script>window.location.href = "?controller=pages&action=account";</script>';
                 }
-                $sql = "update address where address_id=$address_id set street_address='$street_address',
-                city='$city', parish='$parish', postal_code='$postal_code';";
-                $result = $database->update($sql);
-                if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;}
-                $_SESSION['account'] = $account;
-                //$_SESSION['username'] = $account->getUsername();
-                //$_SESSION['email'] = $account->getEmail();
-                //$_SESSION['phonenumber'] = $account->getPhoneNumber();
-                //$_SESSION['firstname'] = $account->getFirstName();
-                //$_SESSION['lastname'] = $account->getLastName();
-                //$_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-                //$_SESSION['city'] = $account->getShippingAddress()->getCity();
-                //$_SESSION['parish'] = $account->getShippingAddress()->getParish();
-                //$_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $email;
-                $_SESSION['phonenumber'] = $phone_number;
-                $_SESSION['firstname'] = $first_name;
-                $_SESSION['lastname'] = $last_name;
-                $_SESSION['streetaddress'] = $street_address;
-                $_SESSION['city'] = $city;
-                $_SESSION['parish'] = $parish;
-                $_SESSION['postalcode'] = $postal_code;
-                echo '<script>window.location.href = "?controller=pages&action=account";</script>';
             } else {
                 echo '<script>alert(\'Unknown error occurred\')</script>';
             }
@@ -218,73 +235,340 @@
     public function addpayment(){
         if (isset($_SESSION['fromcheckout'])){
             unset($_SESSION['fromcheckout']);
-            //Implement
             $account = $_SESSION['account'];
-            //Is there already a payment method on record?
-            
-            
-            
+            $username = $account->getUsername();
+            $existing = 'no';
+
+            //Check for existing payment method
+            $method = $account->getPaymentMethod();
+            if(gettype($method) == 'object'){
+                $existing = 'yes';
+            }
             
             $payment_method = $_POST['payment_method'];
             $database = new Database('localhost', 'pdo_ret', 'root', '');
-            switch ($payment_method){
-                case 'bankaccount':
-                    $bank_name = $_POST['bankname'];
-                    $accounttype = $_POST['accounttype'];
-                    $accountnumber = $_POST['accountnumber'];
-                    $streetaddress = $_POST['streetaddress'];
-                    $city = $_POST['city'];
-                    $parish = $_POST['parish'];
-                    $postalcode = $_POST['postalcode'];
-                    //updates
-                    $sql = "insert into bank_account values()";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    break;
-                case 'creditcard':
-                    $cctype = $_POST['cctype'];
-                    $ccnumber = $_POST['ccnumber'];
-                    $cvc = $_POST['cvc'];
-                    $ccexpiry = $_POST['ccexpiry'];
-                    $cccardholder = $_POST['cccardholder'];
-                    $streetaddress = $_POST['ccstreetaddress'];
-                    $city = $_POST['cccity'];
-                    $parish = $_POST['ccparish'];
-                    $postalcode = $_POST['ccpostalcode'];
-                    //updates
-                    $sql = "insert into ";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    break;
-                case 'paypal':
-                    $paypal_email = $_POST['paypalemail'];
-                    $paypal_password = $_POST['paypalpassword'];
-                    //updates
-                    $sql = "insert into ";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    $sql = "insert into";
-                    $result = $database->update($sql);
-                    break;
+            if($existing == 'no') {
+                switch ($payment_method){
+                    case 'bankaccount':
+                        $bank_name = $_POST['bankname'];
+                        $accounttype = $_POST['accounttype'];
+                        $accountnumber = $_POST['accountnumber'];
+                        $streetaddress = $_POST['streetaddress'];
+                        $city = $_POST['city'];
+                        $parish = $_POST['parish'];
+                        $postalcode = $_POST['postalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new BankAccount($accountnumber, $bank, $accounttype, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        
+                        $sql = "insert into bank_account values(0, '$bank_name', '$accounttype', $accountnumber);";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into ba_billing_address values(0, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                    case 'creditcard':
+                        $cctype = $_POST['cctype'];
+                        $ccnumber = $_POST['ccnumber'];
+                        $cvc = $_POST['cvc'];
+                        $ccexpiry = $_POST['ccexpiry'];
+                        $cccardholder = $_POST['cccardholder'];
+                        $streetaddress = $_POST['ccstreetaddress'];
+                        $city = $_POST['cccity'];
+                        $parish = $_POST['ccparish'];
+                        $postalcode = $_POST['ccpostalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new CreditCard($cccardholder, $ccnumber, $ccexpiry, $cvc, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into credit_card values ($ccnumber, '$cccardholder')";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into cc_billing_address values($ccnumber, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                    case 'paypal':
+                        $paypal_email = $_POST['paypalemail'];
+                        $paypal_password = $_POST['paypalpassword'];
+                        //updates
+                        $payment = new PayPal($paypal_email, $paypal_password);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into paypal values ('$paypal_email', '$paypal_password');";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                }
+            } else {
+                //deletes
+                switch($_SESSION['paymenttype']){
+                    case 'ba':
+                        $old = $account->getPaymentMethod()->getAccountNumber();
+                        $sql = "select * from bank_account natural join ba_billing_address natural join address where acc_number=$old;";
+                        $result = $database->query($sql);
+                        $result = $result[0];
+                        $sql = "delete * from bank_account where acc_number=$old";
+                        $database->update($sql);
+                        $sql = "delete * from address where address_id=$result[0]";
+                        $database->update($sql);
+                        break;
+                    case 'cc':
+                        $old = $account->getPaymentMethod()->getCardNumber();
+                        $sql = "select * from credit_card natural join cc_billing_address natural join address where cc_number=$old;";
+                        $result = $database->query($sql);
+                        $result = $result[0];
+                        $sql = "delete * from credit_card where cc_number=$old;";
+                        $database->update($sql);
+                        $sql = "delete * from address where address_id=$result[0];";
+                        $database->update($sql);
+                        break;
+                    case 'pp':
+                        $old = $account->getPaymentMethod()->getEmail();
+                        $sql = "delete * from paypal where email='$old';";
+                        $database->update($sql);
+                        break;
+                }
+                
+                switch ($payment_method){
+                    case 'bankaccount':
+                        $bank_name = $_POST['bankname'];
+                        $accounttype = $_POST['accounttype'];
+                        $accountnumber = $_POST['accountnumber'];
+                        $streetaddress = $_POST['streetaddress'];
+                        $city = $_POST['city'];
+                        $parish = $_POST['parish'];
+                        $postalcode = $_POST['postalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new BankAccount($accountnumber, $bank, $accounttype, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        
+                        $sql = "insert into bank_account values(0, '$bank_name', '$accounttype', $accountnumber);";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into ba_billing_address values(0, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                    case 'creditcard':
+                        $cctype = $_POST['cctype'];
+                        $ccnumber = $_POST['ccnumber'];
+                        $cvc = $_POST['cvc'];
+                        $ccexpiry = $_POST['ccexpiry'];
+                        $cccardholder = $_POST['cccardholder'];
+                        $streetaddress = $_POST['ccstreetaddress'];
+                        $city = $_POST['cccity'];
+                        $parish = $_POST['ccparish'];
+                        $postalcode = $_POST['ccpostalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new CreditCard($cccardholder, $ccnumber, $ccexpiry, $cvc, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into credit_card values ($ccnumber, '$cccardholder')";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into cc_billing_address values($ccnumber, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                    case 'paypal':
+                        $paypal_email = $_POST['paypalemail'];
+                        $paypal_password = $_POST['paypalpassword'];
+                        //updates
+                        $payment = new PayPal($paypal_email, $paypal_password);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into paypal values ('$paypal_email', '$paypal_password');";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        break;
+                }
             }
-            
-            
-            //$_SESSION['payment'] = yes;
             echo '<script>window.location.href = "?controller=pages&action=checkout";</script>';
         } else {
             if(isset($_SESSION['fromaccount'])){
                 unset($_SESSION['fromaccount']);
-                //$_SESSION['payment'] = yes;
-                echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+                $account = $_SESSION['account'];
+            $username = $account->getUsername();
+            $existing = 'no';
+
+            //Check for existing payment method
+            $method = $account->getPaymentMethod();
+                echo gettype($method);
+            if(gettype($method) == 'object'){
+                $existing = 'yes';
+            }
+            
+            $payment_method = $_POST['payment_method'];
+            $database = new Database('localhost', 'pdo_ret', 'root', '');
+            if($existing == 'no') {
+                switch ($payment_method){
+                    case 'bankaccount':
+                        $bank_name = $_POST['bankname'];
+                        $accounttype = $_POST['accounttype'];
+                        $accountnumber = $_POST['accountnumber'];
+                        $streetaddress = $_POST['streetaddress'];
+                        $city = $_POST['city'];
+                        $parish = $_POST['parish'];
+                        $postalcode = $_POST['postalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new BankAccount($accountnumber, $bank_name, $accounttype, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        
+                        $sql = "insert into bank_account values(0, '$bank_name', '$accounttype',". (int)$accountnumber .");";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into ba_billing_address values(0, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'ba';
+                        break;
+                    case 'creditcard':
+                        $cctype = $_POST['cctype'];
+                        $ccnumber = $_POST['ccnumber'];
+                        $cvc = $_POST['cvc'];
+                        $ccexpiry = $_POST['ccexpiry'];
+                        $cccardholder = $_POST['cccardholder'];
+                        $streetaddress = $_POST['ccstreetaddress'];
+                        $city = $_POST['cccity'];
+                        $parish = $_POST['ccparish'];
+                        $postalcode = $_POST['ccpostalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new CreditCard($cccardholder, $ccnumber, $ccexpiry, $cvc, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into credit_card values (".(int)$ccnumber.", '$cccardholder')";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into cc_billing_address values(".(int)$ccnumber.", 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'cc';
+                        break;
+                    case 'paypal':
+                        $paypal_email = $_POST['paypalemail'];
+                        $paypal_password = $_POST['paypalpassword'];
+                        //updates
+                        $payment = new PayPal($paypal_email, $paypal_password);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into paypal values ('$paypal_email', '$paypal_password');";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'pp';
+                        break;
+                }
             } else {
-                echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+                //deletes
+                switch($_SESSION['paymenttype']){
+                    case 'ba':
+                        $old = $account->getPaymentMethod()->getAccountNumber();
+                        $sql = "select * from bank_account natural join ba_billing_address natural join address where acc_number=$old;";
+                        $result = $database->query($sql);
+                        $result = $result[0];
+                        $sql = "delete * from bank_account where acc_number=$old";
+                        $database->update($sql);
+                        $sql = "delete * from address where address_id=$result[0]";
+                        $database->update($sql);
+                        break;
+                    case 'cc':
+                        $old = $account->getPaymentMethod()->getCardNumber();
+                        $sql = "select * from credit_card natural join cc_billing_address natural join address where cc_number=$old;";
+                        $result = $database->query($sql);
+                        $result = $result[0];
+                        $sql = "delete * from credit_card where cc_number=$old;";
+                        $database->update($sql);
+                        $sql = "delete * from address where address_id=$result[0];";
+                        $database->update($sql);
+                        break;
+                    case 'pp':
+                        $old = $account->getPaymentMethod()->getEmail();
+                        $sql = "delete * from paypal where email='$old';";
+                        $database->update($sql);
+                        break;
+                }
+                
+                switch ($payment_method){
+                    case 'bankaccount':
+                        $bank_name = $_POST['bankname'];
+                        $accounttype = $_POST['accounttype'];
+                        $accountnumber = $_POST['accountnumber'];
+                        $streetaddress = $_POST['streetaddress'];
+                        $city = $_POST['city'];
+                        $parish = $_POST['parish'];
+                        $postalcode = $_POST['postalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new BankAccount($accountnumber, $bank_name, $accounttype, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        
+                        $sql = "insert into bank_account values(0, '$bank_name', '$accounttype', $accountnumber);";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into ba_billing_address values(0, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'ba';
+                        break;
+                    case 'creditcard':
+                        $cctype = $_POST['cctype'];
+                        $ccnumber = $_POST['ccnumber'];
+                        $cvc = $_POST['cvc'];
+                        $ccexpiry = $_POST['ccexpiry'];
+                        $cccardholder = $_POST['cccardholder'];
+                        $streetaddress = $_POST['ccstreetaddress'];
+                        $city = $_POST['cccity'];
+                        $parish = $_POST['ccparish'];
+                        $postalcode = $_POST['ccpostalcode'];
+                        //updates
+                        $address = new Address($streetaddress, $city, $parish, $postalcode);
+                        $payment = new CreditCard($cccardholder, $ccnumber, $ccexpiry, $cvc, $address);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into credit_card values ($ccnumber, '$cccardholder')";
+                        $result = $database->update($sql);
+                        $sql = "insert into address values(0, '$streetaddress', '$city', '$parish', '$postalcode');";
+                        $result = $database->update($sql);
+                        $sql = "insert into cc_billing_address values($ccnumber, 0);";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'cc';
+                        break;
+                    case 'paypal':
+                        $paypal_email = $_POST['paypalemail'];
+                        $paypal_password = $_POST['paypalpassword'];
+                        //updates
+                        $payment = new PayPal($paypal_email, $paypal_password);
+                        $account->setPaymentMethod($payment);
+                        
+                        $sql = "insert into paypal values ('$paypal_email', '$paypal_password');";
+                        $result = $database->update($sql);
+                        $_session['payment'] = 'yes';
+                        $_session['paymenttype'] = 'pp';
+                        break;
+                }
+            }
+                //echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+            } else {
+                //echo '<script>window.location.href = "?controller=pages&action=account";</script>';
             }
         }
     }

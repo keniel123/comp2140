@@ -30,7 +30,7 @@ class User
      */
     public function setUsername($username)//boolean
     {
-        // TODO: implement here
+        $this->username = $username;
         return false;
     }
 
@@ -39,8 +39,7 @@ class User
      */
     public function getUsername()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->username;
     }
 
     /**
@@ -49,8 +48,8 @@ class User
      */
     public function setPassword($password)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->password = $password;
+        return TRUE;
     }
 
     /**
@@ -58,8 +57,7 @@ class User
      */
     public function getPassword()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->password;
     }
 
     /**
@@ -68,7 +66,7 @@ class User
     public function logout()//boolean
     {
         // TODO: implement here
-        return false;
+        return TRUE;
     }
 
     /**
@@ -100,14 +98,5 @@ class User
     {
         $hash = sha1($this->password);
         return $hash;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function is_logged_in()//boolean
-    {
-        // TODO: implement here
-        return false;
     }
 }

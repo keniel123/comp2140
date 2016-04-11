@@ -27,7 +27,7 @@ class Account extends User
     /**
      * @var PaymentMethod
      */
-    private $paymentMethod;
+    private $paymentMethod = '';
     /**
      * @var Cart
      */
@@ -37,17 +37,13 @@ class Account extends User
      * @var emailAddress
      */
     private $emailAddress;
-    /**
-     * @var paymentMethod
-     */
-    private $paymentMethod;
     
     
     
     
     
     public function __construct($user, $email, $pass, $phone_number,
-                               $first_name, $last_name, $address,$payment){
+                               $first_name, $last_name, $address){
         parent::__construct($user, $pass);
         $this->emailAddress = $email;
         $this->firstName = $first_name;
@@ -56,7 +52,6 @@ class Account extends User
         $this->phoneNumber = $phone_number;
         $this->cart = new Cart();
         $this->orders = array();
-        $this->paymentMethod = new PaymentMethod();
     }
     
     /**
@@ -64,16 +59,16 @@ class Account extends User
      */
     public function getFirstName()//:String
     {
-        // TODO: implement here
+        
         return $this->firstName;
     }
     /**
      * @param String $firstName
      * @return boolean
      */
-    public function setFirstName(String $firstName)//:boolean
+    public function setFirstName($firstName)//:boolean
     {
-        // TODO: implement here
+        
          $this->firstName = $firstName;
     }
     /**
@@ -81,33 +76,46 @@ class Account extends User
      */
     public function getLastName()//:String
     {
-        // TODO: implement here
-        return $this->lastName = $lastName;
+        
+        return $this->lastName;
     }
     /**
      * @param String $lastName
      * @return boolean
      */
-    public function setLastName(String $lastName)//:boolean
+    public function setLastName($lastName)//:boolean
     {
-        // TODO: implement here
+        
         $this->lastName = $lastName;
+    }
+    
+    public function getEmail()//:String
+    {
+        
+        return $this->emailAddress;
+    }
+    /**
+     * @param String $lastName
+     * @return boolean
+     */
+    public function setEmail($email)//:boolean
+    {
+        
+        $this->emailAddress = $email;
     }
     /**
      * @return Address
      */
     public function getShippingAddress()//:Address
     {
-        // TODO: implement here
-        return $this->shippingAddress
+        return $this->shippingAddress;
     }
     /**
      * @param Address $address
      * @return boolean
      */
-    public function setShippingAddress(Address $address)//:boolean
+    public function setShippingAddress($address)//:boolean
     {
-        // TODO: implement here
         $this->shippingAddress = $address;
     }
     /**
@@ -115,73 +123,80 @@ class Account extends User
      */
     public function getOrders()//:List<Order>
     {
-        // TODO: implement here
+        
         return $this->orders;
     }
     /**
      * @return boolean
      */
-    public function updateOrders($orders)//:boolean
+    public function updateOrders($order)//:boolean
     {
-        // TODO: implement here
-        return $this->orders = $orders;
+        array_push($this->orders, $order);
     }
     /**
      * @return String
      */
     public function getPhoneNumber()//:String
     {
-        // TODO: implement here
+        
         return $this->phoneNumber;
     }
     /**
      * @param String $number
      * @return boolean
      */
-    public function setPhoneNumber(String $number)//:boolean
+    public function setPhoneNumber($number)//:boolean
     {
-        $this->phoneNumber = $number
+        $this->phoneNumber = $number;
+    }
+    
+    public function getPaymentMethod()//:String
+    {
+        
+        return $this->paymentMethod;
+    }
+    /**
+     * @param String $number
+     * @return boolean
+     */
+    public function setPaymentMethod($method)//:boolean
+    {
+        $this->paymentMethod = $method;
     }
     /**
      * @return boolean
      */
     public function checkout()//:boolean
     {
-        if (!empty($cart)){
-            if $paymentMethod->validatePayment(){
-                $items = fetchItems();
-                foreach ($items as $item ) {
-                    if(!checkAvailability($item)){
-                        return false;
+        if (count($cart->getItems()) > 0){
+            if ($paymentMethod->validatePayment()){
+                $items = $this->fetchItems();
+                foreach ($items as $item) {
+                    if(!$cart->checkAvailability($item)){
+                        return FALSE;
                     }
                 }
-                $this->chargePayment();
-                $this->updateOrders($orders=new array())
-                return true;
+                $this->chargePaymentMethod();
+                $order = new Order($cart->getTotal(), $this->fetchItems());
+                $this->updateOrders($order);
+                return TRUE;
             }
-            return false
+            return FALSE;
         }
-        return false;
+        return FALSE;
     }
     /**
      * @return List<Product>
      */
     public function fetchItems()//:List<Product>
     {
-        $cart->getItems();
-    }
-    /**
-     * @return void
-     */
-    public function makeComplaint($complain)//:void
-    {
-        $complaint = $complain
+        return $cart->getItems();
     }
     /**
      * @return boolean
      */
     public function chargePaymentMethod()//:boolean
     {
-        return True
+        return TRUE;
     }
 }

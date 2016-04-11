@@ -26,6 +26,13 @@ class BankAccount extends PaymentMethod
      * @var Address
      */
     private $address;
+    
+    public function __construct($number, $bank, $type, $address){
+        $this->accountNumber = $number;
+        $this->bank = $bank;
+        $this->accountType = $type;
+        $this->address = $address;
+    }
 
 
     /**
@@ -33,18 +40,17 @@ class BankAccount extends PaymentMethod
      */
     public function getAccountNumber()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->accountNumber;
     }
 
     /**
      * @param String $accountNumber
      * @return boolean
      */
-    public function setAccountNumber(String $accountNumber)//boolean
+    public function setAccountNumber($accountNumber)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->accountNumber = $accountNumber;
+        return TRUE;
     }
 
     /**
@@ -52,21 +58,7 @@ class BankAccount extends PaymentMethod
      */
     public function getBank()//String
     {
-        // TODO: implement here
-        return null;
-    }
-
-    /**
-     * @param String $accountNumber
-     * @param String $bank
-     * @param String $accountType
-     * @param Address $address
-     * @return boolean
-     */
-    public function changeBank(String $accountNumber, String $bank, String $accountType, Address $address)//boolean
-    {
-        // TODO: implement here
-        return false;
+        return $this->bank;
     }
 
     /**
@@ -74,18 +66,17 @@ class BankAccount extends PaymentMethod
      */
     public function getAccountType()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->accountType;
     }
 
     /**
      * @param String $accountType
      * @return boolean
      */
-    public function setAccountType(String $accountType)//boolean
+    public function setAccountType($accountType)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->accountType = $accountType;
+        return TRUE;
     }
 
     /**
@@ -93,17 +84,16 @@ class BankAccount extends PaymentMethod
      */
     public function getAddress()//Address
     {
-        // TODO: implement here
-        return null;
+        return $this->address;
     }
 
     /**
      * @param Address $address
      * @return boolean
      */
-    public function setAddress(Address $address)//boolean
+    public function setAddress($address)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->address = $address;
+        return TRUE;
     }
 }

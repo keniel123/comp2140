@@ -22,7 +22,7 @@ class Admin extends User
         if ($query_result != false)
         {
                 foreach ($query_result as $query_result) {
-                        return $query_result
+                        return $query_result;
                 }
         }
         return false;
@@ -40,7 +40,7 @@ class Admin extends User
         if ($query_result != false)
         {
                 foreach ($query_result as $query_result) {
-                        return $query_result
+                        return $query_result;
                 }
         }
         return false;
@@ -58,7 +58,7 @@ class Admin extends User
         if ($query_result != false)
         {
                 foreach ($query_result as $query_result) {
-                        return $query_result
+                        return $query_result;
                 }
         }
         return false;
@@ -71,7 +71,7 @@ class Admin extends User
         $update_result = $db->update(
             "UPDATE orders JOIN account_order 
             ON orders.order_id = account_order.order_id WHERE account_order.username = '%s'  
-            SET orderStatus = confirmed;",$username)
+            SET orderStatus = confirmed;",$username);
         
     }
 }

@@ -31,6 +31,14 @@ class CreditCard extends PaymentMethod
      * @var Address
      */
     private $address;
+    
+    public function __construct($cardholder, $cardnumber, $date, $cvc, $address){
+        $this->$cardHolder = $cardholder;
+        $this->cardNumber = $cardnumber;
+        $this->expiryDate = $date;
+        $this->cardVerificationCode = $cvc;
+        $this->address = $address;
+    }
 
 
     /**
@@ -38,18 +46,17 @@ class CreditCard extends PaymentMethod
      */
     public function getCardHolder()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->cardHolder;
     }
 
     /**
      * @param String $cardHolder
      * @return boolean
      */
-    public function setCardHolder(String $cardHolder)//boolean
+    public function setCardHolder($cardHolder)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->cardHolder = $cardHolder;
+        return TRUE;
     }
 
     /**
@@ -57,18 +64,17 @@ class CreditCard extends PaymentMethod
      */
     public function getCardNumber()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->cardNumber;
     }
 
     /**
      * @param String $cardNumber
      * @return boolean
      */
-    public function setCardNumber(String $cardNumber)//boolean
+    public function setCardNumber($cardNumber)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->cardNumber = $cardNumber;
+        return TRUE;
     }
 
     /**
@@ -76,18 +82,17 @@ class CreditCard extends PaymentMethod
      */
     public function getExpiryDate()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->expiryDate;
     }
 
     /**
      * @param String $expiryDate
      * @return boolean
      */
-    public function setExpiryDate(String $expiryDate)//boolean
+    public function setExpiryDate($expiryDate)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->expiryDate = $expiryDate;
+        return TRUE;
     }
 
     /**
@@ -95,17 +100,31 @@ class CreditCard extends PaymentMethod
      */
     public function getCardVerificationCode()//String
     {
-        // TODO: implement here
-        return null;
+        return $this->cardVerificationCode;
     }
 
     /**
      * @param String $cvc
      * @return boolean
      */
-    public function setCardVerificationCode(String $cvc)//boolean
+    public function setCardVerificationCode($cvc)//boolean
     {
-        // TODO: implement here
-        return false;
+        $this->cardVerificationCode = $cvc;
+        return TRUE;
+    }
+    
+    public function getBillingAddress()//String
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param String $cvc
+     * @return boolean
+     */
+    public function setBillingAddress($address)//boolean
+    {
+        $this->address = $address;
+        return TRUE;
     }
 }

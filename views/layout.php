@@ -219,12 +219,15 @@
     <script src="https://code.jquery.com/jquery.min.js"></script>
     
     <!-- Bootstrap JS form CDN -->
+    <script src="source-files/js/register.js"type="text/javascript"></script>
+    <script src="source-files/js/login.js"type="text/javascript"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
     <script src="source-files/js/owl.carousel.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="source-files/js/jquery.sticky.js"></script>
-               
+    
     <!-- jQuery easing -->
     <script src="source-files/js/jquery.easing.1.3.min.js"></script>
     

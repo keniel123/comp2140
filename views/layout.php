@@ -2,31 +2,37 @@
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if !IE]><!--> 
+<html lang="en"> <!--<![endif]-->
 <head>
     <title>Bowla's Motoring World</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-      <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    <!-- Google Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+                                        
+                                        <!-- Google Fonts -->
+    <!--== Titillium Web ==-->
+    <link href='source-files/css/titillium_web.css' rel='stylesheet' type='text/css'>
+    
+    <!--== Roboto Condensed ==-->
+    <link href='source-files/css/roboto_condensed.css' rel='stylesheet' type='text/css'>
+    
+    <!--== Raleway ==-->
+    <link href='source-files/css/raleway.css' rel='stylesheet' type='text/css'>
+    
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="source-files/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="source-files/css/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="source-files/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="source-files/css/style.css">
-    <link rel="stylesheet" href="source-files/css/style1.css">
-    <link rel="stylesheet" href="source-files/css/responsive.css">
+    <link href="source-files/css/owl.carousel.css" rel="stylesheet">
+    <link href="source-files/css/style.css" rel="stylesheet">
+    <link href="source-files/css/style1.css" rel="stylesheet">
+    <link href="source-files/css/responsive.css" rel="stylesheet">
     
 </head>
 <body>
@@ -216,10 +222,10 @@
     </div> <!-- End footer bottom area -->
    
     <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="source-files/js/jquery.min.js"></script>
     
     <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="source-files/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
     <script src="source-files/js/owl.carousel.min.js"></script>

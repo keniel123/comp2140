@@ -1,30 +1,4 @@
-<!--?php
-//include config
-
-//check if already logged in move to home page
-if( $customer->is_logged_in() ){ header('Location:index.php'); } 
-
-//process login form if submitted
-if(isset($_POST['submit'])){
-
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-	
-	if($customer->login($username,$password)){ 
-		$_SESSION['username'] = $username;
-		if ($_SESSION['username']=="Admin") {
-			header("Location:admin/index.php");
-			# code...
-		}
-		else{
-		header("Location:index.php");
-		exit;}
-	
-	} else {
-		$error[] = 'Wrong username or password or your account has not been activated.';
-	}}//end if submit
-?-->
-		<!-- === BEGIN CONTENT === -->
+	<!-- === BEGIN CONTENT === -->
 		<div id="content" class="container">
 			<div class="container">
 				<div class="row margin-vert-30">

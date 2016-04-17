@@ -2,6 +2,7 @@
   include ('models/Control/System.php');
 
   class PagesController {
+      
     public function index() {
       require_once('views/pages/index.php');
     }
@@ -111,5 +112,10 @@
             require_once('views/pages/login.php');
         }
     }
+      
+    public function singleproduct(){
+        require_once('views/pages/single-product.html');
+    }
+      
   }
 ?>

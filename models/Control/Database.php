@@ -25,8 +25,7 @@ class Database
     /**
      * @return array
      */
-    public function query($sql)
-    {
+    public function query($sql){
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -42,8 +41,7 @@ class Database
     /**
      * @return array
      */
-    public function update($sql)
-    {
+    public function update($sql){
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -53,6 +51,19 @@ class Database
             return -1;
             print $e->getMessage();
         }
+    }
+    
+    public function beginTransaction(){
+        $this->db->beginTransaction();
+    }
+    
+    public function commitChanges(){
+        $this->db->commit();
+    }
+    
+    public function rollbackUpdate(){
+        $status = $this->db->rollBack();
+        return $status;
     }
 }
 ?>

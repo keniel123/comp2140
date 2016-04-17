@@ -83,11 +83,15 @@ if(isset($_POST['submit'])){
 
 ?-->
 		<!-- === BEGIN CONTENT === -->
+		
+		
+
+		
 		<div id="content" class="container">
 			<div class="row margin-vert-30">
 				<!-- Register Box -->
 				<div class="col-md-6 col-md-offset-3 col-sm-offset-3">
-					<form class="signup-page" role="form" method="post" action="?controller=control&action=signup" autocomplete="off">
+					<form class="signup-page" role="form" method="post" action="?controller=control&action=signup" id="signupform" autocomplete="off">
 						<div class="signup-header">
 							<h2>Register a new account</h2>
 							<p>Already a member? Click <a href="?controller=pages&action=login">HERE</a> to login to your account.</p>
@@ -155,7 +159,7 @@ if(isset($_POST['submit'])){
 						<div class="row">
 							<div class="col-lg-8">
 								<label class="checkbox">
-									<input type="checkbox">
+									<input type="checkbox" id="terms" name="terms">
 									I read the <a href="#">Terms and Conditions</a>
 								</label>
 							</div>
@@ -169,4 +173,5 @@ if(isset($_POST['submit'])){
 				<!-- End Register Box -->
 			</div>
 		</div>
+		
 		<!-- === END CONTENT === -->

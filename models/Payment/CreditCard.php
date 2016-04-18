@@ -33,7 +33,7 @@ class CreditCard extends PaymentMethod
     private $address;
     
     public function __construct($cardholder, $cardnumber, $date, $cvc, $address){
-        $this->$cardHolder = $cardholder;
+        $this->cardHolder = $cardholder;
         $this->cardNumber = $cardnumber;
         $this->expiryDate = $date;
         $this->cardVerificationCode = $cvc;

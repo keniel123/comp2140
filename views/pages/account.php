@@ -40,16 +40,16 @@
                                 $tdc = '</td>';
                                 $type = $_SESSION['paymenttype'];
                                 $account = $_SESSION['account'];
-                                echo $type . $tdc . $trc;
                                 switch($type){
                                     case 'cc':
+                                        echo 'Credit Card<a href="?controller=pages&action=addpayment"> change</a>' . $tdc . $trc;
                                         $num = $account->getPaymentMethod()->getCardNumber();
                                         $b_address1 = $account->getPaymentMethod()->getBillingAddress()->getStreetAddress();
                                         $b_address2 = $account->getPaymentMethod()->getBillingAddress()->getCity();
                                         $b_address3 = $account->getPaymentMethod()->getBillingAddress()->getParish();
                                         $b_address4 = $account->getPaymentMethod()->getBillingAddress()->getPostalCode();
                                         $cardholder = $account->getPaymentMethod()->getCardHolder();
-                                        echo $tr . $td . 'Card Number' . $tdc . $td . $num . $tdc . $trc;
+                                        echo $tr . $td . 'Card Number' . $tdc . $td . 'XXXX-XXXX-XXXX-' . substr($num, 12) . $tdc . $trc;
                                         echo $tr . $td . 'Cardholder' . $tdc . $td . $cardholder . $tdc . $trc;
                                         echo $tr . $td . 'Billing Address' . $tdc . $td . $b_address1 . $tdc . $trc;
                                         echo $tr . $td . '' . $tdc . $td . $b_address2 . $tdc . $trc;
@@ -57,6 +57,7 @@
                                         echo $tr . $td . '' . $tdc . $td . $b_address4;
                                         break;
                                     case 'ba':
+                                        echo 'Bank Account<a href="?controller=pages&action=addpayment"> change</a>' . $tdc . $trc;
                                         $num = $account->getPaymentMethod()->getAccountNumber();
                                         $batype = $account->getPaymentMethod()->getAccountType();
                                         $bname = $account->getPaymentMethod()->getBank();
@@ -65,6 +66,7 @@
                                         echo $tr . $td . 'Bank' . $tdc . $td . $bname;
                                         break;
                                     case 'pp':
+                                        echo 'PayPal<a href="?controller=pages&action=addpayment"> change</a>' . $tdc . $trc;
                                         $ppemail = $account->getPaymentMethod()->getEmail();
                                         echo $tr . $td . 'PayPal Email' . $tdc . $td . $ppemail;
                                         break;
@@ -80,84 +82,5 @@
          <button class="btn btn-primary" type="button" style="width: 25%;" 
                  onclick="location.href='?controller=pages&action=form'">Edit</button>
      </div>
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-    <!--form name="yourAccount" method = "post">
-    <TABLE width= 500px class= "accountTable">
-        <th> <h3>Settings</h3> </th>
-            <tr>
-                <td width=50%>
-                Change Your Password:
-                </td>
-                   
-                <td width=50%> 
-                   <button class="btn btn-danger" type ="button" 
-                id="resetPword" onclick="location.href='?controller=pages&action=reset'">Reset Password</button> 
-                </td>
-            </tr>
-            <tr>
-                <td width=50%> 
-               Change Your Email Address: 
-                 </td>   
-             
-    
-                <td width=50%>
-                     <input type ="text" name="changeEmail" placeholder="address@example.com"  class = "accountSettings" >
-                </td>
-            </tr>
-           
-    </TABLE>
-    <input type="submit" value="Submit  Changes">
-    </form>
-
-</div>
-    <div class="accountsection">
-        <TABLE width= 500px>
-        <th> <h3>Orders</h3> </th>
-        <tr>
-        <td width=50%>
-          <a href="cart.php"> View orders </a>
-        </td>
-
-        
-        <td width=50%>  </td>
-       </tr>
-       <tr>
-        <td width=50%>
-          <a href="#">Cancel orders </a>
-        </td>
-
-        
-        <td width=50%>  </td>
-       </tr>
-        <tr>
-        <td width=50%>
-            To Change your billing address: 
-        </td>
-
-        
-        <td width=50%>  <button class="btn btn-success" type ="button" id="chahgeBillingLink"
-        onclick="location.href='?controller=pages&action=changeshipping'">Change Billing Address</button> </td>
-       </tr> 
-       <tr>
-        <td width=50%>
-            
-        </td>
-
-        
-        <td width=50%>  </td>
-       </tr>
-    </TABLE-->
     </div>
- </div>
+</div>

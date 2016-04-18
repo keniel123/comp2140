@@ -1007,16 +1007,13 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 }
 .accountsection
 {
-
- 
-
   margin: 0 auto;
   border-radius: 10px;
-  border-bottom-style: solid;
+  /*border-bottom-style: solid;*/
   border-bottom-width: .5px;
   border-bottom-color:  #00b386;
-  height: 50%;
-  width: 50%;
+  height: 100%;
+  width: 80%;
   padding: 15px;
 
 }
@@ -1030,5 +1027,16 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
   border-spacing: 2px;
 
 }
+
+#bankaccount {}
+
+#credit-card{
+    display: none;
+}
+
+#paypal{
+    display: none;
+}
+
 
 

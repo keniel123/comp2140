@@ -1,4 +1,5 @@
-    <div class="product-big-title-area">
+<?php $account = $_SESSION['account']; $shippingAddress = $account->getShippingAddress(); ?>
+<div class="product-big-title-area">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -60,19 +61,19 @@
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Shipping Address</th>
-                                                <td><?php echo $_SESSION['streetaddress']; ?></td>
+                                                <td><?php echo $shippingAddress->getStreetAddress(); ?></td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th></th>
-                                                <td><?php echo $_SESSION['city']; ?></td>
+                                                <td><?php echo $shippingAddress->getCity(); ?></td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th></th>
-                                                <td><?php echo $_SESSION['parish']; ?></td>
+                                                <td><?php echo $shippingAddress->getParish(); ?></td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th></th>
-                                                <td><?php echo $_SESSION['postalcode']; ?></td>
+                                                <td><?php echo $shippingAddress->getPostalCode(); ?></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -84,7 +85,18 @@
                                             $h3 = '<h2>';
                                             $h3c = '</h2>';   
                                             if(isset($_SESSION['payment'])){
-                                                echo $p . 'Your Payment Method: ' . $_SESSION['paymenttype'] . $pc;
+                                                switch($_SESSION['paymenttype']){
+                                                    case 'ba':
+                                                        $type = 'Bank Account';
+                                                        break;
+                                                    case 'cc':
+                                                        $type = 'Credit Card';
+                                                        break;
+                                                    case 'pp':
+                                                        $type = 'PayPal';
+                                                        break;
+                                                }
+                                                echo $p . 'Your Payment Method: ' . $type . $pc;
                                                 echo $p . '<a href="?controller=pages&action=addpayment">Change</a>' . $pc;
                                                 echo '<div class="form-row place-order"><input type="submit" 
                                                 data-value="Place order" value="Place order" id="placeOrder" 

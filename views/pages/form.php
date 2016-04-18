@@ -1,4 +1,8 @@
-		<!-- === BEGIN CONTENT === -->
+<?php 
+$account = $_SESSION['account'];
+?>		
+
+<!-- === BEGIN CONTENT === -->
 <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -23,55 +27,55 @@
                         <div class="form-group">
                             <label>First Name<span class="color-red">*</span></label>
                             <input class="form-control margin-bottom-20" type="text" name="firstname" id="firstname"
-                               value="<?php echo $_SESSION['firstname'] ?>">
+                               value="<?php echo $account->getFirstName(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Last Name<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="lastname" id="lastname"
-                               value="<?php echo $_SESSION['lastname'] ?>">
+                               value="<?php echo $account->getLastName(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Username<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="username" id="username"
-                               value="<?php echo $_SESSION['username'] ?>">
+                               value="<?php echo $account->getUsername(); ?>">
 						</div>
                         
                         <div class="form-group">
 						<label>Email Address <span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="email" id="email"
-                               value="<?php echo $_SESSION['email'] ?>">
+                               value="<?php echo $account->getEmail(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Phone Number<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="number" name="phonenumber" 
-                               id="phonenumber" value="<?php echo $_SESSION['phonenumber'] ?>">
+                               id="phonenumber" value="<?php echo $account->getPhoneNumber(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Street Address<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="saddress" id="saddress"
-                               value="<?php echo $_SESSION['streetaddress'] ?>">
+                               value="<?php echo $account->getShippingAddress()->getStreetAddress(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>City<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="city" id="city"
-                               value="<?php echo $_SESSION['city'] ?>">
+                               value="<?php echo $account->getShippingAddress()->getCity(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Parish<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="parish" id="parish"
-                               value="<?php echo $_SESSION['parish'] ?>">
+                               value="<?php echo $account->getShippingAddress()->getParish(); ?>">
                         </div>
                         
                         <div class="form-group">
                         <label>Postal Code<span class="color-red">*</span></label>
 						<input class="form-control margin-bottom-20" type="text" name="postalcode" 
-                               id="postalcode" value="<?php echo $_SESSION['postalcode'] ?>">
+                               id="postalcode" value="<?php echo $account->getShippingAddress()->getPostalCode(); ?>">
                         </div>
                         
 						<div class="row">

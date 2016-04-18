@@ -1,4 +1,6 @@
 <?php
+
+$database = new Database('localhost', 'pdo_ret', 'root', '');
 /**
  *
  */
@@ -20,8 +22,7 @@ class Cart
 	/**
 	 * @return	void 
 	 **/
-	public function __construct()
-    {
+	public function __construct(){
 		$this->dateCreated = getdate();
 		$this->total = 0.00;
 		$this->items = array();
@@ -29,8 +30,7 @@ class Cart
     /**
      * @return boolean
      */
-    public function checkAvailability($prod, $qty)//boolean
-    {
+    private function checkAvailability($prod, $qty){
         $result = $database->query(
 					"SELECT quantity
 					 FROM product
@@ -47,41 +47,34 @@ class Cart
     /**
      * @return boolean
      */
-    public function emptyCart()//boolean
-    {
+    public function emptyCart(){
 		unset($this->items);
 		$this->items = array();
-		return TRUE;
     }
+    
     /**
      * @param prod			Product object
      * @return boolean
      */
-    public function addToCart(Product $prod, int $amt)//boolean
-    {
-        if (!checkAvailability($prod, $amt))
-        {
-				return FALSE;
-		}
+    public function addToCart($prod, $amt){
+        
 		// if product already in list increase quantity
-		foreach($this->items as $product)
-		{
-			if($prod->name == $product->name)
-			{
-				$product->quantity+=$prod->name;
+		foreach($this->items as $product){
+			if($prod->getName() == $product->getName()){
+                $total = $product->getQuantity() + $amt;
+                $this->removeFromCart($product);
+                $prod->setQuantity($total);
+                $this->addToCart($prod);
 			}
 		}
-		array_push($this->items,prod);
-		//update total price
-		calculateTotal();
 		return TRUE;
     }
+    
     /**
      * @param String $itemName
      * @return boolean
      */
-    public function removeFromCart(String $itemName)//boolean
-    {
+    public function removeFromCart($itemName){
         foreach($this->items as $product)
         {
 			if($product.name == $itemName)
@@ -95,7 +88,7 @@ class Cart
     /**
      * @return double
      */
-    public function calculateTotal()//double
+    public function calculateTotal()
     {
 		$running_sum = 0.00;
 		$size = count($this->items);
@@ -112,21 +105,21 @@ class Cart
     /**
      * @return String
      */
-    public function getDateCreated()//String
+    public function getDateCreated()
     {
         return $this->dateCreated;
     }
     /**
      * @return Double
      */
-    public function getTotal()//Double
+    public function getTotal()
     {
         return $this->total;
     }
     /**
      * @return List<Product>
      */
-    public function getItems()//List<Product>
+    public function getItems()
     {
         return $this->items;
     }

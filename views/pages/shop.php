@@ -13,7 +13,6 @@
     
     
     <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -28,7 +27,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -46,7 +46,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -64,7 +65,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -82,7 +84,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -100,7 +103,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -118,7 +122,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -136,7 +141,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -154,7 +160,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -172,7 +179,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -190,7 +198,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -208,7 +217,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -226,7 +236,8 @@
                             </div>  
                             
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
+                                   href="?controller=control&action=addtocart">Add to cart</a>
                                 <p></p>
                             </div>                       
                         </div>
@@ -266,5 +277,5 @@
         
     
     <!-- Main Script -->
-    <script src="../../js/main.js"></script>
-    <script src="../../js/shop.js"></script>
+    <script src="source-files/js/main.js"></script>
+    <script src="source-files/js/shop.js"></script>

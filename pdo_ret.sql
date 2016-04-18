@@ -43,7 +43,7 @@ CREATE TABLE admin(
 CREATE TABLE account (
     username varchar(80) NOT NULL,
     email_address varchar(80) NOT NULL,
-    password_hash varchar(80) NOT NULL,
+    password_hash char(40) NOT NULL,
     p_number int(20) NOT NULL,
     f_name varchar(80) NOT NULL,
     l_name varchar(80) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE account (
 
 
 CREATE TABLE cart (
-  cart_id int(80) NOT NULL auto_increment,
+  cart_id char(40) not null,
   date_created date NOT NULL,
   total_price float(50) NOT Null,
   PRIMARY KEY(cart_id)
@@ -61,7 +61,7 @@ CREATE TABLE cart (
 
 
 CREATE TABLE orders (
-  order_id int(80) not null auto_increment,
+  order_id char(40) not null,
   order_date date NOT NULL,
   delivery_date date NOT NULL,
   order_status varchar(20) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE orders (
 
 
 CREATE TABLE product (
-  product_id int(80) not null auto_increment,
+  product_id char(40) not null,
   product_name varchar(80) NOT NULL,
   image varchar(80) NOT NULL,
   price float(40) NOT NULL,
@@ -80,28 +80,28 @@ CREATE TABLE product (
 );
 
 CREATE TABLE address (
-  address_id int(80) not null auto_increment,
-  street_address varchar(255) NOT NULL,
+  address_id char(40) not null,
+  street_address varchar(80) NOT NULL,
   city varchar(80) NOT NULL,
   parish varchar(50) NOT NULL,
-  postal_code varchar(20) NOT NULL,
+  postal_code char(7) NOT NULL,
   Primary Key (address_id)
 );
 
 -- Table structure for table `creditCard`
 
 CREATE TABLE credit_card (
-  cc_number int(80) NOT NULL,
+  cc_number char(40) not null,
   cardholder_name varchar(80) NOT NULL,
   Primary Key (cc_number)
 );
 
 
 CREATE TABLE bank_account (
-  acc_id int(80) not null auto_increment,
+  acc_id char(40) not null,
   bank_name varchar(80) NOT NULL,
   acc_type varchar(30)  NOT NULL,
-  acc_number int(80) NOT NULL,
+  acc_number int(25) not null,
   Primary Key (acc_id)
 );
 
@@ -114,25 +114,27 @@ CREATE TABLE paypal (
 
 
 CREATE TABLE order_product (
-  order_id int(80) not null auto_increment,
-  product_id int(80) not null,
-  PRIMARY KEY(order_id,product_id),
-  foreign key (order_id) references orders(order_id) on update cascade on delete cascade,
-  foreign key (product_id) references product(product_id) on update cascade on delete cascade
+    order_id char(40) not null,
+    product_id char(40) not null,
+    quantity int(3) not null,
+    PRIMARY KEY(order_id,product_id),
+    foreign key (order_id) references orders(order_id) on update cascade on delete cascade,
+    foreign key (product_id) references product(product_id) on update cascade on delete cascade
 );
 
 
 CREATE TABLE cart_product (
-  cart_id int(80) NOT NULL auto_increment,
-  product_id int(80) NOT NULL,
-  PRIMARY Key(cart_id,product_id),
-  foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade,
-  foreign key (product_id) references product(product_id) on update cascade on delete cascade
+    cart_id char(40) not null,
+    product_id char(40) not null,
+    quantity int(3) not null,
+    PRIMARY Key(cart_id,product_id),
+    foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade,
+    foreign key (product_id) references product(product_id) on update cascade on delete cascade
 );
 
 CREATE TABLE account_cart (
   username varchar(80) NOT NULL,
-  cart_id int(80) NOT NULL auto_increment,
+  cart_id char(40) not null,
   Primary Key (username,cart_id),
   foreign key (username) references account(username) on update cascade on delete cascade,
   foreign key (cart_id) references cart(cart_id) on update cascade on delete cascade
@@ -142,7 +144,7 @@ CREATE TABLE account_cart (
 
 CREATE TABLE account_order (
   username varchar(80) NOT NULL,
-  order_id int(80) not null auto_increment,
+  order_id char(40) not null,
   Primary Key (username,order_id),
   foreign key (username) references account(username) on update cascade on delete cascade,
   foreign key (order_id) references orders(order_id) on update cascade on delete cascade
@@ -151,23 +153,23 @@ CREATE TABLE account_order (
 
 CREATE TABLE shipping_address (
   username varchar(80) NOT NULL,
-  address_id int(80) not null auto_increment,
+  address_id char(40) not null,
   Primary Key (username),
   foreign key (username) references account(username) on update cascade on delete cascade,
   foreign key (address_id) references address(address_id) on update cascade on delete cascade
 );
 
 CREATE TABLE cc_billing_address (
-    cc_number int(80) NOT NULL,
-    address_id int(80) not null auto_increment,
-    Primary Key (cc_number),
-    foreign key (address_id) references address(address_id) on update cascade on delete cascade,
-    foreign key (cc_number) references credit_cart(cc_number) on update cascade on delete cascade
+  cc_number char(40) not null,
+  address_id char(40) not null,
+  Primary Key (cc_number),
+  foreign key (cc_number) references credit_card(cc_number) on update cascade on delete cascade,
+  foreign key (address_id) references address(address_id) on update cascade on delete cascade
 );
 
 CREATE TABLE ba_billing_address (
-  acc_id int(80) not null auto_increment,
-  address_id int(80) not null auto_increment,
+  acc_id char(40) not null,
+  address_id char(40) not null,
   Primary Key (acc_id),
   foreign key (acc_id) references bank_account(acc_id) on update cascade on delete cascade,
   foreign key (address_id) references address(address_id) on update cascade on delete cascade
@@ -175,15 +177,15 @@ CREATE TABLE ba_billing_address (
 
 CREATE TABLE account_payment (
   username varchar(80) NOT NULL,
-  payment_id int(80) not null auto_increment,
+  payment_id varchar(80) not null,
   Primary Key (username),
   foreign key (username) references account(username) on update cascade on delete cascade
 );
 
 CREATE TABLE product_description (
-  product_id int(80) not null auto_increment,
-  description_no int(80) NOT NULL auto_increment,
-  description varchar(255) NOT NULL,
+  product_id char(40) not null,
+  description_no char(40) not null,
+  description varchar(80) NOT NULL,
   Primary Key (product_id,description_no),
   foreign key (product_id) references product(product_id) on update cascade on delete cascade
 );

@@ -23,7 +23,7 @@
     
     
     <!-- Bootstrap -->
-    <link href="source-files/css/bootstrap.min.css" rel="stylesheet">
+    <link href="source-files/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link href="source-files/css/font-awesome.min.css" rel="stylesheet">
@@ -47,15 +47,17 @@
                     <div class="user-menu">
                          <ul class="nav navbar-nav pull-left">
                              <?php 
-                                 if(isset($_SESSION['username']))
+                                 if(isset($_SESSION['account']))
                                  {
+                                     $account = $_SESSION['account'];
+                                     $username = $account->getUsername();
                                      echo "<li><a href='?controller=pages&action=account'>
-                                     <i class='fa fa-user'></i>Hi " . $_SESSION['username'] . "</a></li>";
+                                     <span class=\"glyphicon glyphicon-user\"></span> Hi $username</a></li>";
                                      echo "<li><a href='?controller=control&action=logout'>
                                      Logout</a></li>";
                                  } else {
                                      echo '<li class="nav"><a href=\'?controller=pages&action=login\'>
-                                     <i class=\'fa fa-user\'></i>Login</a></li>';
+                                     <span class="glyphicon glyphicon-user"></span> Login</a></li>';
                                  }
                              ?>
                         </ul>
@@ -89,8 +91,8 @@
                         }
 
                         ?>
-                        <?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=cart">';}
-                                else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
+                        <?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=cart">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
                     </div>
                 </div>
                    </div>
@@ -105,9 +107,9 @@
                     <ul class="nav navbar-nav" >
                         <li class="active"><a href="?controller=pages&action=index">Home</a></li>
                         <li><a href="?controller=pages&action=shop">Shop page</a></li>
-                        <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=cart">';}
+                        <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=cart">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>Cart</a></li>
-                        <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=checkout">';}
+                        <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=checkout">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>Checkout</a></li>
                         <li><a href="?controller=pages&action=contact">Contact</a></li>
                     </ul>
@@ -157,7 +159,7 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
                         <ul>
-                            <li><?php if (isset($_SESSION['username'])){echo '<a href="?controller=pages&action=account">';}
+                            <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=account">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>My account</a></li>
                             <li><a href="#">Order history</a></li>
                             <li><a href="?controller=pages&action=contact">Contact</a></li>
@@ -204,8 +206,8 @@
                 <div class="col-md-8">
                     <div class="copyright">
                         <p>&copy; 2015 Bowla's Motoring world. All Rights Reserved.</p>
-                        <p><a href="terms.php">Terms and Conditions</a></p>
-                        <a href="privacy.php">Privacy Policy</a>
+                        <p><a href="?controller=pages&action=terms">Terms and Conditions</a></p>
+                        <a href="?controller=pages&action=privacy">Privacy Policy</a>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -236,5 +238,9 @@
     
     <!-- Main Script -->
     <script src="source-files/js/main.js"></script>
+
+    <!-- Custom Script -->
+    <script src="source-files/js/addpayment.js"></script>
+    <script src="source-files/js/login.js"></script>
   </body>
 </html>

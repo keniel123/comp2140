@@ -91,7 +91,7 @@ if(isset($_POST['submit'])){
 			<div class="row margin-vert-30">
 				<!-- Register Box -->
 				<div class="col-md-6 col-md-offset-3 col-sm-offset-3">
-					<form class="signup-page" role="form" method="post" action="?controller=control&action=signup" id="signupform" autocomplete="off">
+					<form class="signup-page" role="form" method="post" action="?controller=control&action=signup" id="signupform">
 						<div class="signup-header">
 							<h2>Register a new account</h2>
 							<p>Already a member? Click <a href="?controller=pages&action=login">HERE</a> to login to your account.</p>
@@ -99,59 +99,59 @@ if(isset($_POST['submit'])){
 						
                         <div class="form-group">
                         <label>First Name<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="firstname" id="firstname">
+						<input required class="form-control margin-bottom-20" type="text" name="firstname" id="firstname">
                         </div>
                         
                         <div class="form-group">
                         <label>Last Name<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="lastname" id="lastname">
+						<input required class="form-control margin-bottom-20" type="text" name="lastname" id="lastname">
                         </div>
                         
                         <div class="form-group">
                         <label>Username<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="username" id="username">
+						<input required class="form-control margin-bottom-20" type="text" name="username" id="username">
 						</div>
                         
                         <div class="form-group">
 						<label>Email Address <span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="email" id="email">
+						<input required class="form-control margin-bottom-20" type="text" name="email" id="email">
                         </div>
                         
                         <div class="form-group">
                         <label>Phone Number<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="number" name="phonenumber" 
-                               id="phonenumber" placeholder="E.g. 8761234567">
+						<input required class="form-control margin-bottom-20" type="number" name="phonenumber" 
+                               id="phonenumber" placeholder="E.g. 8761234567" maxlength="10">
                         </div>
                         
                         <div class="form-group">
                         <label>Street Address<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="saddress" id="saddress">
+						<input required class="form-control margin-bottom-20" type="text" name="saddress" id="saddress">
                         </div>
                         
                         <div class="form-group">
                         <label>City<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="city" id="city">
+						<input required class="form-control margin-bottom-20" type="text" name="city" id="city">
                         </div>
                         
                         <div class="form-group">
                         <label>Parish<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="parish" id="parish">
+						<input required class="form-control margin-bottom-20" type="text" name="parish" id="parish">
                         </div>
                         
                         <div class="form-group">
                         <label>Postal Code<span class="color-red">*</span></label>
-						<input class="form-control margin-bottom-20" type="text" name="postalcode" 
-                               id="postalcode" placeholder="E.g. JMBPD15">
+						<input required class="form-control margin-bottom-20" type="text" name="postalcode" 
+                               id="postalcode" placeholder="E.g. JMBPD15" maxlength="7">
                         </div>
                         
 						<div class="row">
 							<div class="col-sm-6">
 								<label>Password <span class="color-red">*</span></label>
-								<input class="form-control margin-bottom-20" type="password" name="password" id="password">
+								<input required class="form-control margin-bottom-20" type="password" name="password" id="password">
 							</div>
 							<div class="col-sm-6">
 								<label>Confirm Password <span class="color-red">*</span></label>
-								<input class="form-control margin-bottom-20" type="password" name="passwordConfirm" id="passwordConfirm" >
+								<input required class="form-control margin-bottom-20" type="password" name="passwordConfirm" id="passwordConfirm" >
 							</div>
 						</div>
 						<hr>
@@ -159,8 +159,9 @@ if(isset($_POST['submit'])){
 						<div class="row">
 							<div class="col-lg-8">
 								<label class="checkbox">
-									<input type="checkbox" id="terms" name="terms">
-									I read the <a href="#">Terms and Conditions</a>
+									<input required type="checkbox" id="terms" name="terms">
+									I read and agree with the <a href="?controller=pages&action=terms">Terms and Conditions</a>
+                                    and <a href="?controller=pages&action=privacy">Privacy Policy</a>
 								</label>
 							</div>
 							<div class="col-lg-4 text-right">

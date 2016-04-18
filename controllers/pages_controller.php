@@ -8,7 +8,7 @@
     }
       
     public function admin() {
-      if (isset($_SESSION['username'])) {
+      if (isset($_SESSION['account'])) {
           if ($_SESSION['username'] == 'admin'){
             require_once('views/pages/admin.php');
           } else{
@@ -26,7 +26,7 @@
       
       
     public function cart(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             require_once('views/pages/cart.php');
         } else {
             require_once('views/pages/login.php');
@@ -38,7 +38,7 @@
     }
       
     public function checkout(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             require_once('views/pages/checkout.php');
         } else {
             require_once('views/pages/login.php');
@@ -54,7 +54,7 @@
     }
       
     public function login(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
         } else {
             require_once('views/pages/login.php');
@@ -66,7 +66,7 @@
     }
       
     public function signup(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             echo '<script>alert(\'You already have an account.\n Please log out first\');
             window.location.href = "?controller=pages&action=account";</script>';
         } else {
@@ -75,7 +75,7 @@
     }
       
     public function form(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             $_SESSION['fromaccount'] = 'yes';
             require_once('views/pages/form.php');
         } else {
@@ -84,7 +84,7 @@
     }
       
     public function account(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             require_once('views/pages/account.php');
         } else {
             require_once('views/pages/login.php');
@@ -96,7 +96,7 @@
     }
       
     public function addpayment(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             $_SESSION['fromaccount'] = 'yes';
             require_once('views/pages/addpayment.php');
         } else {
@@ -105,7 +105,7 @@
     }
       
     public function addpaymentc(){
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['account'])) {
             $_SESSION['fromcheckout'] = 'yes';
             require_once('views/pages/addpayment.php');
         } else {
@@ -117,5 +117,12 @@
         require_once('views/pages/single-product.html');
     }
       
+    public function terms(){
+        require_once('views/pages/terms.php');
+    }
+      
+    public function privacy(){
+        require_once('views/pages/privacy.php');
+    }      
   }
 ?>

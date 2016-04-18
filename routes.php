@@ -28,7 +28,8 @@
                                    'checkout', 'contact', 'about',
                                    'login', 'signup', 'account', 'admin',
                                   'form', 'changeshipping', 'reset',
-                                  'addpayment', 'addpaymentc', 'singleproduct'],
+                                  'addpayment', 'addpaymentc', 'singleproduct',
+                                  'terms', 'privacy'],
                         'control' => ['login', 'signup', 'logout', 'reset', 'change',
                                      'addpayment']);
 

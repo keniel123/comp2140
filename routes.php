@@ -31,7 +31,7 @@
                                   'addpayment', 'addpaymentc', 'singleproduct',
                                   'terms', 'privacy'],
                         'control' => ['login', 'signup', 'logout', 'reset', 'change',
-                                     'addpayment']);
+                                     'addpayment', 'addtocart', 'removefromcart']);
 
   // check that the requested controller and action are both allowed
   // if someone tries to access something else he will be redirected to the error action of the pages controller

@@ -23,7 +23,6 @@
       require_once('views/pages/error.php');
     }
       
-      
     public function cart(){
         if (isset($_SESSION['account'])) {
             require_once('views/pages/cart.php');

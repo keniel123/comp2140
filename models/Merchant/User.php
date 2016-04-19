@@ -137,18 +137,27 @@ class User
         }
         
         /* Link shipping address to account */
-        $sql = "insert into shipping_address values('$username', '".$shipping_address->getAddressId()."');";
+        $sql = "insert into shipping_address values('$this->username', '".$shipping_address->getAddressId()."');";
+        $result = $database->update($sql);
+        if($result < 1){
+            return FALSE;
+        }
+        
+        /* Store cart */
+        $sql = "insert into cart values('".$account->getCart()->getCartId()."', '".$account->getCart()->getDateCreated()."',
+        '".$account->getCart()->getTotal()."');";
         $result = $database->update($sql);
         if($result < 1){
             return FALSE;
         }
         
         /* Link account to cart */
-        $sql = "insert into account_cart values('$username', '".$account->getCart()->getCartId()."');";
+        $sql = "insert into account_cart values('$this->username', '".$account->getCart()->getCartId()."');";
         $result = $database->update($sql);
         if($result < 1){
             return FALSE;
         }
+        $_SESSION['account'] = $account;
         
         return TRUE;
     }

@@ -51,7 +51,7 @@
                                                     echo $td . $product->getQuantity() . $tdc;
                                                     echo $td . $product->getPrice() * $product->getQuantity() . $tdc;
                                                     echo $td . '<form method="post" action="?controller=control&action=removefromcart">
-                                                    <input type="text" hidden="true" name="productid" value="' . $product->getID() . '">
+                                                    <input type="text" hidden="true" name="productid" value="' . $product->getProductId() . '">
                                                     <input type="number" hidden="true" name="quantity" value="' . $product->getQuantity() . '">
                                                     <input type="submit" value="Remove">
                                                     </form>' . $tdc;

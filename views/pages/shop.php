@@ -10,251 +10,54 @@
             </div>
         </div>
     </div>
-    
-    
-    <div class="single-product-area">
+<div class="single-product-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
+
+<?php 
+/* Dynamically generate stuff */
+$account = $_SESSION['account'];
+$database = new Database('localhost', 'pdo_ret', 'root', '');
+$sql = "select * from product;";
+$result = $database->query($sql);
+foreach($result as $row){
+    /* Create Product and generate row */
+    $productId = $row[0];
+    $name = $row[1];
+    $price = $row[3];
+    $product = new Product($productId, $name, $price);
+    echo '<div class="col-md-3 col-sm-6">
+        <a class = "link" href ="">
+            <div class="single-shop-product">
+                <div class="product-upper">
+                    <img src="" alt="">
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">   
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img  alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product price--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">    
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product price--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a class = "link" href ="">
-                        <div class="single-shop-product">
-                            <div class="product-upper">
-                                <img src="" alt="">
-                            </div>
-                            <h2><a href=""> <!--Product name--> </a></h2>
-                            <div class="product-carousel-price">
-                                <ins> <!--Product price--> </ins>
-                            </div>  
-                            
-                            <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" 
-                                   href="?controller=control&action=addtocart">Add to cart</a>
-                                <a class="add_to_cart_button" href="?controller=pages&action=singleproduct">View Product</a><br><br>
-                                <p></p>
-                            </div>                       
-                        </div>
-                    </a>
-                </div>
+                <h2><a href="?controller=pages&action=singleproduct">'. $product->getName() .'</a></h2>
+                <div class="product-carousel-price">
+                    <ins>$'. $product->getPrice() .'</ins>
+                </div>  
+
+                <div class="product-option-shop">
+                <form role="form" class="form" method="post" action="?controller=control&action=addtocart">
+                    <input type="text" hidden="true" value="'. $product->getProductId() .'" name="productid">
+                    <div style="display: inline;">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" class="form-control">
+                    </div>
+                    <div style="display: inline;">
+                    <input type="submit" value="Add to cart" class="btn">
+                </form>
+                    
+                    <a class="add_to_cart_button btn" href="?controller=pages&action=singleproduct">View Product</a><br><br>
+                    </div>
+                    <p></p>
+                </div>                       
+            </div>
+        </a>
+    </div>';
+    
+}
+?>
             </div>
             
             <div class="row">

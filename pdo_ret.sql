@@ -54,7 +54,7 @@ CREATE TABLE account (
 
 CREATE TABLE cart (
   cart_id char(40) not null,
-  date_created date NOT NULL,
+  date_created int(8) NOT NULL,
   total_price float(50) NOT Null,
   PRIMARY KEY(cart_id)
 );
@@ -192,3 +192,15 @@ CREATE TABLE product_description (
 
 
 
+insert into product values('a98704cd1bee6608772b6458e7d9e06a7add59b2', 'G1 Engine', '', 600.00, 21);
+insert into product values('95819786d71397569d39fd668c65b95003ee37e0', 'G2 Engine', '', 600.00, 21);
+insert into product values('bd52d850ed04432d978984c9ed66bdd4b27c9499', 'G3 Engine', '', 600.00, 21);
+insert into product values('0beb966c593579ae1a7cd7eaf6827c560a6dfcb7', 'G4 Engine', '', 600.00, 21);
+insert into product values('0f352d1add9f11f05c34adbe843c9250f5321824', 'G5 Engine', '', 600.00, 21);
+insert into product values('07ac93aec58e44ac803e4a0736f9e336677f4f4a', 'G6 Engine', '', 600.00, 21);
+insert into product values('dd6c9e88d90241cb733be473f2fceff1da902f85', 'G7 Engine', '', 600.00, 21);
+insert into product values('12e296235e4267c93832a365624e99fb656ea39b', 'G8 Engine', '', 600.00, 21);
+insert into product values('545c2be1837e49fb3bed1aa4c9a34c5a6d55d6c8', 'G9 Engine', '', 600.00, 21);
+insert into product values('b3bd3d4e85aeafd063b6982dc5a235c37031b7b9', 'G10 Engine', '', 600.00, 21);
+insert into product values('610371dba973f103d235fd213c381052cd43aee3', 'G11 Engine', '', 600.00, 21);
+insert into product values('ab743453d5d9988978b3d94068d909e2ec99f33f', 'G12 Engine', '', 600.00, 21);

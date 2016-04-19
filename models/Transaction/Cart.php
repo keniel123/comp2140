@@ -30,23 +30,6 @@ class Cart
 		$this->total = 0.00;
 		$this->items = array();
     }
-    /**
-     * @return boolean
-     */
-//    private function checkAvailability($prod, $qty){
-//        $result = $database->query(
-//					"SELECT quantity
-//					 FROM product
-//					  WHERE productId = ".$prod->getID().";"
-//					);
-//		if (gettype($result) == 'object')
-//		{
-//			$row = $result[0];
-//			if($qty <= $row[4])
-//				return TRUE;
-//		}
-//		return FALSE;
-//    }
     
     public function inCart($product_name){
         foreach($this->items as $product){
@@ -72,6 +55,7 @@ class Cart
      */
     public function addToCart($prod, $amt){
         
+        $database = new Database('localhost', 'pdo_ret', 'root', '');
         if(gettype($this->inCart($prod->getName())) != 'boolean'){ /* if product already in list increase quantity */
             $total = $this->inCart($prod->getName()) + $amt;
             $this->removeFromCart($prod->getName());
@@ -79,10 +63,11 @@ class Cart
             array_push($this->items, $prod);
             
             /* Update relevent tables in the database */
-            $productId = $prod->getID();
+            $productId = $prod->getProductId();
             $sql = "update cart_product set quantity=$total where cart_id='$this->cartId' and product_id='$productId';";
             $result = $database->update($sql);
             if($result < 1){
+                array_pop($this->items);
                 return FALSE;
             }
             return TRUE;
@@ -91,9 +76,11 @@ class Cart
             array_push($this->items, $prod);
             
             /* Update relevent tables in the database */
-            $sql = "insert into cart_product values($this->cartId, $productId, $amt);";
+            $productId = $prod->getProductId();
+            $sql = "insert into cart_product values('$this->cartId', '$productId', $amt);";
             $result = $database->update($sql);
             if($result < 1){
+                array_pop($this->items);
                 return FALSE;
             }
             return TRUE;
@@ -105,9 +92,12 @@ class Cart
      * @return boolean
      */
     public function removeFromCart($itemName){
+        $database = new Database('localhost', 'pdo_ret', 'root', '');
         foreach($this->items as $product){
-			if($product.name == $itemName){
+			if($product->getName() == $itemName){
 				array_pop($this->items, $product);
+                $sql = "delete from cart_product where cart_id='$this->cartId' and product_id='".$product->getProductId()."';";
+                $database->update($sql);
 				return TRUE;
 			}	
 		}

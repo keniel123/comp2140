@@ -30,10 +30,10 @@
      private $image;
  
 
- 	 public function __construct($_id, $_name, $_price){
-         $this->ID = $_id;
-         $this->name = $_name;
-         $this->price = $_price;
+ 	 public function __construct($id, $name, $price){
+         $this->ID = $id;
+         $this->name = $name;
+         $this->price = $price;
  	}
  
      /**

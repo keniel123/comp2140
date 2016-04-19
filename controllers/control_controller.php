@@ -161,8 +161,7 @@
             echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
             return;
         }
-        $_SESSION['account'] = $account;
-        echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+        //echo '<script>window.location.href = "?controller=pages&action=index";</script>';
     }
 
       public function reset(){
@@ -649,17 +648,18 @@
 
         /* Checking availability */
         $database = new Database('localhost', 'pdo_ret', 'root', '');
-        $sql = "select product_name, quantity_left from product where product_id='$productId';";
+        $sql = "select product_name, quantity_left, price from product where product_id='$productId';";
         $result = $database->query($sql);
         $result = $result[0];
         $product_name = $result[0];
         $quantity_left = $result[1];
-        if(quantity <= $quantity_left){
+        $price = $result[2];
+        if($quantity <= $quantity_left){
             /* Adding to cart */
-            $product = new Product($productId, $product_name);
+            $product = new Product($productId, $product_name, $price);
             $product->setQuantity($quantity);
             $bool = $account->getCart()->addToCart($product, (float)$quantity);
-            if($bool){
+            if($bool == TRUE){
                 echo '<script>alert(\'Successfully added\');</script>';
                 echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
             } 

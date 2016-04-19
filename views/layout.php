@@ -221,7 +221,7 @@
     <!-- Bootstrap JS form CDN -->
     <script src="source-files/js/register.js"type="text/javascript"></script>
     <script src="source-files/js/login.js"type="text/javascript"></script>
-    <script src="source-files/js/addpayment.js"type="text/javascript"></script>
+    <script src="source-files/js/bankdetails.js"type="text/javascript"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->

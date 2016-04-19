@@ -114,7 +114,7 @@
     }
       
     public function singleproduct(){
-        require_once('views/pages/single-product.html');
+        require_once('views/pages/single-product.php');
     }
       
     public function terms(){

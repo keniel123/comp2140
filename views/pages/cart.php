@@ -39,8 +39,24 @@
                                             $trc = '</tr>';
                                             $td = '<td>';
                                             $tdc = '</td>';
-                                            if (FALSE){
-                                                
+                                            $account = $_SESSION['account'];
+                                            $items = $account->fetchItems();
+                                            if (count($items) > 0){
+                                                foreach($items as $product){
+                                                    echo $tr;
+                                                    echo $td . $tdc;
+                                                    echo $td . $tdc;
+                                                    echo $td . $product->getName() . $tdc;
+                                                    echo $td . $product->getPrice() . $tdc;
+                                                    echo $td . $product->getQuantity() . $tdc;
+                                                    echo $td . $product->getPrice() * $product->getQuantity() . $tdc;
+                                                    echo $td . '<form method="post" action="?controller=control&action=removefromcart">
+                                                    <input type="text" hidden="true" name="productid" value="' . $product->getID() . '">
+                                                    <input type="number" hidden="true" name="quantity" value="' . $product->getQuantity() . '">
+                                                    <input type="submit" value="Remove">
+                                                    </form>' . $tdc;
+                                                    echo $trc;
+                                                }
                                             } else {
                                                 echo $tr . $td . '<h3>No items</h3>' . $tdc . $trc;
                                             }

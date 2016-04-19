@@ -28,21 +28,18 @@
       * @var String
       */
      private $image;
-     /**
-      * @var int
-      */
-     private $qtyLeft;
  
 
- 	 public function __construct($_id, $_name){
- 		$this->ID = $_id;
- 		$this->name = $_name;
+ 	 public function __construct($_id, $_name, $_price){
+         $this->ID = $_id;
+         $this->name = $_name;
+         $this->price = $price
  	}
  
      /**
       * @return String
       */
-     public function getID(){
+     public function getProductId(){
  
          return $this->ID;
  
@@ -52,7 +49,7 @@
       * @param String $ID
       * @return 
       */
-     public function setID($ID){
+     public function setProductId($ID){
  
          $this->ID = $ID;
      }

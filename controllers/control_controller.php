@@ -1,11 +1,12 @@
 <?php
 
   class ControlController {
-      
-    public function login(){
+      public function login(){
         $username = $_POST['username'];
         $password = $_POST['password'];
         $user = new User($username, $password);
+        
+        /* Login call to user object - checking credentials */
         $boolean = $user->login('account');
         if ($boolean) {
             $database = new Database('localhost', 'pdo_ret', 'root', '');
@@ -14,10 +15,10 @@
             $result = $database->query($sql);
             $result = $result[0];
             $address = new Address($result[7], $result[8], $result[9], $result[10]);
-            $account = new Account($username, $result[2], $password, $result[4],
+            $account = new Account($username, $result[2], $password, (float)$result[4],
                                   $result[5], $result[6], $address);
             
-            //Check for existing payment method
+            /* Check for existing payment method */
             $sql = "select * from account natural join account_payment 
             natural join address where username='$username';";
             $result = $database->query($sql);
@@ -84,20 +85,37 @@
                 }
                 
             }
+            
+            /* Get cart and products in cart */
+            $sql = "select cart_id from account_cart username='$username';";
+            $result = $database->query($sql);
+            $result = $result[0];
+            $cartId = $result[0];
+            $cart = new Cart();
+            $cart->setCartId($cartId);
+            
+            $sql = "select * from cart_product where cart_id='$cartId';";
+            $result = $database->query($sql);
+            foreach($result as $row){
+                $productId = $row[1];
+                $quantity = $row[2];
+                $sql = "select * from product where product_id='$productId';";
+                $results = $database->query($sql);
+                $results = $results[0];
+                $name = $results[1];
+                $price = $results[3];
+                $product = new Product($productId, $name, $price);
+                for($i=0; $i<$quantity; $i++){
+                    $cart->addToCart($product);
+                }
+            }
+            
+            $account->setCart($cart);
             $_SESSION['account'] = $account;
-            /*
-            $_SESSION['username'] = $account->getUsername();
-            $_SESSION['email'] = $account->getEmail();
-            $_SESSION['phonenumber'] = $account->getPhoneNumber();
-            $_SESSION['firstname'] = $account->getFirstName();
-            $_SESSION['lastname'] = $account->getLastName();
-            $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-            $_SESSION['city'] = $account->getShippingAddress()->getCity();
-            $_SESSION['parish'] = $account->getShippingAddress()->getParish();
-            $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-            */
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
-        } else {
+        } 
+        else {
+            /* Login call to user object - checking credentials */
             $boolean = $user->login('admin');
             if ($boolean) {
                 $admin = new Admin($username, $password);
@@ -112,13 +130,15 @@
         }
     }
       
-    public function logout(){
-        session_unset();
-        session_destroy();
-        echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+      public function logout(){
+        $account = $_SESSION['account'];
+
+        /* Logout call to account object */
+        $account->logout();
     }
-      
-    public function signup(){
+
+      public function signup(){
+        /* Get posted form values */
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -129,64 +149,35 @@
         $city = $_POST['city'];
         $parish = $_POST['parish'];
         $postal_code = $_POST['postalcode'];
-        $address_id = sha1($street_address . $city . $parish . $postal_code);
-        
+//        $address_id = sha1($street_address . $city . $parish . $postal_code);
+
+        /* Create various objects */
+
         $shipping_address = new Address($street_address, $city, $parish, $postal_code);
-        $account = new Account($username, $email, $password, $phone_number, 
-                              $first_name, $last_name, $shipping_address);
-        $database = new Database('localhost', 'pdo_ret', 'root', '');
-        if (gettype($database->get_db()) == 'object'){
-            $sql = "insert into account values('$username', '$email', '" . sha1($password)
-                . "', $phone_number, '$first_name', '$last_name');";
-            $result = $database->update($sql);
-            if ($result == -1){
-                echo '<script>alert(\'Unknown error occurred\')</script>';
-                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
-            }
-            $sql = "insert into address values('$address_id', '$street_address', '$city', '$parish', '$postal_code');";
-            $result = $database->update($sql);
-            if ($result == -1){
-                echo '<script>alert(\'Unknown error occurred\')</script>';
-                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
-            }
-            $sql = "insert into shipping_address values('$username', '$address_id');";
-            $result = $database->update($sql);
-            if ($result == -1){
-                echo '<script>alert(\'Unknown error occurred\')</script>';
-                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
-            }
-            $_SESSION['account'] = $account;
-            /*
-            $_SESSION['username'] = $account->getUsername();
-            $_SESSION['email'] = $account->getEmail();
-            $_SESSION['phonenumber'] = $account->getPhoneNumber();
-            $_SESSION['firstname'] = $account->getFirstName();
-            $_SESSION['lastname'] = $account->getLastName();
-            $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-            $_SESSION['city'] = $account->getShippingAddress()->getCity();
-            $_SESSION['parish'] = $account->getShippingAddress()->getParish();
-            $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-            */
-            echo '<script>window.location.href = "?controller=pages&action=index";</script>';
-        } else {
+        $user = new User($username, $password);
+        $bool = $user->createAccount($email, $phone_number, $first_name, $last_name, $shipping_address);
+        if(!$bool){
             echo '<script>alert(\'Unknown error occurred\')</script>';
             echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+            return;
         }
-        
+        $_SESSION['account'] = $account;
+        echo '<script>window.location.href = "?controller=pages&action=index";</script>';
     }
-      
-    public function reset(){
+
+      public function reset(){
         //Send reset email
         echo '<script>window.location.href = "?controller=pages&action=index";</script>';
     }
-      
-    public function change(){
+
+      public function change(){
         if (isset($_SESSION['fromaccount'])){
             unset($_SESSION['fromaccount']);
-            //Make changes to user details
+
+            /* Get postal values */
             $username = $_POST['username'];
             $email = $_POST['email'];
-            $phone_number = $_POST['phonenumber'];
+            $phone_number = (float) $_POST['phonenumber'];
             $first_name = $_POST['firstname'];
             $last_name = $_POST['lastname'];
             $street_address = $_POST['saddress'];
@@ -197,51 +188,53 @@
             $shipping_address = new Address($street_address, $city, $parish, $postal_code);
             $account = $_SESSION['account'];
             $oldusername = $account->getUsername();
-            $account->setUsername($username);
-            $account->setEmail($email);
-            $account->setPhoneNumber($phone_number);
-            $account->setFirstName($first_name);
-            $account->setLastName($last_name);
-            $account->setShippingAddress($shipping_address);
 
-            $database = new Database('localhost', 'pdo_ret', 'root', '');
-            if (gettype($database->get_db()) != 'int'){
-                $sql = "update account set username='$username', email_address='$email', 
-                p_number=". (float)$phone_number .", f_name='$first_name', l_name='$last_name' where username='$oldusername';";
-                $result = $database->update($sql);
-                if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;}
-                $sql = "select * from shipping_address where username='$oldusername'";
-                $result = $database->query($sql);
-                if (count($result) < 1){
-                    echo '<script>alert(\'Unknown error occurred\')</script>'; return;
-                } else {
-                    $result = $result[0];
-                    $address_id = $result[1];
-                    $sql = "update address set street_address='$street_address',
-                    city='$city', parish='$parish', postal_code='$postal_code' where address_id='$address_id';";
-                    $result = $database->update($sql);
-                    if ($result == -1){echo '<script>alert(\'Unknown error occurred\')</script>'; return;}
-                    $_SESSION['account'] = $account;
-                    $_SESSION['username'] = $account->getUsername();
-                    $_SESSION['email'] = $account->getEmail();
-                    $_SESSION['phonenumber'] = $account->getPhoneNumber();
-                    $_SESSION['firstname'] = $account->getFirstName();
-                    $_SESSION['lastname'] = $account->getLastName();
-                    $_SESSION['streetaddress'] = $account->getShippingAddress()->getStreetAddress();
-                    $_SESSION['city'] = $account->getShippingAddress()->getCity();
-                    $_SESSION['parish'] = $account->getShippingAddress()->getParish();
-                    $_SESSION['postalcode'] = $account->getShippingAddress()->getPostalCode();
-                    echo '<script>window.location.href = "?controller=pages&action=account";</script>';
-                }
-            } else {
-                echo '<script>alert(\'Unknown error occurred\')</script>';
+
+            $bool = $account->setUsername($username);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
             }
-        } else {
+
+            $bool = $account->setEmail($email);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
+            }
+
+            $bool = $account->setPhoneNumber($phone_number);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
+            }
+
+            $bool = $account->setFirstName($first_name);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
+            }
+
+            $bool = $account->setLastName($last_name);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
+            }
+
+            $bool = $account->setShippingAddress($shipping_address);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>'; 
+                return;
+            }
+
+            $_SESSION['account'] = $account;
+            echo '<script>window.location.href = "?controller=pages&action=account";</script>';
+        } 
+        else {
             echo '<script>window.location.href = "?controller=pages&action=login";</script>';
         }
     }
-      
-    public function addpayment(){
+
+      public function addpayment(){
         if (isset($_SESSION['fromcheckout'])){
             unset($_SESSION['fromcheckout']);
             $account = $_SESSION['account'];
@@ -361,7 +354,7 @@
                         break;
                     }
                 }
-                
+
                 //updates
                 switch ($payment_method){
                     case 'bankaccount':{
@@ -566,7 +559,7 @@
                         break;
                     }
                 }
-                
+
                 //updates
                 switch ($payment_method){
                     case 'bankaccount':{
@@ -648,55 +641,56 @@
             echo '<script>window.location.href = "?controller=pages&action=account";</script>';
         }
     }
-      
-    public function addtocart(){
-        //Implement
+
+      public function addtocart(){
         $account = $_SESSION['account'];
-        //$cart = $account->getCart();
         $productId = $_POST['productid'];
         $quantity = $_POST['quantity'];
-        
+
         /* Checking availability */
         $database = new Database('localhost', 'pdo_ret', 'root', '');
         $sql = "select product_name, quantity_left from product where product_id='$productId';";
         $result = $database->query($sql);
-        if(count($result) > 0){
-            $result = $result[0];
-            $product_name = $result[0];
-            $quantity_left = $result[1];
-            if(quantity <= $quantity_left){
-                /* Adding to cart */
-                $product = new Product($productId, $product_name);
-                $product->setQuantity($quantity);
-                $account->getCart()->addToCart($product);
-                
-                /* Update relevent tables in the database */
-                $sql = "";
-                $result = $database->update($sql);
-                if($result < 1){}
-                $sql = "";
-                $result = $database->update($sql);
-                if($result < 1){}
-            }
+        $result = $result[0];
+        $product_name = $result[0];
+        $quantity_left = $result[1];
+        if(quantity <= $quantity_left){
+            /* Adding to cart */
+            $product = new Product($productId, $product_name);
+            $product->setQuantity($quantity);
+            $bool = $account->getCart()->addToCart($product, (float)$quantity);
+            if($bool){
+                echo '<script>alert(\'Successfully added\');</script>';
+                echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
+            } 
             else {
-                
+                echo '<script>alert(\'Unknown error occurred\');</script>';
+                echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
             }
         }
         else {
-            
+            echo '<script>alert(\'Quantity not available\');</script>';
+            echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
         }
     }
-      
-    public function removefromcart(){
-        //Implement
+
+      public function removefromcart(){
+        $_productId = $_POST['productid'];
+        $sql = "select * from product where product_id='$productId';";
+        $results = $database->query($sql);
+        $results = $results[0];
+        $name = $results[1];
+        $price = $results[3];
+        $product = new Product($productId, $name, $price);
         $account = $_SESSION['account'];
-        $cart = $account->getCart();
+        $account->getCart()->removeFromCart($product);
     }
-      
-    public function checkout(){
+
+      public function checkout(){
         //Implement here
         $account = $_SESSION['account'];
         $cart = $account->getCart();
     }
+      
   }
 ?>

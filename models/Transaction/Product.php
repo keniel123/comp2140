@@ -33,7 +33,7 @@
  	 public function __construct($_id, $_name, $_price){
          $this->ID = $_id;
          $this->name = $_name;
-         $this->price = $price
+         $this->price = $_price;
  	}
  
      /**

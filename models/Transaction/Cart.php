@@ -6,6 +6,8 @@ $database = new Database('localhost', 'pdo_ret', 'root', '');
  */
 class Cart
 {
+    private $cartId;
+    
     /**
      * @var String
      */
@@ -23,6 +25,7 @@ class Cart
 	 * @return	void 
 	 **/
 	public function __construct(){
+        $this->cartId = sha1(round(microtime(true) * 1000));
 		$this->dateCreated = getdate();
 		$this->total = 0.00;
 		$this->items = array();
@@ -30,20 +33,31 @@ class Cart
     /**
      * @return boolean
      */
-    private function checkAvailability($prod, $qty){
-        $result = $database->query(
-					"SELECT quantity
-					 FROM product
-					  WHERE productId = ".$prod->getID().";"
-					);
-		if (gettype($result) == 'object')
-		{
-			$row = $result[0];
-			if($qty <= $row[4])
-				return TRUE;
-		}
-		return FALSE;
+//    private function checkAvailability($prod, $qty){
+//        $result = $database->query(
+//					"SELECT quantity
+//					 FROM product
+//					  WHERE productId = ".$prod->getID().";"
+//					);
+//		if (gettype($result) == 'object')
+//		{
+//			$row = $result[0];
+//			if($qty <= $row[4])
+//				return TRUE;
+//		}
+//		return FALSE;
+//    }
+    
+    public function inCart($product_name){
+        foreach($this->items as $product){
+            if($product->getName() == $product_name){
+                return $product->getQuantity();
+            }
+        }
+        return FALSE;
     }
+    
+    
     /**
      * @return boolean
      */
@@ -58,16 +72,32 @@ class Cart
      */
     public function addToCart($prod, $amt){
         
-		// if product already in list increase quantity
-		foreach($this->items as $product){
-			if($prod->getName() == $product->getName()){
-                $total = $product->getQuantity() + $amt;
-                $this->removeFromCart($product);
-                $prod->setQuantity($total);
-                $this->addToCart($prod);
-			}
-		}
-		return TRUE;
+        if(gettype($this->inCart($prod->getName())) != 'boolean'){ /* if product already in list increase quantity */
+            $total = $this->inCart($prod->getName()) + $amt;
+            $this->removeFromCart($prod->getName());
+            $prod->setQuantity($total);
+            array_push($this->items, $prod);
+            
+            /* Update relevent tables in the database */
+            $productId = $prod->getID();
+            $sql = "update cart_product set quantity=$total where cart_id='$this->cartId' and product_id='$productId';";
+            $result = $database->update($sql);
+            if($result < 1){
+                return FALSE;
+            }
+            return TRUE;
+        } 
+        else { /* Add as new product */
+            array_push($this->items, $prod);
+            
+            /* Update relevent tables in the database */
+            $sql = "insert into cart_product values($this->cartId, $productId, $amt);";
+            $result = $database->update($sql);
+            if($result < 1){
+                return FALSE;
+            }
+            return TRUE;
+        }
     }
     
     /**
@@ -75,21 +105,19 @@ class Cart
      * @return boolean
      */
     public function removeFromCart($itemName){
-        foreach($this->items as $product)
-        {
-			if($product.name == $itemName)
-			{
-				array_pop($this->items,$product);
+        foreach($this->items as $product){
+			if($product.name == $itemName){
+				array_pop($this->items, $product);
 				return TRUE;
 			}	
 		}
         return FALSE;
     }
+    
     /**
      * @return double
      */
-    public function calculateTotal()
-    {
+    public function calculateTotal(){
 		$running_sum = 0.00;
 		$size = count($this->items);
         if($size==0)
@@ -102,25 +130,33 @@ class Cart
 		}
 		return $running_sum;
     }
+    
     /**
      * @return String
      */
-    public function getDateCreated()
-    {
+    public function getDateCreated(){
         return $this->dateCreated;
     }
+    
     /**
      * @return Double
      */
-    public function getTotal()
-    {
+    public function getTotal(){
         return $this->total;
     }
+    
     /**
      * @return List<Product>
      */
-    public function getItems()
-    {
+    public function getItems(){
         return $this->items;
+    }
+    
+    public function getCartId(){
+        return $this->cartId;
+    }
+    
+    public function setCartId($cartId){
+        $this->cartId = $cartId;
     }
 }

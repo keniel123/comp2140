@@ -1,5 +1,4 @@
 <?php
-  include ('models/Control/System.php');
 
   class PagesController {
       

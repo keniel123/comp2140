@@ -20,7 +20,7 @@
                 <div class="">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="?controller=pages&action=checkout">
+                            <!--form method="post" action="?controller=pages&action=checkout"-->
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -41,15 +41,16 @@
                                             $tdc = '</td>';
                                             $account = $_SESSION['account'];
                                             $items = $account->fetchItems();
+                                        $cart = $account->getCart();
                                             if (count($items) > 0){
                                                 foreach($items as $product){
                                                     echo $tr;
                                                     echo $td . $tdc;
                                                     echo $td . $tdc;
                                                     echo $td . $product->getName() . $tdc;
-                                                    echo $td . $product->getPrice() . $tdc;
+                                                    echo $td . '$' .  $product->getPrice() . '.00' .  $tdc;
                                                     echo $td . $product->getQuantity() . $tdc;
-                                                    echo $td . $product->getPrice() * $product->getQuantity() . $tdc;
+                                                    echo $td . '$' .  $product->getPrice() * $product->getQuantity() . '.00' .  $tdc;
                                                     echo $td . '<form method="post" action="?controller=control&action=removefromcart">
                                                     <input type="text" hidden="true" name="productid" value="' . $product->getProductId() . '">
                                                     <input type="number" hidden="true" name="quantity" value="' . $product->getQuantity() . '">
@@ -66,8 +67,11 @@
                                             <td class="actions" colspan="6">
                                                 
                                                 <div class="form-group">
-                                                <input type="submit" value="Proceed to Checkout" name="proceed" 
-                                                       class="checkout-button button alt wc-forward">
+                                                <!--input type="submit" value="Proceed to Checkout" name="proceed" 
+                                                       class="checkout-button button alt wc-forward"-->
+                                                    <a href="?controller=pages&action=checkout">
+                                                        <button class="btn btn-success">Proceed to Checkout</button>
+                                                    </a>
                                                     </div>
                                             </td>
                                         </tr>

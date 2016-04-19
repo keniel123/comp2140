@@ -76,7 +76,10 @@ class Cart
             array_push($this->items, $prod);
             
             /* Update relevent tables in the database */
+            $prod->setQuantity($amt);
             $productId = $prod->getProductId();
+            $sql = "delete from cart_product where cart_id='$this->cartId' and product_id='$productId';";
+            $result = $database->update($sql);
             $sql = "insert into cart_product values('$this->cartId', '$productId', $amt);";
             $result = $database->update($sql);
             if($result < 1){
@@ -95,7 +98,8 @@ class Cart
         $database = new Database('localhost', 'pdo_ret', 'root', '');
         foreach($this->items as $product){
 			if($product->getName() == $itemName){
-				array_pop($this->items, $product);
+				$key = array_search($product, $this->items);
+                unset($this->items[$key]);
                 $sql = "delete from cart_product where cart_id='$this->cartId' and product_id='".$product->getProductId()."';";
                 $database->update($sql);
 				return TRUE;

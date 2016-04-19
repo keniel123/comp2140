@@ -87,7 +87,7 @@
             }
             
             /* Get cart and products in cart */
-            $sql = "select cart_id from account_cart username='$username';";
+            $sql = "select cart_id from account_cart where username='$username';";
             $result = $database->query($sql);
             $result = $result[0];
             $cartId = $result[0];
@@ -105,9 +105,7 @@
                 $name = $results[1];
                 $price = $results[3];
                 $product = new Product($productId, $name, $price);
-                for($i=0; $i<$quantity; $i++){
-                    $cart->addToCart($product);
-                }
+                $cart->addToCart($product, $quantity);
             }
             
             $account->setCart($cart);
@@ -665,7 +663,7 @@
             } 
             else {
                 echo '<script>alert(\'Unknown error occurred\');</script>';
-                echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
+                //echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
             }
         }
         else {
@@ -675,15 +673,19 @@
     }
 
       public function removefromcart(){
-        $_productId = $_POST['productid'];
-        $sql = "select * from product where product_id='$productId';";
-        $results = $database->query($sql);
-        $results = $results[0];
-        $name = $results[1];
-        $price = $results[3];
-        $product = new Product($productId, $name, $price);
-        $account = $_SESSION['account'];
-        $account->getCart()->removeFromCart($product);
+          $database = new Database('localhost', 'pdo_ret', 'root', '');
+          $productId = $_POST['productid'];
+          $quantity = $_POST['quantity'];
+          $sql = "select * from product where product_id='$productId';";
+          $results = $database->query($sql);
+          $results = $results[0];
+          $name = $results[1];
+          $price = $results[3];
+          $product = new Product($productId, $name, $price);
+          $account = $_SESSION['account'];
+          $account->getCart()->removeFromCart($product->getName());
+          $_SESSION['account'] = $account;
+          echo '<script>window.location.href=\'?controller=pages&action=cart\'</script>';
     }
 
       public function checkout(){

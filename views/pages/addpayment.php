@@ -61,7 +61,7 @@
                             <!--== BANK ACCOUNT FORM ==-->
             
                             <div id="bankaccount">
-                                <form action="?controller=control&action=addpayment" method="post">
+                                <form action="?controller=control&action=addpayment" method="post" id="bankaccountform">
                                     <input name="payment_method" value="bankaccount" hidden="true">
                                     <div class="form-group">
                                         <label>Bank Name</label>
@@ -101,7 +101,7 @@
                             <!--== CREDIT CARD FORM ==-->
                             
                             <div id="credit-card">
-                                <form action="?controller=control&action=addpayment" method="post">
+                                <form action="?controller=control&action=addpayment" method="post" id="credit-cardform">
                                     <input name="payment_method" value="creditcard" hidden="true">
                                     <div class="form-group">
                                         <label>Card Type</label>
@@ -149,7 +149,7 @@
                             <!--== PAYPAL FORM ==-->
                             
                             <div id="paypal">
-                                <form action="?controller=control&action=addpayment" method="post">
+                                <form action="?controller=control&action=addpayment" method="post" id="paypalform">
                                     <input name="payment_method" value="paypal" hidden="true">
                                 <div class="form-group">
                                     <label>PayPal Email</label>

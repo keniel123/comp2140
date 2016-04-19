@@ -116,13 +116,13 @@ class Cart
 		$size = count($this->items);
         if($size==0)
         {
-			return 0.00;
+			return;
 		}
 		foreach($this->items as $product)
 		{
-			$running_sum += $product->price;
+			$running_sum += $product->getPrice()*$product->getQuantity();
 		}
-		return $running_sum;
+		$this->total = $running_sum;
     }
     
     /**
@@ -136,6 +136,7 @@ class Cart
      * @return Double
      */
     public function getTotal(){
+        $this->calculateTotal();
         return $this->total;
     }
     

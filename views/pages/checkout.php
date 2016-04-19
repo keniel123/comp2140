@@ -48,7 +48,7 @@
                                         <tfoot>
                                             <tr class="cart-subtotal">
                                                 <th>Cart Subtotal</th>
-                                                <td><span class="amount"></span>
+                                                <td><span class="amount"><?php echo '$' . $account->getCart()->getTotal() . '.00'; ?></span>
                                                 </td>
                                             </tr>
                                             <tr class="shipping">
@@ -57,7 +57,8 @@
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount"></span></strong> </td>
+                                                <td><strong><span class="amount"><?php echo '$' . $account->getCart()->getTotal() . '.00'; ?>
+                                                    </span></strong> </td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Shipping Address</th>

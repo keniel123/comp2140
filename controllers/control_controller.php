@@ -672,6 +672,7 @@
     }
 
       public function addtocart(){
+          if (isset($_SESSION['account'])){
         $account = $_SESSION['account'];
         $productId = $_POST['productid'];
         $quantity = $_POST['quantity'];
@@ -694,13 +695,17 @@
             } 
             else {
                 echo '<script>alert(\'Unknown error occurred\');</script>';
-                //echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
+                echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
             }
         }
         else {
             echo '<script>alert(\'Quantity not available\');</script>';
             echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
         }
+          }
+          else{
+              echo '<script>window.location.href=\'?controller=pages&action=login\';</script>';
+          }
     }
 
       public function removefromcart(){

@@ -26,7 +26,7 @@ class Cart
 	 **/
 	public function __construct(){
         $this->cartId = sha1(round(microtime(true) * 1000));
-		$this->dateCreated = getdate();
+		$this->dateCreated = round(microtime(true) * 1000);
 		$this->total = 0.00;
 		$this->items = array();
     }
@@ -113,11 +113,6 @@ class Cart
      */
     public function calculateTotal(){
 		$running_sum = 0.00;
-		$size = count($this->items);
-        if($size==0)
-        {
-			return;
-		}
 		foreach($this->items as $product)
 		{
 			$running_sum += $product->getPrice()*$product->getQuantity();

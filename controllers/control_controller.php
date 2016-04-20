@@ -136,30 +136,35 @@
     }
 
       public function signup(){
-        /* Get posted form values */
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $phone_number = (float)$_POST['phonenumber'];
-        $first_name = $_POST['firstname'];
-        $last_name = $_POST['lastname'];
-        $street_address = $_POST['saddress'];
-        $city = $_POST['city'];
-        $parish = $_POST['parish'];
-        $postal_code = $_POST['postalcode'];
-//        $address_id = sha1($street_address . $city . $parish . $postal_code);
+          if(isset($_SESSION['frompages'])){
+              unset($_SESSION['frompages']);
+            /* Get posted form values */
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $phone_number = (float)$_POST['phonenumber'];
+            $first_name = $_POST['firstname'];
+            $last_name = $_POST['lastname'];
+            $street_address = $_POST['saddress'];
+            $city = $_POST['city'];
+            $parish = $_POST['parish'];
+            $postal_code = $_POST['postalcode'];
 
-        /* Create various objects */
+            /* Create various objects */
 
-        $shipping_address = new Address($street_address, $city, $parish, $postal_code);
-        $user = new User($username, $password);
-        $bool = $user->createAccount($email, $phone_number, $first_name, $last_name, $shipping_address);
-        if(!$bool){
-            echo '<script>alert(\'Unknown error occurred\')</script>';
-            echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
-            return;
-        }
-        //echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+            $shipping_address = new Address($street_address, $city, $parish, $postal_code);
+            $user = new User($username, $password);
+            $bool = $user->createAccount($email, $phone_number, $first_name, $last_name, $shipping_address);
+            if(!$bool){
+                echo '<script>alert(\'Unknown error occurred\')</script>';
+                echo '<script>window.location.href = "?controller=pages&action=signup";</script>';
+                return;
+            }
+            echo '<script>window.location.href = "?controller=pages&action=index";</script>';
+          }
+          else{
+              echo '<script>window.location.href = "?controller=pages&action=error";</script>';
+          }
     }
 
       public function reset(){

@@ -68,6 +68,7 @@
             echo '<script>alert(\'You already have an account.\n Please log out first\');
             window.location.href = "?controller=pages&action=account";</script>';
         } else {
+            $_SESSION['frompages'] = yes;
             require_once('views/pages/signup.php');
         }
     }

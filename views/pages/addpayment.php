@@ -105,7 +105,13 @@
                                     <input name="payment_method" value="creditcard" hidden="true">
                                     <div class="form-group">
                                         <label>Card Type</label>
-                                        <input required class="form-control" name="cctype" placeholder="E.g. Visa">
+                                        <select name="cctype" class="form-control">
+                                            <optgroup>
+                                                <option value="Visa">Visa</option>
+                                                <option value="Mastercard">Mastercard</option>
+                                                <option value="AMEX">American Express</option>
+                                            </optgroup>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Card Number</label>

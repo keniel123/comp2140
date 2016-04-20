@@ -16,7 +16,9 @@
 
 <?php 
 /* Dynamically generate stuff */
-$account = $_SESSION['account'];
+if (isset($_SESSION['account'])){
+    $account = $_SESSION['account'];
+}
 $database = new Database('localhost', 'pdo_ret', 'root', '');
 $sql = "select * from product;";
 $result = $database->query($sql);

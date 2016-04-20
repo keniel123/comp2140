@@ -48,8 +48,9 @@ class Database
             return $stmt->rowCount();
         } catch(PDOException $e) {
             //Return error
-            return -1;
             print $e->getMessage();
+            echo $e->getMessage();
+            return -1;
         }
     }
     

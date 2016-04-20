@@ -47,6 +47,9 @@ class Cart
     public function emptyCart(){
 		unset($this->items);
 		$this->items = array();
+        $database = new Database('localhost', 'pdo_ret', 'root', '');;
+        $sql = "delete from cart_product where cart_id='".$this->getCartId()."';";
+        $database->update($sql);
     }
     
     /**

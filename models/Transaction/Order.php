@@ -37,12 +37,11 @@ class Order
      */
     private $items;
     
-	public function __construct($total, $items)
-    {
-		$this->ID = sha1(date());
-		$this->orderDate = date();
-		$this->deliveryDate = "";
-		$this->orderStatus = "";
+	public function __construct($total, $items){
+		$this->ID = sha1(round(microtime(true) * 1000));
+		$this->orderDate = round(microtime(true) * 1000);
+		$this->deliveryDate = 0;
+		$this->orderStatus = "U";
 		$this->total = $total;
 		$this->items = $items;
     }
@@ -50,80 +49,80 @@ class Order
     /**
      * @return String
      */
-    public function getID()//String
+    public function getOrderId()
     {
 
-        return $this->$ID;
+        return $this->ID;
 
     }
     /**
      * @param String $ID
      * @return boolean
      */
-    public function setID(String $ID)//boolean
+    public function setOrderId($ID)
     {
 
-		$this->$ID = $ID;
+		$this->ID = $ID;
 
         return true;
     }
     /**
      * @return String
      */
-    public function getOrderDate()//String
+    public function getOrderDate()
     {
 
-        return $this->$orderDate;
+        return $this->orderDate;
 
     }
     /**
      * @param String $orderDate
      * @return boolean
      */
-    public function setOrderDate(String $orderDate)//boolean
+    public function setOrderDate($orderDate)
     {
 
-		$this->$orderDate = $orderDate;
+		$this->orderDate = $orderDate;
 
         return true;
     }
     /**
      * @return String
      */
-    public function getDeliveryDate()//String
+    public function getDeliveryDate()
     {
 
-        return $this->$deliveryDate;
+        return $this->deliveryDate;
 
     }
     /**
      * @param String $deliveryDate
      * @return boolean
      */
-    public function setDeliveryDate(String $deliveryDate)//boolean
+    public function setDeliveryDate($deliveryDate)
     {
 
-        $this->$deliveryDate = $deliveryDate;
+        $this->deliveryDate = $deliveryDate;
 
         return true;
     }
     /**
      * @return String
      */
-    public function getOrderStatus()//String
+    public function getOrderStatus()
     {
 
-        return $this->$orderStatus;
+        return $this->orderStatus;
 
     }
     /**
      * @param String $orderStatus
      * @return boolean
      */
-    public function setOrderStatus(String $orderStatus)//boolean
+    public function setOrderStatus($orderStatus)
     {
 
-        $this->$orderStatus = $orderStatus;
+        $this->orderStatus = $orderStatus;
 
         return true;
     }
@@ -133,13 +132,13 @@ class Order
     public function getTotal()//Double
     {
 
-        return $this->$total;
+        return $this->total;
 
     }
     /**
      * @return boolean
      */
-    public function calculateTotal()//boolean
+    public function calculateTotal()
     {
         $running_sum = 0.00;
 
@@ -164,7 +163,7 @@ class Order
     public function getItems()//List<Product>
     {
 
-        return $this->$items;
+        return $this->items;
 
     }
     /**
@@ -173,7 +172,7 @@ class Order
      public function setItems(array $arr)
      {
 
-		 $this->$items = $arr;
+		 $this->items = $arr;
 		 return true;
 	 }
 }

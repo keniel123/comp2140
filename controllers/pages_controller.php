@@ -68,7 +68,7 @@
             echo '<script>alert(\'You already have an account.\n Please log out first\');
             window.location.href = "?controller=pages&action=account";</script>';
         } else {
-            $_SESSION['frompages'] = yes;
+            $_SESSION['frompages'] = 'yes';
             require_once('views/pages/signup.php');
         }
     }
@@ -122,6 +122,15 @@
       
     public function privacy(){
         require_once('views/pages/privacy.php');
-    }      
+    }    
+      
+    public function orders(){
+        if(isset($_SESSION['account'])){
+        require_once('views/pages/orders.php');
+        }
+        else{
+            echo '<script>window.location.href="?controller=pages&action=login"</script>';
+        }
+    }
   }
 ?>

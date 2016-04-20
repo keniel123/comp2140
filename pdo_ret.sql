@@ -62,9 +62,9 @@ CREATE TABLE cart (
 
 CREATE TABLE orders (
   order_id char(40) not null,
-  order_date date NOT NULL,
-  delivery_date date NOT NULL,
-  order_status varchar(20) NOT NULL,
+  order_date int(8) NOT NULL,
+  delivery_date int(8) NOT NULL,
+  order_status char(1) NOT NULL,
   order_total float(40) NOT NULL,
   Primary Key(order_id)
 );
@@ -116,7 +116,9 @@ CREATE TABLE paypal (
 CREATE TABLE order_product (
     order_id char(40) not null,
     product_id char(40) not null,
+    product_name varchar(80) NOT NULL,
     quantity int(3) not null,
+    price float(40) not null,
     PRIMARY KEY(order_id,product_id),
     foreign key (order_id) references orders(order_id) on update cascade on delete cascade,
     foreign key (product_id) references product(product_id) on update cascade on delete cascade

@@ -170,9 +170,6 @@ class Account extends User
         return $this->orders;
     }
     
-    /**
-     * @return boolean
-     */
     public function updateOrders($order){
         array_push($this->orders, $order);
     }
@@ -217,28 +214,6 @@ class Account extends User
     }
     
     /**
-     * @return boolean
-     */
-    public function checkout(){
-        if (count($cart->getItems()) > 0){
-            if ($paymentMethod->validatePayment()){
-                $items = $this->fetchItems();
-                foreach ($items as $item) {
-                    if(!$cart->checkAvailability($item)){
-                        return FALSE;
-                    }
-                }
-                $this->chargePaymentMethod();
-                $order = new Order($cart->getTotal(), $this->fetchItems());
-                $this->updateOrders($order);
-                return TRUE;
-            }
-            return FALSE;
-        }
-        return FALSE;
-    }
-    
-    /**
      * @return List<Product>
      */
     public function fetchItems(){
@@ -249,6 +224,7 @@ class Account extends User
      * @return boolean
      */
     public function chargePaymentMethod(){
+        //Stub method
         return TRUE;
     }
     

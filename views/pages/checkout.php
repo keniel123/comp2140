@@ -84,25 +84,34 @@
                                             $p = '<p>';
                                             $pc = '</p>';
                                             $h3 = '<h2>';
-                                            $h3c = '</h2>';   
+                                            $h3c = '</h2>';
+                                            $cart = $account->getCart();
                                             if(isset($_SESSION['payment'])){
-                                                switch($_SESSION['paymenttype']){
-                                                    case 'ba':
-                                                        $type = 'Bank Account';
-                                                        break;
-                                                    case 'cc':
-                                                        $type = 'Credit Card';
-                                                        break;
-                                                    case 'pp':
-                                                        $type = 'PayPal';
-                                                        break;
+                                                if(count($cart->getItems()) < 1){
+                                                echo $h3 . 'You have no items in your cart. 
+                                                Add some <a href="?controller=pages&action=shop">here</a>' . $h3c;
+                                                } 
+                                                else{
+                                                    switch($_SESSION['paymenttype']){
+                                                        case 'ba':
+                                                            $type = 'Bank Account';
+                                                            break;
+                                                        case 'cc':
+                                                            $type = 'Credit Card';
+                                                            break;
+                                                        case 'pp':
+                                                            $type = 'PayPal';
+                                                            break;
+                                                    }
+                                                    echo $p . 'Your Payment Method: ' . $type . $pc;
+                                                    echo $p . '<a href="?controller=pages&action=addpayment">Change</a>' . $pc;
+                                                    echo '<div class="form-row place-order">
+                                                    <form method="post" action="?controller=control&action=checkout">
+                                                    <input type="submit" data-value="Place order" value="Place order" id="placeOrder"
+                                                    name="placeOrder" class="button alt"></form></div>';
                                                 }
-                                                echo $p . 'Your Payment Method: ' . $type . $pc;
-                                                echo $p . '<a href="?controller=pages&action=addpayment">Change</a>' . $pc;
-                                                echo '<div class="form-row place-order"><input type="submit" 
-                                                data-value="Place order" value="Place order" id="placeOrder" 
-                                                name="placeOrder" class="button alt"></div>';
-                                            } else {
+                                            }
+                                            else {
                                                 echo $h3 . 'Add a payment method <a href="?controller=pages&action=addpaymentc">here</a>' . $h3c;
                                             }
                                         ?>

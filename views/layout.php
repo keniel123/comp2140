@@ -95,7 +95,17 @@
                                 else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt">
                         <?php if(isset($_SESSION['account'])){echo '$'. $account->getCart()->getTotal();}?></span> 
                         <span class="glyphicon glyphicon-shopping-cart"></span> 
-                        <span class="product-count"><?php if(isset($_SESSION['account'])){echo count($account->fetchItems());}?></span></a>
+                        <span class="product-count">
+                            <?php if(isset($_SESSION['account'])){
+                                    $items = $account->fetchItems();
+                                    $number = 0;
+                                    foreach($items as $item){
+                                        $number += $item->getQuantity();
+                                    }
+                                    echo $number;
+                                    }
+                            ?>
+                        </span></a>
                     </div>
                 </div>
                    </div>
@@ -112,6 +122,8 @@
                         <li><a href="?controller=pages&action=shop">Shop page</a></li>
                         <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=cart">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>Cart</a></li>
+                        <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=orders">';}
+                                else {echo '<a href="?controller=pages&action=login">';}?>Orders</a></li>
                         <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=checkout">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>Checkout</a></li>
                         <li><a href="?controller=pages&action=contact">Contact</a></li>
@@ -235,6 +247,9 @@
     <!-- jQuery sticky menu -->
     <script src="source-files/js/owl.carousel.min.js"></script>
     <script src="source-files/js/jquery.sticky.js"></script>
+
+    <!-- jQuery Validation menu -->
+    <script src="source-files/js/jquery.validate.min.js"></script>
                
     <!-- jQuery easing -->
     <script src="source-files/js/jquery.easing.1.3.min.js"></script>
@@ -243,7 +258,9 @@
     <script src="source-files/js/main.js"></script>
 
     <!-- Custom Script -->
-    <script src="source-files/js/addpayment.js"></script>
+    <script src="source-files/js/register.js"></script>
     <script src="source-files/js/login.js"></script>
+    <script src="source-files/js/payment.js"></script>
+    <script src="source-files/js/addpayment.js"></script>
   </body>
 </html>

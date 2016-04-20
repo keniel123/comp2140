@@ -108,6 +108,34 @@
                 $cart->addToCart($product, $quantity);
             }
             
+            /* Get orders */
+            $products = array();
+            $sql = "select order_id from account_order where username='$username';";
+            $result = $database->query($sql);
+            foreach($result as $row){
+                $orderId = $row[0];
+                $sql = "select * from orders natural join order_product where order_id='$orderId';";
+                $results = $database->query($sql);
+                $row = $results[0];
+                $orderId = $row[0];
+                $orderDate = $row[1];
+                $deliveryDate = $row[2];
+                $orderStatus = $row[3];
+                $orderTotal = $row[4];
+                foreach($results as $products_row){
+                    $product = new Product($products_row[5], $products_row[6], $products_row[8]);
+                    $product->setQuantity($products_row[7]);
+                    array_push($products, $product);
+                    
+                }
+                $order = new Order($orderTotal, $products);
+                $order->setOrderId($orderId);
+                $order->setOrderDate($orderDate);
+                $order->setDeliveryDate($deliveryDate);
+                $order->setOrderStatus($orderStatus);
+                $account->updateOrders($order);
+            }
+            
             $account->setCart($cart);
             $_SESSION['account'] = $account;
             echo '<script>window.location.href = "?controller=pages&action=index";</script>';
@@ -245,7 +273,6 @@
 
             //Check for existing payment method
             $method = $account->getPaymentMethod();
-                echo gettype($method);
             if(gettype($method) == 'object'){
                 $existing = 'yes';
             }
@@ -432,7 +459,7 @@
                     }
                 }
             }
-            //echo '<script>window.location.href = "?controller=pages&action=checkout";</script>';
+            echo '<script>window.location.href = "?controller=pages&action=checkout";</script>';
         } 
         else if(isset($_SESSION['fromaccount'])){
             unset($_SESSION['fromaccount']);
@@ -663,7 +690,6 @@
             $product->setQuantity($quantity);
             $bool = $account->getCart()->addToCart($product, (float)$quantity);
             if($bool == TRUE){
-                echo '<script>alert(\'Successfully added\');</script>';
                 echo '<script>window.location.href=\'?controller=pages&action=shop\';</script>';
             } 
             else {
@@ -694,9 +720,68 @@
     }
 
       public function checkout(){
-        //Implement here
-        $account = $_SESSION['account'];
-        $cart = $account->getCart();
+          //Implement here
+          $account = $_SESSION['account'];
+          $database = new Database('localhost', 'pdo_ret', 'root', '');
+          $cart = $account->getCart();
+          
+          /* Validate Payment */
+          $paymentMethod = $account->getPaymentMethod();
+          $bool = $paymentMethod->validatePayment();
+          if($bool){
+              /* Get items from the cart */
+              $items = $account->fetchItems();
+              
+              /* Check availability of each item */
+              foreach($items as $product){
+                  $sql = "select quantity_left from product where product_id='".$product->getProductId()."';";
+                  $result = $database->query($sql);
+                  $row = $result[0];
+                  $quantity_left = $row[0];
+                  if($product->getQuantity() > $quantity_left){
+                      $overage = $product->getQuantity() - $quantity_left;
+                      /* Generate error message */
+                      echo '<script>alert("You have'. $overage .' more'. $product->getName() .' than is currently available");</script>';
+                      echo '<script>window.location.href="?controller=pages&action=cart";</script>';
+                  }
+              }
+              
+              /* Charge payment method and update orders for this account */
+              $account->chargePaymentMethod();
+              $order = new Order($cart->getTotal(), $cart->getItems());
+              $account->updateOrders($order);
+              $sql = "insert into orders values('".$order->getOrderId()."', ".(float)$order->getOrderDate().",
+              ".(float)$order->getDeliveryDate().", '".$order->getOrderStatus()."', ".$order->getTotal().");";
+              $database->update($sql);
+              $sql = "insert into account_order values('".$account->getUsername()."', '".$order->getOrderId()."');";
+              $database->update($sql);
+              foreach($items as $product){
+                  $orderId = $order->getOrderId();
+                  $productId = $product->getProductId();
+                  $productName = $product->getName();
+                  $productQuantity = (int)$product->getQuantity();
+                  $productPrice = (float)$product->getPrice();
+                  $sql = "insert into order_product values('$orderId', '$productId', '$productName', $productQuantity, $productPrice);";
+                  $result = $database->update($sql);
+                  
+                  /* Decrease quantity of product available */
+                  $sql = "update product set quantity_left=quantity_left-".$product->getQuantity()." 
+                  where product_id='".$product->getProductId()."';";
+                  $database->update($sql);
+              }
+              
+              /* Empty Cart */
+              $account->getCart()->emptyCart();
+              $_SESSION['account'] = $account;
+              
+              /* Redirect to orders page */
+              echo '<script>window.location.href="?controller=pages&action=orders";</script>';
+          }
+          else {
+              //Generate error message
+              echo '<script>alert("You do not have enough funds to make this purchase");</script>';
+              echo '<script>window.location.href="?controller=pages&action=checkout";</script>';
+          }
     }
       
   }

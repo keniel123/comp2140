@@ -92,7 +92,10 @@
 
                         ?>
                         <?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=cart">';}
-                                else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt"><?php if(isset($total)){echo '$'. $total;}?></span> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="product-count"><?php if(isset($number)){echo $number;}?></span></a>
+                                else {echo '<a href="?controller=pages&action=login">';}?>Cart - <span class="cart-amunt">
+                        <?php if(isset($_SESSION['account'])){echo '$'. $account->getCart()->getTotal();}?></span> 
+                        <span class="glyphicon glyphicon-shopping-cart"></span> 
+                        <span class="product-count"><?php if(isset($_SESSION['account'])){echo count($account->fetchItems());}?></span></a>
                     </div>
                 </div>
                    </div>

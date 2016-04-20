@@ -164,7 +164,7 @@
                         <ul>
                             <li><?php if (isset($_SESSION['account'])){echo '<a href="?controller=pages&action=account">';}
                                 else {echo '<a href="?controller=pages&action=login">';}?>My account</a></li>
-                            <li><a href="#">Order history</a></li>
+                            <li><a href="?controller=pages&action=orders">Order history</a></li>
                             <li><a href="?controller=pages&action=contact">Contact</a></li>
                             <li><a href="?controller=pages&action=index">Front page</a></li>
                             <li><a href="?controller=pages&action=about">About Us</a></li>

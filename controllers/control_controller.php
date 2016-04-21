@@ -164,7 +164,7 @@
     }
 
       public function signup(){
-          if(isset($_SESSION['frompages'])){
+          if(isset($_SESSION['frompages'])){    
               unset($_SESSION['frompages']);
             /* Get posted form values */
             $username = $_POST['username'];
@@ -711,15 +711,12 @@
       public function removefromcart(){
           $database = new Database('localhost', 'pdo_ret', 'root', '');
           $productId = $_POST['productid'];
-          $quantity = $_POST['quantity'];
-          $sql = "select * from product where product_id='$productId';";
+          $sql = "select product_name from product where product_id='$productId';";
           $results = $database->query($sql);
-          $results = $results[0];
-          $name = $results[1];
-          $price = $results[3];
-          $product = new Product($productId, $name, $price);
+          $row = $results[0];
+          $name = $row[0];
           $account = $_SESSION['account'];
-          $account->getCart()->removeFromCart($product->getName());
+          $account->getCart()->removeFromCart($name);
           $_SESSION['account'] = $account;
           echo '<script>window.location.href=\'?controller=pages&action=cart\'</script>';
     }
